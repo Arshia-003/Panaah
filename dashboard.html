@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل کاربری | مجموعه پناه</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',sans-serif;}
+html,body{overflow-x:hidden;}
+body{background:#0b1220;color:#e8eef7;min-height:100vh;}
+
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 20s infinite ease-in-out;}
+.shape:nth-child(1){width:400px;height:400px;background:#0a6ebd;top:-100px;right:-100px;}
+.shape:nth-child(2){width:300px;height:300px;background:#00c2a8;bottom:-80px;left:-80px;animation-delay:-5s;}
+.shape:nth-child(3){width:250px;height:250px;background:#7c5cff;top:40%;left:10%;animation-delay:-10s;}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1);}
+  25%{transform:translate(60px,-40px) scale(1.15);}
+  50%{transform:translate(-40px,60px) scale(.9);}
+  75%{transform:translate(30px,30px) scale(1.08);}
+}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
+
+.dash-header{background:rgba(11,18,32,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;box-shadow:0 8px 20px rgba(0,194,168,.3);}
+.back-btn{padding:10px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#e8eef7;text-decoration:none;font-size:14px;font-weight:600;transition:.3s;display:flex;align-items:center;gap:8px;}
+.back-btn:hover{background:rgba(0,194,168,.15);border-color:rgba(0,194,168,.4);transform:translateX(-3px);}
+
+.wrap{max-width:1100px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
+
+.welcome{background:linear-gradient(145deg,rgba(0,194,168,.12),rgba(10,110,189,.12));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px;margin-bottom:30px;display:flex;align-items:center;gap:25px;position:relative;overflow:hidden;}
+.welcome::before{content:'';position:absolute;top:-80px;left:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(0,194,168,.25),transparent 70%);pointer-events:none;}
+.welcome-avatar{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:#fff;box-shadow:0 15px 35px rgba(0,194,168,.4);flex-shrink:0;position:relative;z-index:1;}
+.welcome-text{position:relative;z-index:1;flex:1;}
+.welcome-text h1{font-size:26px;font-weight:900;margin-bottom:8px;letter-spacing:-.5px;}
+.welcome-text h1 span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.welcome-text p{color:#a8b5c8;font-size:14px;font-weight:300;line-height:1.7;}
+
+.grid-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:35px;}
+.stat-card{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;position:relative;overflow:hidden;transition:.4s;}
+.stat-card:hover{transform:translateY(-5px);border-color:rgba(0,194,168,.35);}
+.stat-card .ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.stat-card .num{font-size:28px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px;}
+.stat-card .lbl{font-size:13px;color:#7a8899;font-weight:500;}
+
+.section{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:30px;margin-bottom:25px;}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
+.section-head h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;}
+.section-head h2::before{content:'';width:4px;height:22px;background:linear-gradient(180deg,#00c2a8,#0a6ebd);border-radius:4px;}
+.section-head .action{font-size:13px;color:#00c2a8;font-weight:700;text-decoration:none;padding:8px 16px;border:1px solid rgba(0,194,168,.3);border-radius:10px;transition:.3s;cursor:pointer;background:transparent;font-family:inherit;}
+.section-head .action:hover{background:rgba(0,194,168,.15);}
+
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.info-item{padding:16px 20px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.05);}
+.info-item .k{font-size:12px;color:#7a8899;margin-bottom:6px;font-weight:500;}
+.info-item .v{font-size:15px;color:#e8eef7;font-weight:600;word-break:break-all;}
+
+table{width:100%;border-collapse:collapse;margin-top:6px;}
+th,td{padding:14px 12px;text-align:right;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);}
+th{background:rgba(0,194,168,.08);color:#00c2a8;font-weight:700;font-size:12.5px;letter-spacing:.3px;border-radius:0;}
+tr:hover{background:rgba(255,255,255,.03);}
+.del{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;transition:.3s;}
+.del:hover{background:rgba(231,76,60,.3);}
+
+.empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
+.empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
+
+.book-again{display:inline-block;padding:13px 28px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;text-decoration:none;border-radius:14px;font-size:14.5px;font-weight:700;box-shadow:0 10px 30px rgba(10,110,189,.35);transition:.3s;}
+.book-again:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(10,110,189,.5);}
+
+.logout-area{text-align:center;margin-top:35px;}
+.logout-area button{padding:14px 36px;background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);border-radius:14px;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;transition:.3s;}
+.logout-area button:hover{background:rgba(231,76,60,.3);transform:translateY(-2px);}
+
+@media(max-width:768px){
+  .dash-header{padding:14px 20px;}
+  .logo{font-size:17px;}
+  .logo-mark{width:32px;height:32px;font-size:15px;}
+  .back-btn{padding:8px 14px;font-size:13px;}
+  .wrap{padding:25px 18px 60px;}
+  .welcome{flex-direction:column;text-align:center;padding:30px 22px;gap:18px;}
+  .welcome-avatar{width:70px;height:70px;font-size:28px;}
+  .welcome-text h1{font-size:20px;}
+  .info-row{grid-template-columns:1fr;}
+  .section{padding:22px 18px;}
+  th,td{padding:10px 8px;font-size:12px;}
+  .stat-card .num{font-size:24px;}
+}
+</style>
+</head>
+<body>
+
+<div id="bg">
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<header class="dash-header">
+  <a href="index.html" class="logo"><div class="logo-mark">🦷</div> مجموعه پناه</a>
+  <a href="index.html" class="back-btn">← بازگشت به سایت</a>
+</header>
+
+<div class="wrap">
+
+  <div class="welcome">
+    <div class="welcome-avatar" id="avatar">؟</div>
+    <div class="welcome-text">
+      <h1>سلام <span id="greetName">کاربر</span>! خوش آمدی 👋</h1>
+      <p>اینجا می‌تونی نوبت‌های خودت رو مدیریت کنی، اطلاعات حسابت رو ببینی و نوبت جدید رزرو کنی.</p>
+    </div>
+  </div>
+
+  <div class="grid-stats">
+    <div class="stat-card">
+      <div class="ic">📅</div>
+      <div class="num" id="statTotal">۰</div>
+      <div class="lbl">کل نوبت‌ها</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">✅</div>
+      <div class="num" id="statUpcoming">۰</div>
+      <div class="lbl">نوبت‌های فعال</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">🦷</div>
+      <div class="num" id="statServices">۰</div>
+      <div class="lbl">خدمت استفاده‌شده</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">🏢</div>
+      <div class="num" id="statBranches">۰</div>
+      <div class="lbl">شعبه‌های مراجعه</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>اطلاعات حساب</h2>
+    </div>
+    <div class="info-row">
+      <div class="info-item"><div class="k">نام و نام خانوادگی</div><div class="v" id="infoName">—</div></div>
+      <div class="info-item"><div class="k">شماره تلفن</div><div class="v" id="infoPhone">—</div></div>
+      <div class="info-item"><div class="k">ایمیل</div><div class="v" id="infoEmail">—</div></div>
+      <div class="info-item"><div class="k">وضعیت حساب</div><div class="v" style="color:#00c2a8;">فعال ✓</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>نوبت‌های من</h2>
+      <a href="index.html#booking" class="action">+ رزرو نوبت جدید</a>
+    </div>
+    <div id="appointmentsBox"></div>
+  </div>
+
+  <div class="logout-area">
+    <button onclick="logout()">خروج از حساب</button>
+  </div>
+
+</div>
+
+<script>
+/* ===== DATA ===== */
+const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
+const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
+const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
+
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded',()=>{
+  const cur = getCurrent();
+  if(!cur){ window.location.href = 'index.html'; return; }
+  renderUser(cur);
+  renderAppointments(cur);
+  renderStats(cur);
+});
+
+function renderUser(user){
+  const firstName = user.name.trim().split(/\s+/)[0];
+  document.getElementById('avatar').textContent = firstName.charAt(0);
+  document.getElementById('greetName').textContent = firstName;
+  document.getElementById('infoName').textContent = user.name;
+  document.getElementById('infoPhone').textContent = user.phone;
+  document.getElementById('infoEmail').textContent = user.email || '—';
+}
+
+function renderStats(user){
+  const all = getData();
+  const mine = all.filter(a => a.user === user.phone);
+  const today = new Date().toISOString().split('T')[0];
+  const upcoming = mine.filter(a => a.date >= today);
+  const services = new Set(mine.map(a=>a.service));
+  const branches = new Set(mine.map(a=>a.branch));
+  
+  document.getElementById('statTotal').textContent = toFa(mine.length);
+  document.getElementById('statUpcoming').textContent = toFa(upcoming.length);
+  document.getElementById('statServices').textContent = toFa(services.size);
+  document.getElementById('statBranches').textContent = toFa(branches.size);
+}
+
+function toFa(n){
+  const fa = '۰۱۲۳۴۵۶۷۸۹';
+  return String(n).replace(/\d/g, d=>fa[d]);
+}
+
+function renderAppointments(user){
+  const box = document.getElementById('appointmentsBox');
+  const mine = getData().filter(a => a.user === user.phone);
+  
+  if(!mine.length){
+    box.innerHTML = `
+      <div class="empty">
+        <div class="big">📭</div>
+        <p>هنوز نوبتی رزرو نکرده‌اید</p>
+        <a href="index.html#booking" class="book-again" style="margin-top:20px;display:inline-block;">رزرو اولین نوبت</a>
+      </div>
+    `;
+    return;
+  }
+  
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <thead>
+      <tr><th>خدمت</th><th>شعبه</th><th>تاریخ</th><th>ساعت</th><th>عملیات</th></tr>
+    </thead>
+  `;
+  const tbody = document.createElement('tbody');
+  mine.slice().reverse().forEach(a=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${a.service}</td>
+      <td>${a.branch}</td>
+      <td>${a.date}</td>
+      <td>${a.time}</td>
+      <td><button class="del" onclick="delAppt(${a.id})">لغو</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  box.innerHTML = '';
+  box.appendChild(table);
+}
+
+function delAppt(id){
+  if(!confirm('از لغو این نوبت مطمئن هستید؟')) return;
+  let data = getData();
+  data = data.filter(a => a.id !== id);
+  setData(data);
+  const cur = getCurrent();
+  renderAppointments(cur);
+  renderStats(cur);
+}
+
+function logout(){
+  if(!confirm('از حساب خود خارج می‌شوید؟')) return;
+  localStorage.removeItem('panaah_current');
+  window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>
