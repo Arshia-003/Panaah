@@ -39,6 +39,7 @@ nav a:hover::after{width:100%;}
 .user-btn{display:flex;align-items:center;gap:10px;padding:10px 18px;background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:50px;cursor:pointer;transition:.3s;font-family:inherit;color:#e8eef7;font-size:14px;font-weight:600;}
 .user-btn:hover{background:rgba(0,194,168,.2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,194,168,.2);}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
+.user-avatar.admin{background:linear-gradient(135deg,#7c5cff,#0a6ebd);}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
@@ -166,18 +167,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .form-group input{padding:9px 13px;font-size:13.5px;}
   .modal .btn-primary{padding:11px;font-size:14px;margin-top:4px;}
   .switch-auth{margin-top:10px;font-size:12px;padding-top:10px;}
-  .err-msg{font-size:11px;margin-top:3px;}
-}
-@media(max-height:600px){
-  .modal{padding:16px 28px 14px;}
-  .modal-logo{width:36px;height:36px;font-size:17px;margin-bottom:6px;}
-  .modal h2{font-size:15px;margin-bottom:3px;}
-  .modal .sub{font-size:10.5px;margin-bottom:9px;}
-  .modal .form-group{margin-bottom:6px;}
-  .modal .form-group label{font-size:11px;margin-bottom:3px;}
-  .modal .form-group input{padding:8px 12px;font-size:13px;}
-  .modal .btn-primary{padding:10px;font-size:13px;margin-top:3px;}
-  .switch-auth{margin-top:8px;font-size:11.5px;padding-top:8px;}
 }
 </style>
 </head>
@@ -192,33 +181,28 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <div class="grid-overlay"></div>
 </div>
 
-<!-- ===== AUTH MODAL ===== -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
     <div class="modal-logo">🦷</div>
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <!-- REGISTER FIELDS -->
     <div id="registerFields">
       <div class="form-group">
         <label>نام و نام خانوادگی</label>
         <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
         <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
       </div>
-      
       <div class="form-group">
         <label>شماره تلفن همراه</label>
         <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
         <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
       </div>
-      
       <div class="form-group">
         <label>ایمیل <span class="optional">(اختیاری)</span></label>
         <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
         <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
       </div>
-      
       <div class="form-group">
         <label>رمز عبور</label>
         <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
@@ -226,7 +210,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
       </div>
     </div>
     
-    <!-- LOGIN FIELDS -->
     <div id="loginFields" class="hidden">
       <div class="form-group">
         <label>نام و نام خانوادگی یا شماره همراه</label>
@@ -301,30 +284,9 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <p class="section-sub">سه شعبه مجهز در نقاط مختلف تهران</p>
   </div>
   <div class="branches">
-    <div class="branch-card reveal">
-      <h3>شعبه مرکزی</h3>
-      <div class="branch-info">
-        <b>آدرس:</b> تهران، خیابان ولیعصر، پلاک ۱۲۳<br>
-        <b>تلفن:</b> ۰۲۱-۱۲۳۴۵۶۷۸<br>
-        <b>ساعات:</b> ۹ صبح تا ۹ شب
-      </div>
-    </div>
-    <div class="branch-card reveal">
-      <h3>شعبه شمال</h3>
-      <div class="branch-info">
-        <b>آدرس:</b> تهران، سعادت‌آباد، پلاک ۴۵<br>
-        <b>تلفن:</b> ۰۲۱-۸۷۶۵۴۳۲۱<br>
-        <b>ساعات:</b> ۱۰ صبح تا ۸ شب
-      </div>
-    </div>
-    <div class="branch-card reveal">
-      <h3>شعبه غرب</h3>
-      <div class="branch-info">
-        <b>آدرس:</b> تهران، شهرک غرب، پلاک ۷۸<br>
-        <b>تلفن:</b> ۰۲۱-۵۵۵۵۵۵۵۵<br>
-        <b>ساعات:</b> ۹ صبح تا ۷ شب
-      </div>
-    </div>
+    <div class="branch-card reveal"><h3>شعبه مرکزی</h3><div class="branch-info"><b>آدرس:</b> تهران، خیابان ولیعصر، پلاک ۱۲۳<br><b>تلفن:</b> ۰۲۱-۱۲۳۴۵۶۷۸<br><b>ساعات:</b> ۹ صبح تا ۹ شب</div></div>
+    <div class="branch-card reveal"><h3>شعبه شمال</h3><div class="branch-info"><b>آدرس:</b> تهران، سعادت‌آباد، پلاک ۴۵<br><b>تلفن:</b> ۰۲۱-۸۷۶۵۴۳۲۱<br><b>ساعات:</b> ۱۰ صبح تا ۸ شب</div></div>
+    <div class="branch-card reveal"><h3>شعبه غرب</h3><div class="branch-info"><b>آدرس:</b> تهران، شهرک غرب، پلاک ۷۸<br><b>تلفن:</b> ۰۲۱-۵۵۵۵۵۵۵۵<br><b>ساعات:</b> ۹ صبح تا ۷ شب</div></div>
   </div>
 </div>
 
@@ -342,34 +304,26 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
-/* ===== LOCK/UNLOCK BODY ===== */
-function lockBody(){
-  document.documentElement.classList.add('locked');
-  document.body.classList.add('locked');
-}
-function unlockBody(){
-  document.documentElement.classList.remove('locked');
-  document.body.classList.remove('locked');
-}
+function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
+function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
-/* ===== HEADER SCROLL ===== */
 window.addEventListener('scroll',()=>{
   document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
 });
 
-/* ===== SCROLL REVEAL ===== */
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
 },{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ===== DATA HELPERS ===== */
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
-/* ===== AUTH MODE ===== */
+const ADMIN_USERNAME = 'sherkat';
+const ADMIN_PASSWORD = '09126481838';
+
 let authMode = 'register';
 
 function switchMode(mode){
@@ -401,7 +355,6 @@ function switchMode(mode){
   }
 }
 
-/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(cur){
@@ -414,48 +367,32 @@ window.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('registerModal').classList.remove('hide');
     switchMode('register');
   }
-  
   document.getElementById('userBtn').addEventListener('click', goToDashboard);
 });
 
-function openAuth(){
-  document.getElementById('registerModal').classList.remove('hide');
-  lockBody();
-}
-function closeAuth(){
-  document.getElementById('registerModal').classList.add('hide');
-  unlockBody();
-}
+function openAuth(){ document.getElementById('registerModal').classList.remove('hide'); lockBody(); }
+function closeAuth(){ document.getElementById('registerModal').classList.add('hide'); unlockBody(); }
 
-/* ===== VALIDATION ===== */
 function toEnglishDigits(str){
   const fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
-  return str.replace(/[۰-۹]/g,d=>fa.indexOf(d))
-            .replace(/[٠-٩]/g,d=>ar.indexOf(d));
+  return str.replace(/[۰-۹]/g,d=>fa.indexOf(d)).replace(/[٠-٩]/g,d=>ar.indexOf(d));
 }
 function validName(n){
   n = n.trim();
   return n.length >= 3 && /^[\u0600-\u06FF\sA-Za-z]+$/.test(n) && n.split(/\s+/).length >= 2;
 }
-function validPhone(p){
-  p = toEnglishDigits(p.trim());
-  return /^09\d{9}$/.test(p);
-}
+function validPhone(p){ p = toEnglishDigits(p.trim()); return /^09\d{9}$/.test(p); }
 function validEmail(e){
   if(!e.trim()) return true;
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
-function validPass(p){
-  return p.length >= 6;
-}
+function validPass(p){ return p.length >= 6; }
 
-/* ===== SUBMIT AUTH ===== */
 function submitAuth(){
   if(authMode === 'register') doRegister();
   else doLogin();
 }
 
-/* ===== REGISTER ===== */
 function doRegister(){
   const nameEl = document.getElementById('regName');
   const phoneEl = document.getElementById('regPhone');
@@ -470,27 +407,10 @@ function doRegister(){
   [nameEl,phoneEl,emailEl,passEl].forEach(e=>e.classList.remove('error'));
   
   let ok = true;
-  
-  if(!validName(nameEl.value)){
-    errName.classList.add('show');
-    nameEl.classList.add('error');
-    ok = false;
-  }
-  if(!validPhone(phoneEl.value)){
-    errPhone.classList.add('show');
-    phoneEl.classList.add('error');
-    ok = false;
-  }
-  if(!validEmail(emailEl.value)){
-    errEmail.classList.add('show');
-    emailEl.classList.add('error');
-    ok = false;
-  }
-  if(!validPass(passEl.value)){
-    errPass.classList.add('show');
-    passEl.classList.add('error');
-    ok = false;
-  }
+  if(!validName(nameEl.value)){ errName.classList.add('show'); nameEl.classList.add('error'); ok = false; }
+  if(!validPhone(phoneEl.value)){ errPhone.classList.add('show'); phoneEl.classList.add('error'); ok = false; }
+  if(!validEmail(emailEl.value)){ errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
+  if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
   const user = {
@@ -499,13 +419,18 @@ function doRegister(){
     phone: toEnglishDigits(phoneEl.value.trim()),
     email: emailEl.value.trim(),
     password: passEl.value,
-    address: ''
+    address: '',
+    role: 'user',
+    joinedAt: new Date().toISOString()
   };
   
   const users = getUsers();
   const existing = users.find(u=>u.phone===user.phone);
   if(existing){
     user.address = existing.address || '';
+    user.role = existing.role || 'user';
+    user.joinedAt = existing.joinedAt || user.joinedAt;
+    user.id = existing.id;
     Object.assign(existing, user);
     setUsers(users);
     setCurrent(existing);
@@ -519,7 +444,6 @@ function doRegister(){
   closeAuth();
 }
 
-/* ===== LOGIN ===== */
 function doLogin(){
   const inputEl = document.getElementById('loginInput');
   const passEl = document.getElementById('loginPass');
@@ -532,29 +456,51 @@ function doLogin(){
   let ok = true;
   const raw = inputEl.value.trim();
   
-  if(!raw){
-    errInput.classList.add('show');
-    errInput.textContent = 'نام یا شماره همراه را وارد کنید';
-    inputEl.classList.add('error');
-    ok = false;
-  }
-  if(!passEl.value){
-    errPass.classList.add('show');
-    errPass.textContent = 'رمز عبور را وارد کنید';
-    passEl.classList.add('error');
-    ok = false;
-  }
+  if(!raw){ errInput.classList.add('show'); errInput.textContent = 'نام یا شماره همراه را وارد کنید'; inputEl.classList.add('error'); ok = false; }
+  if(!passEl.value){ errPass.classList.add('show'); errPass.textContent = 'رمز عبور را وارد کنید'; passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
+  // چک ادمین
+  if(raw.toLowerCase() === ADMIN_USERNAME && passEl.value === ADMIN_PASSWORD){
+    const adminUser = {
+      id: 'admin',
+      name: 'شرکت',
+      username: ADMIN_USERNAME,
+      phone: '',
+      email: '',
+      address: '',
+      password: ADMIN_PASSWORD,
+      role: 'admin',
+      joinedAt: new Date().toISOString()
+    };
+    // اگه قبلاً ذخیره شده بود، نگهش دار
+    const users = getUsers();
+    const existing = users.find(u=>u.username === ADMIN_USERNAME);
+    if(existing){
+      existing.role = 'admin';
+      existing.password = ADMIN_PASSWORD;
+      setUsers(users);
+      setCurrent(existing);
+    } else {
+      users.push(adminUser);
+      setUsers(users);
+      setCurrent(adminUser);
+    }
+    showUser(getCurrent());
+    closeAuth();
+    setTimeout(()=>{ window.location.href = 'admin.html'; }, 300);
+    return;
+  }
+  
+  // چک کاربرهای عادی
   const users = getUsers();
   let found = null;
-  
   const digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
-    found = users.find(u=>u.phone === digits);
+    found = users.find(u=>u.phone === digits && u.role !== 'admin');
   } else {
     const nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
-    found = users.find(u=>u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm);
+    found = users.find(u=>u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm && u.role !== 'admin');
   }
   
   if(!found){
@@ -576,28 +522,33 @@ function doLogin(){
   closeAuth();
 }
 
-/* ===== PHONE INPUT FORMATTING ===== */
 document.getElementById('regPhone').addEventListener('input',function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
 
-/* ===== SHOW USER ===== */
 function showUser(user){
   const btn = document.getElementById('userBtn');
   const avatar = document.getElementById('userAvatar');
   const uname = document.getElementById('userName');
   
-  const firstName = user.name.trim().split(/\s+/)[0];
-  
   btn.classList.remove('hidden');
-  avatar.textContent = firstName.charAt(0);
-  uname.textContent = firstName;
+  
+  if(user.role === 'admin'){
+    avatar.textContent = '⚙';
+    avatar.classList.add('admin');
+    uname.textContent = 'پنل مدیریت';
+  } else {
+    const firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
+    avatar.textContent = firstName.charAt(0);
+    avatar.classList.remove('admin');
+    uname.textContent = firstName;
+  }
 }
 
-/* ===== GO TO DASHBOARD ===== */
 function goToDashboard(){
   const cur = getCurrent();
   if(!cur){ openAuth(); return; }
+  if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
   window.location.href = 'dashboard.html';
 }
 </script>
