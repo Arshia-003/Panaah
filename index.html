@@ -125,6 +125,8 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 .reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.9,.3,1);}
 .reveal.show{opacity:1;transform:translateY(0);}
 
+.hidden{display:none!important;}
+
 ::-webkit-scrollbar{width:10px;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00c2a8,#0a6ebd);border-radius:10px;}
 ::-webkit-scrollbar-track{background:#0b1220;}
@@ -190,12 +192,14 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <div class="grid-overlay"></div>
 </div>
 
+<!-- ===== AUTH MODAL ===== -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
     <div class="modal-logo">🦷</div>
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
+    <!-- REGISTER FIELDS -->
     <div id="registerFields">
       <div class="form-group">
         <label>نام و نام خانوادگی</label>
@@ -222,11 +226,12 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
       </div>
     </div>
     
+    <!-- LOGIN FIELDS -->
     <div id="loginFields" class="hidden">
       <div class="form-group">
-        <label>شماره تلفن همراه</label>
-        <input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
-        <div class="err-msg" id="errLoginPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+        <label>نام و نام خانوادگی یا شماره همراه</label>
+        <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
+        <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
       </div>
       <div class="form-group">
         <label>رمز عبور</label>
@@ -337,6 +342,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
+/* ===== LOCK/UNLOCK BODY ===== */
 function lockBody(){
   document.documentElement.classList.add('locked');
   document.body.classList.add('locked');
@@ -346,20 +352,24 @@ function unlockBody(){
   document.body.classList.remove('locked');
 }
 
+/* ===== HEADER SCROLL ===== */
 window.addEventListener('scroll',()=>{
   document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
 });
 
+/* ===== SCROLL REVEAL ===== */
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
 },{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+/* ===== DATA HELPERS ===== */
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
+/* ===== AUTH MODE ===== */
 let authMode = 'register';
 
 function switchMode(mode){
@@ -378,7 +388,7 @@ function switchMode(mode){
     regF.classList.add('hidden');
     logF.classList.remove('hidden');
     title.innerHTML = 'ورود به <span>مجموعه پناه</span>';
-    sub.textContent = 'شماره تلفن و رمز عبور خود را وارد کنید';
+    sub.textContent = 'با نام یا شماره همراه و رمز عبور وارد شوید';
     btn.textContent = 'ورود به حساب';
     sw.innerHTML = 'حساب ندارید؟ <a onclick="switchMode(\'register\')">ثبت‌نام کنید</a>';
   } else {
@@ -391,6 +401,7 @@ function switchMode(mode){
   }
 }
 
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(cur){
@@ -416,6 +427,7 @@ function closeAuth(){
   unlockBody();
 }
 
+/* ===== VALIDATION ===== */
 function toEnglishDigits(str){
   const fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
   return str.replace(/[۰-۹]/g,d=>fa.indexOf(d))
@@ -437,11 +449,13 @@ function validPass(p){
   return p.length >= 6;
 }
 
+/* ===== SUBMIT AUTH ===== */
 function submitAuth(){
   if(authMode === 'register') doRegister();
   else doLogin();
 }
 
+/* ===== REGISTER ===== */
 function doRegister(){
   const nameEl = document.getElementById('regName');
   const phoneEl = document.getElementById('regPhone');
@@ -491,7 +505,8 @@ function doRegister(){
   const users = getUsers();
   const existing = users.find(u=>u.phone===user.phone);
   if(existing){
-    Object.assign(existing, user, {address: existing.address || ''});
+    user.address = existing.address || '';
+    Object.assign(existing, user);
     setUsers(users);
     setCurrent(existing);
   } else {
@@ -504,21 +519,23 @@ function doRegister(){
   closeAuth();
 }
 
+/* ===== LOGIN ===== */
 function doLogin(){
-  const phoneEl = document.getElementById('loginPhone');
+  const inputEl = document.getElementById('loginInput');
   const passEl = document.getElementById('loginPass');
-  const errPhone = document.getElementById('errLoginPhone');
+  const errInput = document.getElementById('errLoginInput');
   const errPass = document.getElementById('errLoginPass');
   
-  [errPhone,errPass].forEach(e=>e.classList.remove('show'));
-  [phoneEl,passEl].forEach(e=>e.classList.remove('error'));
+  [errInput,errPass].forEach(e=>e.classList.remove('show'));
+  [inputEl,passEl].forEach(e=>e.classList.remove('error'));
   
   let ok = true;
+  const raw = inputEl.value.trim();
   
-  if(!validPhone(phoneEl.value)){
-    errPhone.classList.add('show');
-    errPhone.textContent = 'شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد';
-    phoneEl.classList.add('error');
+  if(!raw){
+    errInput.classList.add('show');
+    errInput.textContent = 'نام یا شماره همراه را وارد کنید';
+    inputEl.classList.add('error');
     ok = false;
   }
   if(!passEl.value){
@@ -529,14 +546,21 @@ function doLogin(){
   }
   if(!ok) return;
   
-  const phone = toEnglishDigits(phoneEl.value.trim());
   const users = getUsers();
-  const found = users.find(u=>u.phone===phone);
+  let found = null;
+  
+  const digits = toEnglishDigits(raw).replace(/\D/g,'');
+  if(/^09\d{9}$/.test(digits)){
+    found = users.find(u=>u.phone === digits);
+  } else {
+    const nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
+    found = users.find(u=>u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm);
+  }
   
   if(!found){
-    errPhone.classList.add('show');
-    errPhone.textContent = 'حسابی با این شماره پیدا نشد. لطفاً ثبت‌نام کنید.';
-    phoneEl.classList.add('error');
+    errInput.classList.add('show');
+    errInput.textContent = 'حسابی با این اطلاعات پیدا نشد';
+    inputEl.classList.add('error');
     return;
   }
   
@@ -552,13 +576,12 @@ function doLogin(){
   closeAuth();
 }
 
+/* ===== PHONE INPUT FORMATTING ===== */
 document.getElementById('regPhone').addEventListener('input',function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
-document.getElementById('loginPhone').addEventListener('input',function(){
-  this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
-});
 
+/* ===== SHOW USER ===== */
 function showUser(user){
   const btn = document.getElementById('userBtn');
   const avatar = document.getElementById('userAvatar');
@@ -571,6 +594,7 @@ function showUser(user){
   uname.textContent = firstName;
 }
 
+/* ===== GO TO DASHBOARD ===== */
 function goToDashboard(){
   const cur = getCurrent();
   if(!cur){ openAuth(); return; }
