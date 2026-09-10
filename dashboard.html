@@ -70,10 +70,8 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .edit-err{color:#ff6b5b;font-size:11.5px;margin-top:6px;display:none;font-weight:500;}
 .edit-err.show{display:block;}
 
-/* ===== FORM ===== */
 .new-appt-form{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:26px;}
 .new-appt-form .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:end;margin-bottom:16px;}
-.new-appt-form .row.two{grid-template-columns:1fr 1fr;}
 .new-appt-form .row.full{grid-template-columns:1fr;}
 .new-appt-form label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:8px;}
 .new-appt-form input,.new-appt-form select{width:100%;padding:13px 16px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s cubic-bezier(.2,.9,.3,1);outline:none;}
@@ -81,7 +79,6 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .new-appt-form input:focus,.new-appt-form select:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .new-appt-form select option{background:#0b1220;color:#e8eef7;}
 
-/* ===== CUSTOM SELECT WITH ICON ===== */
 .select-wrap{position:relative;}
 .select-wrap select{padding-right:46px;appearance:none;-webkit-appearance:none;cursor:pointer;}
 .select-wrap .select-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;opacity:.8;transition:.3s;}
@@ -97,7 +94,6 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .date-picker-btn .ico{color:#00c2a8;font-size:16px;transition:.3s;}
 .date-picker-btn:hover .ico{transform:scale(1.15) rotate(-5deg);}
 
-/* ===== PAY OPTIONS ===== */
 .pay-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .pay-opt{padding:18px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:16px;cursor:pointer;transition:.35s cubic-bezier(.2,.9,.3,1);text-align:center;font-family:inherit;color:#e8eef7;position:relative;overflow:hidden;}
 .pay-opt::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,194,168,.15),rgba(10,110,189,.15));opacity:0;transition:.35s;border-radius:14px;}
@@ -110,7 +106,6 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .pay-opt.selected .ttl{color:#00c2a8;}
 .pay-opt.selected .desc{color:#a8b5c8;}
 
-/* ===== PAY DETAIL (SMOOTH ANIMATION) ===== */
 .pay-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.2,.9,.3,1),opacity .35s ease,margin .35s ease,padding .35s ease;margin-top:0;padding:0 20px;background:rgba(0,194,168,.06);border:1px solid transparent;border-radius:16px;}
 .pay-detail.show{max-height:900px;opacity:1;margin-top:16px;padding:22px 20px;border-color:rgba(0,194,168,.2);}
 
@@ -162,7 +157,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
 
-/* ===== DATE MODAL ===== */
 .date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
 .date-modal-overlay.hide{opacity:0;pointer-events:none;}
 .date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:460px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;overflow:hidden;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);}
@@ -185,8 +179,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 .cal-day.disabled{color:#3a4454;background:rgba(255,255,255,.02);cursor:not-allowed;}
 .cal-day.today{border-color:rgba(0,194,168,.4);color:#00c2a8;font-weight:800;}
 .cal-day.selected{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;font-weight:800;box-shadow:0 6px 18px rgba(0,194,168,.4);transform:scale(1.05);}
-
-/* حالت بازه */
 .cal-day.in-range{background:rgba(0,194,168,.18);border-color:rgba(0,194,168,.25);color:#00c2a8;}
 .cal-day.range-start{border-top-right-radius:14px;border-bottom-right-radius:14px;}
 .cal-day.range-end{border-top-left-radius:14px;border-bottom-left-radius:14px;}
@@ -219,7 +211,7 @@ tr:hover{background:rgba(255,255,255,.03);}
   .section{padding:22px 18px;}
   th,td{padding:10px 8px;font-size:12px;}
   .stat-card .num{font-size:24px;}
-  .new-appt-form .row,.new-appt-form .row.two{grid-template-columns:1fr;}
+  .new-appt-form .row{grid-template-columns:1fr;}
   .pay-options{grid-template-columns:1fr;}
   .table-wrap{overflow-x:auto;}
   .date-modal{padding:22px 18px;}
@@ -508,19 +500,20 @@ function jalaliMonthName(jm){
 }
 function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, d=>fa[d]); }
 function formatPrice(n){ return toFa(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',')); }
-
 function jalaliToNum(j){ return j.jy * 10000 + j.jm * 100 + j.jd; }
 
 /* ===== STATE ===== */
-let rangeStart = null;      // {jy, jm, jd}
-let rangeEnd = null;        // {jy, jm, jd}
+let rangeStart = null;
+let rangeEnd = null;
 let calendarView = null;
 let selectedPay = null;
 let selectedInstallments = null;
 
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(!cur){ window.location.href = 'index.html'; return; }
+  if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
   renderUser(cur);
   renderStats(cur);
   renderAppointments(cur);
@@ -530,11 +523,11 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 
 function renderUser(user){
-  const firstName = user.name.trim().split(/\s+/)[0];
+  const firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
   document.getElementById('avatar').textContent = firstName.charAt(0);
   document.getElementById('greetName').textContent = firstName;
-  document.getElementById('infoName').textContent = user.name;
-  document.getElementById('infoPhone').textContent = user.phone;
+  document.getElementById('infoName').textContent = user.name || '—';
+  document.getElementById('infoPhone').textContent = user.phone || '—';
   const emailEl = document.getElementById('infoEmail');
   if(user.email){ emailEl.textContent = user.email; emailEl.classList.remove('empty-val'); }
   else { emailEl.textContent = 'ثبت نشده — برای افزودن کلیک کنید'; emailEl.classList.add('empty-val'); }
@@ -649,7 +642,6 @@ function selectPay(payType){
     updateInstCalc();
   }
 }
-
 function updateCashCalc(){
   const service = document.getElementById('newService').value;
   if(!service){
@@ -665,7 +657,6 @@ function updateCashCalc(){
   document.getElementById('cashDiscount').textContent = '−' + formatPrice(discount) + ' تومان';
   document.getElementById('cashFinal').textContent = formatPrice(final) + ' تومان';
 }
-
 function selectInstallments(n){
   selectedInstallments = n;
   document.querySelectorAll('.inst-opt').forEach(b=>{
@@ -673,7 +664,6 @@ function selectInstallments(n){
   });
   updateInstCalc();
 }
-
 function updateInstCalc(){
   const service = document.getElementById('newService').value;
   const box = document.getElementById('instCalcBox');
@@ -692,7 +682,7 @@ function updateInstCalc(){
   box.classList.add('show');
 }
 
-/* ===== DATE PICKER (RANGE) ===== */
+/* ===== DATE PICKER ===== */
 function openDatePicker(){
   document.getElementById('dateModal').classList.remove('hide');
   if(!calendarView){
@@ -711,7 +701,6 @@ function changeMonth(dir){
   calendarView = { jy, jm };
   renderCalendar();
 }
-
 function renderCalendar(){
   const { jy, jm } = calendarView;
   document.getElementById('calMonthTitle').textContent = `${jalaliMonthName(jm)} ${toFa(jy)}`;
@@ -729,24 +718,18 @@ function renderCalendar(){
   const monthLen = jalaliMonthLength(jy, jm);
   const today = new Date();
   const [tjy, tjm, tjd] = toJalali(today.getFullYear(), today.getMonth()+1, today.getDate());
-  
   for(let d = 1; d <= monthLen; d++){
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'cal-day';
     btn.textContent = toFa(d);
-    
     let isPast = false;
     if(jy < tjy) isPast = true;
     else if(jy === tjy && jm < tjm) isPast = true;
     else if(jy === tjy && jm === tjm && d < tjd) isPast = true;
-    
     if(isPast) btn.classList.add('disabled');
     if(jy === tjy && jm === tjm && d === tjd) btn.classList.add('today');
-    
     const cellNum = jy * 10000 + jm * 100 + d;
-    
-    // range highlight
     if(rangeStart && rangeEnd){
       const s = jalaliToNum(rangeStart);
       const e = jalaliToNum(rangeEnd);
@@ -756,43 +739,26 @@ function renderCalendar(){
         if(cellNum === e) btn.classList.add('range-end');
       }
     }
-    
-    // selected styles
-    if(rangeStart && jalaliToNum(rangeStart) === cellNum){
-      btn.classList.add('selected');
-    }
-    if(rangeEnd && jalaliToNum(rangeEnd) === cellNum){
-      btn.classList.add('selected');
-    }
-    
-    if(!isPast){
-      btn.onclick = ()=>handleDayClick(jy, jm, d);
-    }
-    
+    if(rangeStart && jalaliToNum(rangeStart) === cellNum) btn.classList.add('selected');
+    if(rangeEnd && jalaliToNum(rangeEnd) === cellNum) btn.classList.add('selected');
+    if(!isPast) btn.onclick = ()=>handleDayClick(jy, jm, d);
     grid.appendChild(btn);
   }
-  
   updateRangeInfo();
   document.getElementById('calOk').disabled = !rangeStart || !rangeEnd;
 }
-
 function handleDayClick(jy, jm, d){
   const clicked = { jy, jm, jd: d };
   const clickedNum = jalaliToNum(clicked);
-  
   if(!rangeStart || (rangeStart && rangeEnd)){
-    // شروع انتخاب جدید
     rangeStart = clicked;
     rangeEnd = null;
   } else {
-    // الان یه شروع داریم، پس پایان انتخاب می‌کنیم
     const startNum = jalaliToNum(rangeStart);
     if(clickedNum < startNum){
-      // اگه قبل شروع کلیک شد، جای شروع و پایان عوض می‌شه
       rangeEnd = rangeStart;
       rangeStart = clicked;
     } else if(clickedNum === startNum){
-      // همون روز دوباره → لغو انتخاب
       rangeStart = null;
       rangeEnd = null;
     } else {
@@ -801,7 +767,6 @@ function handleDayClick(jy, jm, d){
   }
   renderCalendar();
 }
-
 function updateRangeInfo(){
   const info = document.getElementById('rangeInfo');
   if(rangeStart && rangeEnd){
@@ -813,7 +778,6 @@ function updateRangeInfo(){
     info.textContent = 'یک روز را برای شروع و روز دیگر را برای پایان انتخاب کنید';
   }
 }
-
 function confirmDate(){
   if(!rangeStart || !rangeEnd) return;
   const txt = `${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} تا ${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}`;
@@ -830,14 +794,12 @@ function addAppointment(){
   const branch = document.getElementById('newBranch').value;
   const service = document.getElementById('newService').value;
   const msg = document.getElementById('formMsg');
-  
   if(!rangeStart || !rangeEnd){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً بازه زمانی را انتخاب کنید'; return; }
   if(!time){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً ساعت را انتخاب کنید'; return; }
   if(!branch){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً شعبه را انتخاب کنید'; return; }
   if(!service){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً خدمت مورد نظر را انتخاب کنید'; return; }
   if(!selectedPay){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً نوع پرداخت را انتخاب کنید'; return; }
   if(selectedPay === 'قسطی' && !selectedInstallments){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً تعداد اقساط را انتخاب کنید'; return; }
-  
   const price = SERVICE_PRICES[service];
   let total = price;
   let payInfo = '';
@@ -852,9 +814,7 @@ function addAppointment(){
     const perMonth = Math.round(total / selectedInstallments);
     payInfo = `${toFa(selectedInstallments)} قسط — هر قسط ${formatPrice(perMonth)} تومان`;
   }
-  
   const rangeText = `${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} تا ${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}`;
-  
   const data = getData();
   data.push({
     id: Date.now(),
@@ -873,11 +833,8 @@ function addAppointment(){
     status: 'pending'
   });
   setData(data);
-  
   msg.className = 'form-msg ok';
   msg.textContent = '✅ نوبت شما ثبت شد و در انتظار تایید است';
-  
-  // reset
   rangeStart = null; rangeEnd = null; selectedPay = null; selectedInstallments = null;
   document.getElementById('dateBtnText').textContent = 'انتخاب بازه';
   document.getElementById('dateBtnText').classList.add('ph');
@@ -890,13 +847,12 @@ function addAppointment(){
   document.getElementById('cashDetail').classList.remove('show');
   document.getElementById('installmentDetail').classList.remove('show');
   document.getElementById('instCalcBox').classList.remove('show');
-  
   renderStats(cur);
   renderAppointments(cur);
   setTimeout(()=>{ msg.className = 'form-msg'; }, 4000);
 }
 
-/* ===== APPOINTMENTS TABLE ===== */
+/* ===== APPOINTMENTS ===== */
 function renderAppointments(user){
   const box = document.getElementById('appointmentsBox');
   const mine = getData().filter(a => a.user === user.phone);
@@ -914,7 +870,7 @@ function renderAppointments(user){
   mine.slice().reverse().forEach(a=>{
     const status = a.status || 'pending';
     const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
-    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments || 0)} قسط)` : 'نقدی';
+    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments || 0)} قسط)` : (a.pay || '—');
     const rangeText = a.dateRange || a.date || '—';
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -932,7 +888,6 @@ function renderAppointments(user){
   box.innerHTML = '';
   box.appendChild(table);
 }
-
 function delAppt(id){
   if(!confirm('از لغو این نوبت مطمئن هستید؟')) return;
   let data = getData();
@@ -942,7 +897,6 @@ function delAppt(id){
   renderAppointments(cur);
   renderStats(cur);
 }
-
 function logout(){
   if(!confirm('از حساب خود خارج می‌شوید؟')) return;
   localStorage.removeItem('panaah_current');
