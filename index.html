@@ -111,35 +111,12 @@ nav a:hover::after{width:100%;}
 .branch-info{color:#a8b5c8;font-size:14px;line-height:2.2;font-weight:300;}
 .branch-info b{color:#00c2a8;font-weight:600;}
 
-.form-box{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:50px;max-width:680px;margin:0 auto;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.4);}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.form-group{margin-bottom:22px;}
-.form-group label{display:block;margin-bottom:10px;font-size:13px;font-weight:600;color:#a8b5c8;letter-spacing:.3px;}
-.form-group input,.form-group select{width:100%;padding:15px 18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:15px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
-.form-group input:focus,.form-group select:focus{border-color:#00c2a8;background:rgba(0,0,0,.4);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
-.form-group input::placeholder{color:#556070;}
-.form-group select option{background:#0b1220;color:#e8eef7;}
-.form-box .btn-primary{width:100%;padding:18px;font-size:16px;margin-top:10px;}
-.msg{margin-top:20px;padding:16px;border-radius:14px;text-align:center;font-size:14px;display:none;font-weight:600;}
-.msg.ok{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);display:block;}
-.msg.err{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);display:block;}
-
-.admin{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:40px;backdrop-filter:blur(20px);}
-.admin-login{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
-.admin-login input{flex:1;min-width:200px;padding:15px 18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:15px;color:#e8eef7;font-family:inherit;outline:none;transition:.3s;}
-.admin-login input:focus{border-color:#00c2a8;box-shadow:0 0 0 4px rgba(0,194,168,.15);}
-.admin-login button{padding:15px 30px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;}
-.admin-login button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(10,110,189,.4);}
-.table-wrap{margin-top:30px;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;}
-th,td{padding:16px 14px;text-align:right;font-size:14px;border-bottom:1px solid rgba(255,255,255,.06);}
-th{background:rgba(0,194,168,.08);color:#00c2a8;font-weight:700;font-size:13px;letter-spacing:.5px;}
-tr{transition:.3s;}
-tr:hover{background:rgba(255,255,255,.03);}
-.del{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);padding:8px 16px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:.3s;}
-.del:hover{background:rgba(231,76,60,.3);}
-.hidden{display:none;}
-.empty{text-align:center;color:#556070;padding:40px;font-size:14px;}
+.cta-section{background:linear-gradient(145deg,rgba(0,194,168,.12),rgba(10,110,189,.12));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;}
+.cta-section::before{content:'';position:absolute;top:-100px;right:-100px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,168,.25),transparent 70%);pointer-events:none;}
+.cta-section h3{font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:15px;position:relative;z-index:1;letter-spacing:-.5px;}
+.cta-section h3 span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.cta-section p{color:#a8b5c8;font-size:15px;margin-bottom:30px;position:relative;z-index:1;font-weight:300;line-height:1.9;}
+.cta-section button{position:relative;z-index:1;}
 
 footer{background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.06);padding:50px 30px 30px;text-align:center;position:relative;z-index:2;margin-top:60px;}
 .footer-logo{font-size:26px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:15px;display:flex;align-items:center;justify-content:center;gap:10px;}
@@ -159,11 +136,8 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   nav a{font-size:13px;}
   .logo{font-size:18px;}
   .logo-mark{width:32px;height:32px;font-size:15px;}
-  .form-row{grid-template-columns:1fr;}
-  .form-box{padding:30px 22px;}
   .stats{gap:35px;}
   .container{padding:70px 20px;}
-  .admin{padding:25px 20px;}
   .user-btn{padding:8px 14px;font-size:13px;}
   .user-btn .user-name{display:none;}
   .modal{padding:28px 24px 24px;max-width:100%;}
@@ -175,6 +149,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .form-group input{padding:11px 14px;font-size:14px;}
   .modal .btn-primary{padding:13px;font-size:14px;margin-top:6px;}
   .switch-auth{margin-top:14px;font-size:12.5px;padding-top:14px;}
+  .cta-section{padding:40px 25px;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
@@ -274,8 +249,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <a href="#home">خانه</a>
     <a href="#services">خدمات</a>
     <a href="#branches">شعبه‌ها</a>
-    <a href="#booking">نوبت‌دهی</a>
-    <a href="#admin">پنل منشی</a>
+    <a href="#cta">رزرو نوبت</a>
   </nav>
   <button class="user-btn hidden" id="userBtn">
     <div class="user-avatar" id="userAvatar">ع</div>
@@ -286,9 +260,9 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 <section class="hero" id="home">
   <div class="hero-badge"><span class="dot"></span> کلینیک تخصصی دندانپزشکی</div>
   <h2>لبخند سالم،<br><span>زندگی زیبا</span></h2>
-  <p>نوبت خود را آنلاین رزرو کنید. بدون تماس تلفنی، بدون انتظار. کافیست فرم را پر کنید و منتظر تایید بمانید.</p>
+  <p>نوبت خود را آنلاین رزرو کنید. بدون تماس تلفنی، بدون انتظار. کافیست وارد پنل کاربری خود شوید و نوبت بگیرید.</p>
   <div class="hero-btns">
-    <button class="btn btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">رزرو نوبت آنلاین</button>
+    <button class="btn btn-primary" onclick="goToDashboard()">رزرو نوبت آنلاین</button>
     <button class="btn btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">مشاهده خدمات</button>
   </div>
   <div class="stats">
@@ -349,92 +323,11 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   </div>
 </div>
 
-<div class="container" id="booking">
-  <div class="section-head reveal">
-    <div class="section-tag">نوبت‌دهی</div>
-    <h2 class="section-title">رزرو <span>آنلاین</span></h2>
-    <p class="section-sub">فرم زیر را پر کنید، منشی ما با شما تماس خواهد گرفت</p>
-  </div>
-  <div class="form-box reveal">
-    <div class="form-row">
-      <div class="form-group">
-        <label>نام و نام خانوادگی</label>
-        <input type="text" id="name" placeholder="علی رضایی">
-      </div>
-      <div class="form-group">
-        <label>شماره تماس</label>
-        <input type="tel" id="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>انتخاب شعبه</label>
-        <select id="branch">
-          <option value="">-- انتخاب کنید --</option>
-          <option>شعبه مرکزی</option>
-          <option>شعبه شمال</option>
-          <option>شعبه غرب</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>نوع خدمت</label>
-        <select id="service">
-          <option value="">-- انتخاب کنید --</option>
-          <option>ایمپلنت</option>
-          <option>ارتودنسی</option>
-          <option>جرم‌گیری</option>
-          <option>کامپوزیت</option>
-          <option>عصب‌کشی</option>
-          <option>کشیدن دندان</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>تاریخ</label>
-        <input type="date" id="date">
-      </div>
-      <div class="form-group">
-        <label>ساعت</label>
-        <select id="time">
-          <option value="">-- انتخاب کنید --</option>
-          <option>۰۹:۰۰</option>
-          <option>۱۰:۰۰</option>
-          <option>۱۱:۰۰</option>
-          <option>۱۲:۰۰</option>
-          <option>۱۴:۰۰</option>
-          <option>۱۵:۰۰</option>
-          <option>۱۶:۰۰</option>
-          <option>۱۷:۰۰</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn btn-primary" onclick="book()">ثبت نوبت</button>
-    <div class="msg" id="msg"></div>
-  </div>
-</div>
-
-<div class="container" id="admin">
-  <div class="section-head reveal">
-    <div class="section-tag">مدیریت</div>
-    <h2 class="section-title">پنل <span>منشی</span></h2>
-    <p class="section-sub">مدیریت نوبت‌های ثبت‌شده</p>
-  </div>
-  <div class="admin reveal">
-    <div class="admin-login">
-      <input type="password" id="pass" placeholder="رمز عبور را وارد کنید (1234)">
-      <button onclick="login()">ورود</button>
-    </div>
-    <div id="adminPanel" class="hidden">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>نام</th><th>تلفن</th><th>شعبه</th><th>خدمت</th><th>تاریخ</th><th>ساعت</th><th>عملیات</th></tr>
-          </thead>
-          <tbody id="list"></tbody>
-        </table>
-      </div>
-    </div>
+<div class="container" id="cta">
+  <div class="cta-section reveal">
+    <h3>آماده‌اید <span>لبخند جدیدتان</span> را شروع کنید؟</h3>
+    <p>وارد پنل کاربری خود شوید و در چند ثانیه نوبت خود را رزرو کنید. ساده، سریع، بدون تماس تلفنی.</p>
+    <button class="btn btn-primary" onclick="goToDashboard()">ورود به پنل و رزرو نوبت</button>
   </div>
 </div>
 
@@ -464,8 +357,6 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
-const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
-const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
@@ -593,21 +484,23 @@ function doRegister(){
     name: nameEl.value.trim(),
     phone: toEnglishDigits(phoneEl.value.trim()),
     email: emailEl.value.trim(),
-    password: passEl.value
+    password: passEl.value,
+    address: ''
   };
   
   const users = getUsers();
   const existing = users.find(u=>u.phone===user.phone);
   if(existing){
-    Object.assign(existing, user);
+    Object.assign(existing, user, {address: existing.address || ''});
     setUsers(users);
+    setCurrent(existing);
   } else {
     users.push(user);
     setUsers(users);
+    setCurrent(user);
   }
   
-  setCurrent(user);
-  showUser(user);
+  showUser(getCurrent());
   closeAuth();
 }
 
@@ -679,72 +572,9 @@ function showUser(user){
 }
 
 function goToDashboard(){
-  window.location.href = 'dashboard.html';
-}
-
-function book(){
   const cur = getCurrent();
   if(!cur){ openAuth(); return; }
-  
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const branch = document.getElementById('branch').value;
-  const service = document.getElementById('service').value;
-  const date = document.getElementById('date').value;
-  const time = document.getElementById('time').value;
-  const msg = document.getElementById('msg');
-
-  if(!name||!phone||!branch||!service||!date||!time){
-    msg.className='msg err';
-    msg.textContent='لطفاً همه فیلدها را پر کنید';
-    return;
-  }
-  const data = getData();
-  data.push({id:Date.now(),name,phone,branch,service,date,time,user:cur.phone});
-  setData(data);
-  msg.className='msg ok';
-  msg.textContent='✅ نوبت شما با موفقیت ثبت شد';
-  ['name','phone','branch','service','date','time'].forEach(id=>document.getElementById(id).value='');
-}
-
-function login(){
-  const pass = document.getElementById('pass').value;
-  if(pass === '1234'){
-    document.getElementById('adminPanel').classList.remove('hidden');
-    render();
-  } else {
-    alert('رمز اشتباه است');
-  }
-}
-
-function render(){
-  const data = getData();
-  const list = document.getElementById('list');
-  list.innerHTML = '';
-  if(!data.length){
-    list.innerHTML='<tr><td colspan="7" class="empty">هیچ نوبتی ثبت نشده است</td></tr>';
-    return;
-  }
-  data.forEach(a=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${a.name}</td>
-      <td>${a.phone}</td>
-      <td>${a.branch}</td>
-      <td>${a.service}</td>
-      <td>${a.date}</td>
-      <td>${a.time}</td>
-      <td><button class="del" onclick="del(${a.id})">حذف</button></td>
-    `;
-    list.appendChild(tr);
-  });
-}
-
-function del(id){
-  let data = getData();
-  data = data.filter(a=>a.id!==id);
-  setData(data);
-  render();
+  window.location.href = 'dashboard.html';
 }
 </script>
 
