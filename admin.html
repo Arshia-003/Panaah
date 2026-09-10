@@ -1,1 +1,485 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل مدیریت | مجموعه پناه</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',sans-serif;}
+html,body{overflow-x:hidden;}
+body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:float 20s infinite ease-in-out;}
+.shape:nth-child(1){width:400px;height:400px;background:#7c5cff;top:-100px;right:-100px;}
+.shape:nth-child(2){width:300px;height:300px;background:#0a6ebd;bottom:-80px;left:-80px;animation-delay:-5s;}
+.shape:nth-child(3){width:250px;height:250px;background:#00c2a8;top:40%;left:10%;animation-delay:-10s;}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1);}
+  25%{transform:translate(60px,-40px) scale(1.15);}
+  50%{transform:translate(-40px,60px) scale(.9);}
+  75%{transform:translate(30px,30px) scale(1.08);}
+}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
+
+.admin-header{background:rgba(11,18,32,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(124,92,255,.25);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#7c5cff,#0a6ebd,#00c2a8);-webkit-background-clip:text;background-clip:text;color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#7c5cff,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;box-shadow:0 8px 20px rgba(124,92,255,.4);}
+.header-actions{display:flex;gap:10px;}
+.header-btn{padding:10px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#e8eef7;text-decoration:none;font-size:14px;font-weight:600;transition:.3s;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;}
+.header-btn:hover{background:rgba(124,92,255,.15);border-color:rgba(124,92,255,.4);transform:translateY(-2px);}
+.header-btn.logout{background:rgba(231,76,60,.15);border-color:rgba(231,76,60,.3);color:#ff6b5b;}
+.header-btn.logout:hover{background:rgba(231,76,60,.3);}
+
+.wrap{max-width:1300px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
+
+.admin-title{background:linear-gradient(145deg,rgba(124,92,255,.12),rgba(10,110,189,.12));border:1px solid rgba(124,92,255,.25);border-radius:28px;padding:36px;margin-bottom:30px;position:relative;overflow:hidden;}
+.admin-title::before{content:'';position:absolute;top:-80px;left:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(124,92,255,.3),transparent 70%);pointer-events:none;}
+.admin-title h1{font-size:28px;font-weight:900;margin-bottom:8px;position:relative;z-index:1;letter-spacing:-.5px;}
+.admin-title h1 span{background:linear-gradient(135deg,#7c5cff,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.admin-title p{color:#a8b5c8;font-size:14px;position:relative;z-index:1;font-weight:300;line-height:1.7;}
+
+.grid-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-bottom:30px;}
+.stat-card{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;transition:.4s;position:relative;overflow:hidden;}
+.stat-card:hover{transform:translateY(-5px);border-color:rgba(124,92,255,.35);}
+.stat-card .ic{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#7c5cff,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:12px;}
+.stat-card .num{font-size:26px;font-weight:900;background:linear-gradient(135deg,#7c5cff,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px;}
+.stat-card .lbl{font-size:12.5px;color:#7a8899;font-weight:500;}
+
+.tabs{display:flex;gap:8px;margin-bottom:25px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;padding-bottom:0;}
+.tab{padding:13px 22px;background:transparent;border:none;color:#7a8899;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px;position:relative;}
+.tab:hover{color:#e8eef7;}
+.tab.active{color:#00c2a8;border-bottom-color:#00c2a8;}
+.tab .badge-cnt{display:inline-block;padding:2px 8px;background:rgba(255,193,7,.2);color:#ffc107;border-radius:8px;font-size:10.5px;font-weight:800;}
+
+.section{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:28px;}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.section-head h2{font-size:18px;font-weight:800;display:flex;align-items:center;gap:10px;}
+.section-head h2::before{content:'';width:4px;height:22px;background:linear-gradient(180deg,#7c5cff,#0a6ebd);border-radius:4px;}
+.search-box{padding:10px 18px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#e8eef7;font-family:inherit;font-size:13.5px;outline:none;transition:.3s;min-width:220px;}
+.search-box:focus{border-color:#00c2a8;box-shadow:0 0 0 3px rgba(0,194,168,.15);}
+.search-box::placeholder{color:#556070;}
+
+.table-wrap{overflow-x:auto;border-radius:14px;}
+table{width:100%;border-collapse:collapse;min-width:700px;}
+th,td{padding:14px 12px;text-align:right;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);}
+th{background:rgba(124,92,255,.08);color:#a395ff;font-weight:700;font-size:12px;letter-spacing:.3px;}
+tr{transition:.3s;}
+tr:hover{background:rgba(255,255,255,.03);}
+.badge{display:inline-block;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;}
+.badge.pending{background:rgba(255,193,7,.15);color:#ffc107;border:1px solid rgba(255,193,7,.3);}
+.badge.approved{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);}
+.badge.canceled{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);}
+.badge.admin{background:rgba(124,92,255,.15);color:#a395ff;border:1px solid rgba(124,92,255,.3);}
+.badge.user{background:rgba(255,255,255,.06);color:#a8b5c8;border:1px solid rgba(255,255,255,.1);}
+
+.btn-sm{padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;transition:.3s;border:1px solid transparent;margin:2px;}
+.btn-approve{background:rgba(0,194,168,.15);color:#00c2a8;border-color:rgba(0,194,168,.3);}
+.btn-approve:hover{background:rgba(0,194,168,.3);}
+.btn-cancel{background:rgba(231,76,60,.15);color:#ff6b5b;border-color:rgba(231,76,60,.3);}
+.btn-cancel:hover{background:rgba(231,76,60,.3);}
+.btn-delete{background:rgba(231,76,60,.15);color:#ff6b5b;border-color:rgba(231,76,60,.3);}
+.btn-delete:hover{background:rgba(231,76,60,.3);}
+
+.empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
+.empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.5);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;overflow:auto;}
+.modal-overlay.hide{opacity:0;pointer-events:none;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(124,92,255,.3);border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);}
+.modal-overlay.hide .modal{transform:scale(.9);}
+.modal h3{font-size:20px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+.modal .sub{color:#7a8899;font-size:13px;margin-bottom:22px;line-height:1.7;}
+.modal .form-group{margin-bottom:14px;}
+.modal label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:6px;}
+.modal input,.modal select{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
+.modal input:focus,.modal select:focus{border-color:#00c2a8;box-shadow:0 0 0 4px rgba(0,194,168,.15);}
+.modal select option{background:#0b1220;color:#e8eef7;}
+.modal-btns{display:flex;gap:10px;margin-top:22px;}
+.modal-btns button{flex:1;padding:13px;border-radius:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:.3s;border:none;}
+.btn-save{background:linear-gradient(135deg,#7c5cff,#0a6ebd);color:#fff;}
+.btn-save:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(124,92,255,.4);}
+.btn-cancel-modal{background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);}
+.btn-cancel-modal:hover{background:rgba(255,255,255,.1);}
+
+.info-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;padding:16px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.05);}
+.info-row .cell .k{font-size:11px;color:#7a8899;margin-bottom:4px;}
+.info-row .cell .v{font-size:13.5px;font-weight:700;color:#e8eef7;word-break:break-all;}
+
+@media(max-width:768px){
+  .admin-header{padding:14px 20px;flex-wrap:wrap;gap:10px;}
+  .logo{font-size:16px;}
+  .logo-mark{width:32px;height:32px;font-size:15px;}
+  .header-btn{padding:8px 14px;font-size:13px;}
+  .wrap{padding:25px 18px 60px;}
+  .admin-title{padding:24px 22px;}
+  .admin-title h1{font-size:20px;}
+  .section{padding:20px 16px;}
+  th,td{padding:10px 8px;font-size:11.5px;}
+  .tab{padding:11px 15px;font-size:13px;}
+  .stat-card .num{font-size:22px;}
+  .modal{padding:24px 20px;}
+  .search-box{min-width:100%;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div id="bg">
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<header class="admin-header">
+  <a href="index.html" class="logo"><div class="logo-mark">⚙</div> پنل مدیریت پناه</a>
+  <div class="header-actions">
+    <a href="index.html" class="header-btn">← سایت</a>
+    <button class="header-btn logout" onclick="logout()">خروج</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="admin-title">
+    <h1>خوش آمدی <span>مدیر</span> ⚙️</h1>
+    <p>از این پنل می‌تونی کاربران، نوبت‌ها و درخواست‌های مشتری‌ها رو مدیریت کنی.</p>
+  </div>
+
+  <div class="grid-stats">
+    <div class="stat-card">
+      <div class="ic">👥</div>
+      <div class="num" id="statUsers">۰</div>
+      <div class="lbl">کاربران ثبت‌نام‌شده</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">📅</div>
+      <div class="num" id="statAppts">۰</div>
+      <div class="lbl">کل نوبت‌ها</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">⏳</div>
+      <div class="num" id="statPending">۰</div>
+      <div class="lbl">در انتظار تایید</div>
+    </div>
+    <div class="stat-card">
+      <div class="ic">✅</div>
+      <div class="num" id="statApproved">۰</div>
+      <div class="lbl">تایید شده</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('users', this)">👥 کاربران</button>
+    <button class="tab" onclick="switchTab('appts', this)">📅 نوبت‌ها <span class="badge-cnt" id="tabPendingBadge" style="display:none;">۰</span></button>
+  </div>
+
+  <!-- USERS TAB -->
+  <div class="tab-content active" id="tabUsers">
+    <div class="section">
+      <div class="section-head">
+        <h2>لیست کاربران ثبت‌نام‌شده</h2>
+        <input type="text" class="search-box" placeholder="🔍 جستجو بر اساس نام، شماره یا ایمیل..." oninput="filterUsers(this.value)">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>نام</th><th>تلفن</th><th>ایمیل</th><th>آدرس</th><th>نقش</th><th>تعداد نوبت</th><th>عملیات</th></tr>
+          </thead>
+          <tbody id="usersList"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPTS TAB -->
+  <div class="tab-content" id="tabAppts">
+    <div class="section">
+      <div class="section-head">
+        <h2>همه نوبت‌ها</h2>
+        <input type="text" class="search-box" placeholder="🔍 جستجو بر اساس نام، خدمت یا شعبه..." oninput="filterAppts(this.value)">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>کاربر</th><th>بازه</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
+          </thead>
+          <tbody id="apptsList"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ASSIGN MODAL -->
+<div class="modal-overlay hide" id="assignModal">
+  <div class="modal">
+    <h3>📅 تعیین نوبت برای کاربر</h3>
+    <p class="sub" id="assignSub">—</p>
+    <div class="form-group">
+      <label>تاریخ و بازه (متن آزاد)</label>
+      <input type="text" id="assignDate" placeholder="مثلاً ۱۵ مهر تا ۲۰ مهر ۱۴۰۴">
+    </div>
+    <div class="form-group">
+      <label>ساعت</label>
+      <select id="assignTime">
+        <option>۰۹:۰۰</option><option>۱۰:۰۰</option><option>۱۱:۰۰</option><option>۱۲:۰۰</option>
+        <option>۱۴:۰۰</option><option>۱۵:۰۰</option><option>۱۶:۰۰</option><option>۱۷:۰۰</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>شعبه</label>
+      <select id="assignBranch">
+        <option>شعبه مرکزی</option><option>شعبه شمال</option><option>شعبه غرب</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>خدمت</label>
+      <select id="assignService">
+        <option>ایمپلنت</option><option>ارتودنسی</option><option>جرم‌گیری</option>
+        <option>کامپوزیت</option><option>عصب‌کشی</option><option>کشیدن دندان</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>وضعیت</label>
+      <select id="assignStatus">
+        <option value="approved">تایید شده</option>
+        <option value="pending">در انتظار تایید</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel-modal" onclick="closeAssign()">لغو</button>
+      <button class="btn-save" onclick="saveAssign()">ثبت نوبت</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
+const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
+const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
+const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
+const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
+
+let currentAssignPhone = null;
+let usersFilter = '';
+let apptsFilter = '';
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const cur = getCurrent();
+  if(!cur || cur.role !== 'admin'){
+    window.location.href = 'index.html';
+    return;
+  }
+  renderAll();
+});
+
+function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, d=>fa[d]); }
+
+function renderAll(){
+  renderStats();
+  renderUsers();
+  renderAppts();
+}
+
+function renderStats(){
+  const users = getUsers().filter(u=>u.role !== 'admin');
+  const appts = getData();
+  const pending = appts.filter(a=>a.status === 'pending');
+  const approved = appts.filter(a=>a.status === 'approved');
+  
+  document.getElementById('statUsers').textContent = toFa(users.length);
+  document.getElementById('statAppts').textContent = toFa(appts.length);
+  document.getElementById('statPending').textContent = toFa(pending.length);
+  document.getElementById('statApproved').textContent = toFa(approved.length);
+  
+  const badge = document.getElementById('tabPendingBadge');
+  if(pending.length){
+    badge.style.display = 'inline-block';
+    badge.textContent = toFa(pending.length);
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderUsers(){
+  const list = document.getElementById('usersList');
+  const appts = getData();
+  let users = getUsers().filter(u=>u.role !== 'admin');
+  
+  if(usersFilter){
+    const f = usersFilter.toLowerCase();
+    users = users.filter(u =>
+      (u.name || '').toLowerCase().includes(f) ||
+      (u.phone || '').includes(f) ||
+      (u.email || '').toLowerCase().includes(f)
+    );
+  }
+  
+  if(!users.length){
+    list.innerHTML = '<tr><td colspan="7" class="empty">هیچ کاربری پیدا نشد</td></tr>';
+    return;
+  }
+  
+  list.innerHTML = '';
+  users.slice().reverse().forEach(u=>{
+    const cnt = appts.filter(a=>a.user === u.phone).length;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${u.name || '—'}</td>
+      <td>${u.phone || '—'}</td>
+      <td>${u.email || '—'}</td>
+      <td>${u.address || '—'}</td>
+      <td><span class="badge user">کاربر</span></td>
+      <td>${toFa(cnt)}</td>
+      <td>
+        <button class="btn-sm btn-approve" onclick="openAssign('${u.phone}','${(u.name||'').replace(/'/g,"\\'")}')">تعیین نوبت</button>
+        <button class="btn-sm btn-delete" onclick="deleteUser('${u.phone}')">حذف</button>
+      </td>
+    `;
+    list.appendChild(tr);
+  });
+}
+
+function renderAppts(){
+  const list = document.getElementById('apptsList');
+  let appts = getData();
+  
+  if(apptsFilter){
+    const f = apptsFilter.toLowerCase();
+    appts = appts.filter(a =>
+      (a.name || '').toLowerCase().includes(f) ||
+      (a.phone || '').includes(f) ||
+      (a.service || '').toLowerCase().includes(f) ||
+      (a.branch || '').toLowerCase().includes(f)
+    );
+  }
+  
+  if(!appts.length){
+    list.innerHTML = '<tr><td colspan="8" class="empty">هیچ نوبتی پیدا نشد</td></tr>';
+    return;
+  }
+  
+  list.innerHTML = '';
+  appts.slice().reverse().forEach(a=>{
+    const status = a.status || 'pending';
+    const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
+    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)})` : (a.pay || '—');
+    const rangeText = a.dateRange || a.date || '—';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${a.name || '—'}<br><small style="color:#7a8899;">${a.phone || ''}</small></td>
+      <td>${rangeText}</td>
+      <td>${a.time || '—'}</td>
+      <td>${a.service || '—'}</td>
+      <td>${a.branch || '—'}</td>
+      <td>${payLabel}</td>
+      <td><span class="badge ${status}">${statusLabel}</span></td>
+      <td>
+        ${status === 'pending' ? `<button class="btn-sm btn-approve" onclick="setStatus(${a.id},'approved')">تایید</button>` : ''}
+        ${status !== 'canceled' ? `<button class="btn-sm btn-cancel" onclick="setStatus(${a.id},'canceled')">لغو</button>` : ''}
+        <button class="btn-sm btn-delete" onclick="deleteAppt(${a.id})">حذف</button>
+      </td>
+    `;
+    list.appendChild(tr);
+  });
+}
+
+function filterUsers(v){ usersFilter = v.trim(); renderUsers(); }
+function filterAppts(v){ apptsFilter = v.trim(); renderAppts(); }
+
+function setStatus(id, status){
+  const data = getData();
+  const found = data.find(a=>a.id===id);
+  if(found){
+    found.status = status;
+    setData(data);
+    renderAll();
+  }
+}
+
+function deleteAppt(id){
+  if(!confirm('این نوبت حذف شود؟')) return;
+  let data = getData();
+  data = data.filter(a=>a.id!==id);
+  setData(data);
+  renderAll();
+}
+
+function deleteUser(phone){
+  if(!confirm('این کاربر و همه نوبت‌هایش حذف شوند؟')) return;
+  let users = getUsers().filter(u=>u.phone !== phone);
+  setUsers(users);
+  let data = getData().filter(a=>a.user !== phone);
+  setData(data);
+  renderAll();
+}
+
+/* ===== ASSIGN ===== */
+function openAssign(phone, name){
+  currentAssignPhone = phone;
+  document.getElementById('assignSub').textContent = `نوبت برای ${name} (${phone})`;
+  document.getElementById('assignDate').value = '';
+  document.getElementById('assignModal').classList.remove('hide');
+}
+function closeAssign(){
+  document.getElementById('assignModal').classList.add('hide');
+  currentAssignPhone = null;
+}
+
+function saveAssign(){
+  const date = document.getElementById('assignDate').value.trim();
+  const time = document.getElementById('assignTime').value;
+  const branch = document.getElementById('assignBranch').value;
+  const service = document.getElementById('assignService').value;
+  const status = document.getElementById('assignStatus').value;
+  
+  if(!date){ alert('لطفاً تاریخ را وارد کنید'); return; }
+  
+  const users = getUsers();
+  const user = users.find(u=>u.phone === currentAssignPhone);
+  if(!user){ alert('کاربر پیدا نشد'); return; }
+  
+  const data = getData();
+  data.push({
+    id: Date.now(),
+    name: user.name,
+    phone: user.phone,
+    branch: branch,
+    service: service,
+    date: date,
+    dateRange: date,
+    time: time,
+    pay: '—',
+    user: user.phone,
+    status: status
+  });
+  setData(data);
+  closeAssign();
+  renderAll();
+}
+
+function logout(){
+  if(!confirm('از حساب خارج می‌شوید؟')) return;
+  localStorage.removeItem('panaah_current');
+  window.location.href = 'index.html';
+}
+
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+</script>
+
+</body>
+</html>
