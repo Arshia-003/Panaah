@@ -38,19 +38,12 @@ nav a::after{content:'';position:absolute;bottom:-6px;right:0;width:0;height:2px
 nav a:hover{color:#fff;}
 nav a:hover::after{width:100%;}
 
-/* ===== USER PANEL BUTTON ===== */
+/* ===== USER BUTTON ===== */
 .user-btn{display:flex;align-items:center;gap:10px;padding:10px 18px;background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:50px;cursor:pointer;transition:.3s;font-family:inherit;color:#e8eef7;font-size:14px;font-weight:600;}
 .user-btn:hover{background:rgba(0,194,168,.2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,194,168,.2);}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
-.user-panel{position:fixed;top:80px;left:50px;background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:20px;padding:25px;width:300px;box-shadow:0 25px 60px rgba(0,0,0,.6);backdrop-filter:blur(20px);z-index:200;opacity:0;transform:translateY(-10px) scale(.95);pointer-events:none;transition:.35s cubic-bezier(.2,.9,.3,1);}
-.user-panel.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
-.user-panel .greet{font-size:17px;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.user-panel .info{font-size:13px;color:#7a8899;line-height:2;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06);}
-.user-panel .info b{color:#a8b5c8;font-weight:500;}
-.user-panel .logout-btn{width:100%;padding:12px;background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);border-radius:12px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;transition:.3s;}
-.user-panel .logout-btn:hover{background:rgba(231,76,60,.3);}
 
-/* ===== REGISTER MODAL ===== */
+/* ===== AUTH MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
@@ -72,7 +65,6 @@ nav a:hover::after{width:100%;}
 .err-msg.show{display:block;}
 .modal .btn-primary{width:100%;padding:14px;font-size:15px;margin-top:8px;position:relative;z-index:1;flex-shrink:0;}
 
-/* ===== SWITCH AUTH LINK ===== */
 .switch-auth{text-align:center;margin-top:18px;font-size:13px;color:#a8b5c8;position:relative;z-index:1;line-height:1.8;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
@@ -186,7 +178,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .stats{gap:35px;}
   .container{padding:70px 20px;}
   .admin{padding:25px 20px;}
-  .user-panel{left:20px;right:20px;width:auto;}
   .user-btn{padding:8px 14px;font-size:13px;}
   .user-btn .user-name{display:none;}
   .modal{padding:28px 24px 24px;max-width:100%;}
@@ -303,17 +294,11 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <a href="#booking">نوبت‌دهی</a>
     <a href="#admin">پنل منشی</a>
   </nav>
-  <button class="user-btn hidden" id="userBtn" onclick="toggleUserPanel()">
+  <button class="user-btn hidden" id="userBtn" onclick="goToDashboard()">
     <div class="user-avatar" id="userAvatar">ع</div>
     <span class="user-name" id="userName">کاربر</span>
   </button>
 </header>
-
-<div class="user-panel" id="userPanel">
-  <div class="greet" id="greetText">سلام!</div>
-  <div class="info" id="userInfo"></div>
-  <button class="logout-btn" onclick="logout()">خروج از حساب</button>
-</div>
 
 <section class="hero" id="home">
   <div class="hero-badge"><span class="dot"></span> کلینیک تخصصی دندانپزشکی</div>
@@ -480,12 +465,10 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 function lockBody(){
   document.documentElement.classList.add('locked');
   document.body.classList.add('locked');
-  document.body.style.top = '0px';
 }
 function unlockBody(){
   document.documentElement.classList.remove('locked');
   document.body.classList.remove('locked');
-  document.body.style.top = '';
 }
 
 /* ===== HEADER SCROLL ===== */
@@ -714,47 +697,17 @@ function showUser(user){
   const btn = document.getElementById('userBtn');
   const avatar = document.getElementById('userAvatar');
   const uname = document.getElementById('userName');
-  const greet = document.getElementById('greetText');
-  const info = document.getElementById('userInfo');
   
   const firstName = user.name.trim().split(/\s+/)[0];
   
   btn.classList.remove('hidden');
   avatar.textContent = firstName.charAt(0);
   uname.textContent = firstName;
-  greet.textContent = `سلام ${firstName}! 👋`;
-  info.innerHTML = `
-    <b>نام:</b> ${user.name}<br>
-    <b>تلفن:</b> ${user.phone}<br>
-    ${user.email ? `<b>ایمیل:</b> ${user.email}` : ''}
-  `;
 }
 
-function toggleUserPanel(){
-  document.getElementById('userPanel').classList.toggle('show');
-}
-
-document.addEventListener('click',(e)=>{
-  const panel = document.getElementById('userPanel');
-  const btn = document.getElementById('userBtn');
-  if(!panel.contains(e.target) && !btn.contains(e.target)){
-    panel.classList.remove('show');
-  }
-});
-
-/* ===== LOGOUT ===== */
-function logout(){
-  localStorage.removeItem('panaah_current');
-  document.getElementById('userPanel').classList.remove('show');
-  document.getElementById('userBtn').classList.add('hidden');
-  document.getElementById('regName').value='';
-  document.getElementById('regPhone').value='';
-  document.getElementById('regEmail').value='';
-  document.getElementById('regPass').value='';
-  document.getElementById('loginPhone').value='';
-  document.getElementById('loginPass').value='';
-  switchMode('register');
-  openAuth();
+/* ===== GO TO DASHBOARD ===== */
+function goToDashboard(){
+  window.location.href = 'dashboard.html';
 }
 
 /* ===== BOOKING ===== */
