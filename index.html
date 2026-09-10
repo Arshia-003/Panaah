@@ -53,27 +53,27 @@ nav a:hover::after{width:100%;}
 /* ===== REGISTER MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
-.modal{background:linear-gradient(145deg,rgba(20,30,50,.94),rgba(11,18,32,.94));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:55px 50px 45px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal::before{content:'';position:absolute;top:-100px;right:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
 .modal::after{content:'';position:absolute;bottom:-100px;left:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(10,110,189,.2),transparent 70%);pointer-events:none;}
-.modal-logo{width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 15px 40px rgba(0,194,168,.4);position:relative;z-index:1;}
-.modal h2{text-align:center;font-size:26px;font-weight:900;margin-bottom:10px;position:relative;z-index:1;letter-spacing:-.5px;}
+.modal-logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;box-shadow:0 15px 40px rgba(0,194,168,.4);position:relative;z-index:1;flex-shrink:0;}
+.modal h2{text-align:center;font-size:23px;font-weight:900;margin-bottom:8px;position:relative;z-index:1;letter-spacing:-.5px;flex-shrink:0;}
 .modal h2 span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.modal .sub{text-align:center;color:#7a8899;font-size:13px;margin-bottom:28px;position:relative;z-index:1;font-weight:300;line-height:1.8;}
-.modal .form-group{margin-bottom:18px;position:relative;z-index:1;}
-.modal .form-group label{display:block;margin-bottom:8px;font-size:13px;font-weight:600;color:#a8b5c8;}
+.modal .sub{text-align:center;color:#7a8899;font-size:12px;margin-bottom:22px;position:relative;z-index:1;font-weight:300;line-height:1.7;flex-shrink:0;}
+.modal .form-group{margin-bottom:14px;position:relative;z-index:1;flex-shrink:0;}
+.modal .form-group label{display:block;margin-bottom:6px;font-size:12.5px;font-weight:600;color:#a8b5c8;}
 .modal .form-group label .optional{color:#556070;font-weight:400;font-size:11px;margin-right:5px;}
-.modal .form-group input{width:100%;padding:14px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:15px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
+.modal .form-group input{width:100%;padding:12px 15px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
 .modal .form-group input:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .modal .form-group input.error{border-color:#ff6b5b;box-shadow:0 0 0 4px rgba(231,76,60,.15);}
 .modal .form-group input::placeholder{color:#556070;}
-.err-msg{color:#ff6b5b;font-size:12px;margin-top:6px;display:none;font-weight:500;}
+.err-msg{color:#ff6b5b;font-size:11.5px;margin-top:5px;display:none;font-weight:500;}
 .err-msg.show{display:block;}
-.modal .btn-primary{width:100%;padding:16px;font-size:16px;margin-top:10px;position:relative;z-index:1;}
+.modal .btn-primary{width:100%;padding:14px;font-size:15px;margin-top:8px;position:relative;z-index:1;flex-shrink:0;}
 
 /* ===== SWITCH AUTH LINK ===== */
-.switch-auth{text-align:center;margin-top:24px;font-size:14px;color:#a8b5c8;position:relative;z-index:1;line-height:1.9;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);}
+.switch-auth{text-align:center;margin-top:18px;font-size:13px;color:#a8b5c8;position:relative;z-index:1;line-height:1.8;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
@@ -189,28 +189,41 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .user-panel{left:20px;right:20px;width:auto;}
   .user-btn{padding:8px 14px;font-size:13px;}
   .user-btn .user-name{display:none;}
-  .modal{padding:35px 28px 30px;max-width:100%;}
-  .modal h2{font-size:22px;}
-  .modal .sub{font-size:12px;margin-bottom:22px;}
-  .modal-logo{width:52px;height:52px;font-size:24px;margin-bottom:15px;}
-  .modal .form-group{margin-bottom:14px;}
-  .modal .form-group input{padding:12px 14px;font-size:14px;}
-  .modal .btn-primary{padding:14px;font-size:15px;}
-  .switch-auth{margin-top:16px;font-size:12px;padding-top:14px;}
+  .modal{padding:28px 24px 24px;max-width:100%;}
+  .modal h2{font-size:19px;margin-bottom:6px;}
+  .modal .sub{font-size:11.5px;margin-bottom:16px;}
+  .modal-logo{width:48px;height:48px;font-size:22px;margin-bottom:12px;}
+  .modal .form-group{margin-bottom:11px;}
+  .modal .form-group label{font-size:12px;margin-bottom:5px;}
+  .modal .form-group input{padding:11px 14px;font-size:14px;}
+  .modal .btn-primary{padding:13px;font-size:14px;margin-top:6px;}
+  .switch-auth{margin-top:14px;font-size:12.5px;padding-top:14px;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
 }
-@media(max-height:680px){
-  .modal{padding:28px 35px 24px;}
-  .modal-logo{width:46px;height:46px;font-size:22px;margin-bottom:10px;}
-  .modal h2{font-size:19px;margin-bottom:5px;}
-  .modal .sub{font-size:11px;margin-bottom:16px;}
-  .modal .form-group{margin-bottom:10px;}
-  .modal .form-group label{font-size:12px;margin-bottom:5px;}
-  .modal .form-group input{padding:10px 14px;font-size:14px;}
-  .modal .btn-primary{padding:12px;font-size:14px;margin-top:4px;}
-  .switch-auth{margin-top:12px;font-size:12px;padding-top:12px;}
+@media(max-height:700px){
+  .modal{padding:22px 32px 20px;}
+  .modal-logo{width:42px;height:42px;font-size:20px;margin-bottom:8px;border-radius:12px;}
+  .modal h2{font-size:17px;margin-bottom:4px;}
+  .modal .sub{font-size:11px;margin-bottom:12px;}
+  .modal .form-group{margin-bottom:8px;}
+  .modal .form-group label{font-size:11.5px;margin-bottom:4px;}
+  .modal .form-group input{padding:9px 13px;font-size:13.5px;}
+  .modal .btn-primary{padding:11px;font-size:14px;margin-top:4px;}
+  .switch-auth{margin-top:10px;font-size:12px;padding-top:10px;}
+  .err-msg{font-size:11px;margin-top:3px;}
+}
+@media(max-height:600px){
+  .modal{padding:16px 28px 14px;}
+  .modal-logo{width:36px;height:36px;font-size:17px;margin-bottom:6px;}
+  .modal h2{font-size:15px;margin-bottom:3px;}
+  .modal .sub{font-size:10.5px;margin-bottom:9px;}
+  .modal .form-group{margin-bottom:6px;}
+  .modal .form-group label{font-size:11px;margin-bottom:3px;}
+  .modal .form-group input{padding:8px 12px;font-size:13px;}
+  .modal .btn-primary{padding:10px;font-size:13px;margin-top:3px;}
+  .switch-auth{margin-top:8px;font-size:11.5px;padding-top:8px;}
 }
 </style>
 </head>
@@ -251,6 +264,12 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
         <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
         <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
       </div>
+      
+      <div class="form-group">
+        <label>رمز عبور</label>
+        <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
+        <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
+      </div>
     </div>
     
     <!-- LOGIN FIELDS -->
@@ -261,9 +280,9 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
         <div class="err-msg" id="errLoginPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
       </div>
       <div class="form-group">
-        <label>ایمیل <span class="optional">(اختیاری)</span></label>
-        <input type="email" id="loginEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
-        <div class="err-msg" id="errLoginEmail">ایمیل وارد شده صحیح نیست</div>
+        <label>رمز عبور</label>
+        <input type="password" id="loginPass" placeholder="رمز عبور خود را وارد کنید" maxlength="40">
+        <div class="err-msg" id="errLoginPass">رمز عبور اشتباه است</div>
       </div>
     </div>
     
@@ -507,7 +526,7 @@ function switchMode(mode){
     regF.classList.add('hidden');
     logF.classList.remove('hidden');
     title.innerHTML = 'ورود به <span>مجموعه پناه</span>';
-    sub.textContent = 'شماره تلفنی که با آن ثبت‌نام کرده‌اید را وارد کنید';
+    sub.textContent = 'شماره تلفن و رمز عبور خود را وارد کنید';
     btn.textContent = 'ورود به حساب';
     sw.innerHTML = 'حساب ندارید؟ <a onclick="switchMode(\'register\')">ثبت‌نام کنید</a>';
   } else {
@@ -562,6 +581,9 @@ function validEmail(e){
   if(!e.trim()) return true;
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
+function validPass(p){
+  return p.length >= 6;
+}
 
 /* ===== SUBMIT AUTH ===== */
 function submitAuth(){
@@ -574,12 +596,14 @@ function doRegister(){
   const nameEl = document.getElementById('regName');
   const phoneEl = document.getElementById('regPhone');
   const emailEl = document.getElementById('regEmail');
+  const passEl = document.getElementById('regPass');
   const errName = document.getElementById('errName');
   const errPhone = document.getElementById('errPhone');
   const errEmail = document.getElementById('errEmail');
+  const errPass = document.getElementById('errRegPass');
   
-  [errName,errPhone,errEmail].forEach(e=>e.classList.remove('show'));
-  [nameEl,phoneEl,emailEl].forEach(e=>e.classList.remove('error'));
+  [errName,errPhone,errEmail,errPass].forEach(e=>e.classList.remove('show'));
+  [nameEl,phoneEl,emailEl,passEl].forEach(e=>e.classList.remove('error'));
   
   let ok = true;
   
@@ -598,13 +622,19 @@ function doRegister(){
     emailEl.classList.add('error');
     ok = false;
   }
+  if(!validPass(passEl.value)){
+    errPass.classList.add('show');
+    passEl.classList.add('error');
+    ok = false;
+  }
   if(!ok) return;
   
   const user = {
     id: Date.now(),
     name: nameEl.value.trim(),
     phone: toEnglishDigits(phoneEl.value.trim()),
-    email: emailEl.value.trim()
+    email: emailEl.value.trim(),
+    password: passEl.value
   };
   
   const users = getUsers();
@@ -625,12 +655,12 @@ function doRegister(){
 /* ===== LOGIN ===== */
 function doLogin(){
   const phoneEl = document.getElementById('loginPhone');
-  const emailEl = document.getElementById('loginEmail');
+  const passEl = document.getElementById('loginPass');
   const errPhone = document.getElementById('errLoginPhone');
-  const errEmail = document.getElementById('errLoginEmail');
+  const errPass = document.getElementById('errLoginPass');
   
-  [errPhone,errEmail].forEach(e=>e.classList.remove('show'));
-  [phoneEl,emailEl].forEach(e=>e.classList.remove('error'));
+  [errPhone,errPass].forEach(e=>e.classList.remove('show'));
+  [phoneEl,passEl].forEach(e=>e.classList.remove('error'));
   
   let ok = true;
   
@@ -640,9 +670,10 @@ function doLogin(){
     phoneEl.classList.add('error');
     ok = false;
   }
-  if(!validEmail(emailEl.value)){
-    errEmail.classList.add('show');
-    emailEl.classList.add('error');
+  if(!passEl.value){
+    errPass.classList.add('show');
+    errPass.textContent = 'رمز عبور را وارد کنید';
+    passEl.classList.add('error');
     ok = false;
   }
   if(!ok) return;
@@ -658,11 +689,10 @@ function doLogin(){
     return;
   }
   
-  const email = emailEl.value.trim();
-  if(email && found.email && found.email.toLowerCase() !== email.toLowerCase()){
-    errEmail.classList.add('show');
-    errEmail.textContent = 'ایمیل با اطلاعات ثبت‌شده مطابقت ندارد';
-    emailEl.classList.add('error');
+  if(found.password !== passEl.value){
+    errPass.classList.add('show');
+    errPass.textContent = 'رمز عبور اشتباه است';
+    passEl.classList.add('error');
     return;
   }
   
@@ -720,8 +750,9 @@ function logout(){
   document.getElementById('regName').value='';
   document.getElementById('regPhone').value='';
   document.getElementById('regEmail').value='';
+  document.getElementById('regPass').value='';
   document.getElementById('loginPhone').value='';
-  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPass').value='';
   switchMode('register');
   openAuth();
 }
