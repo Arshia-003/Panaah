@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',sans-serif;}
-html{scroll-behavior:smooth;}
-body{background:#0b1220;color:#e8eef7;overflow-x:hidden;}
-body.locked{overflow:hidden;height:100vh;}
+html,body{overflow-x:hidden;}
+html.locked,body.locked{overflow:hidden!important;height:100vh!important;position:fixed!important;width:100%!important;top:0;left:0;right:0;bottom:0;}
+body{background:#0b1220;color:#e8eef7;}
 
 /* ===== BACKGROUND SHAPES ===== */
 #bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
-.shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:float 20s infinite ease-in-out;}
+.shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 20s infinite ease-in-out;}
 .shape:nth-child(1){width:400px;height:400px;background:#0a6ebd;top:-100px;right:-100px;animation-delay:0s;}
 .shape:nth-child(2){width:300px;height:300px;background:#00c2a8;bottom:-80px;left:-80px;animation-delay:-5s;}
 .shape:nth-child(3){width:250px;height:250px;background:#7c5cff;top:40%;left:10%;animation-delay:-10s;}
@@ -28,7 +28,7 @@ body.locked{overflow:hidden;height:100vh;}
 .grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
 
 /* ===== HEADER ===== */
-header{position:fixed;top:0;width:100%;padding:20px 50px;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:.4s;backdrop-filter:blur(0px);}
+header{position:fixed;top:0;width:100%;padding:20px 50px;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:.4s;}
 header.scrolled{background:rgba(11,18,32,.85);backdrop-filter:blur(20px);padding:14px 50px;border-bottom:1px solid rgba(255,255,255,.06);}
 .logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;}
 .logo-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;box-shadow:0 8px 20px rgba(0,194,168,.3);}
@@ -51,9 +51,9 @@ nav a:hover::after{width:100%;}
 .user-panel .logout-btn:hover{background:rgba(231,76,60,.3);}
 
 /* ===== REGISTER MODAL ===== */
-.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;}
+.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
-.modal{background:linear-gradient(145deg,rgba(20,30,50,.92),rgba(11,18,32,.92));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:50px 45px;max-width:480px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;max-height:calc(100vh - 40px);overflow-y:auto;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.94),rgba(11,18,32,.94));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:50px 45px;max-width:480px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;max-height:calc(100vh - 40px);overflow-y:auto;overscroll-behavior:contain;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal::before{content:'';position:absolute;top:-100px;right:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
 .modal::after{content:'';position:absolute;bottom:-100px;left:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(10,110,189,.2),transparent 70%);pointer-events:none;}
@@ -71,6 +71,11 @@ nav a:hover::after{width:100%;}
 .err-msg{color:#ff6b5b;font-size:12px;margin-top:6px;display:none;font-weight:500;}
 .err-msg.show{display:block;}
 .modal .btn-primary{width:100%;padding:16px;font-size:16px;margin-top:10px;position:relative;z-index:1;}
+
+/* ===== SWITCH AUTH LINK ===== */
+.switch-auth{text-align:center;margin-top:22px;font-size:13px;color:#7a8899;position:relative;z-index:1;line-height:1.9;}
+.switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
+.switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
 .btn{padding:16px 38px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:.35s;font-family:inherit;position:relative;overflow:hidden;}
 .btn-primary{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;box-shadow:0 10px 30px rgba(10,110,189,.35);}
@@ -191,7 +196,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 }
 </style>
 </head>
-<body class="locked">
+<body>
 
 <div id="bg">
   <div class="shape"></div>
@@ -202,32 +207,53 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <div class="grid-overlay"></div>
 </div>
 
-<!-- ===== REGISTER MODAL ===== -->
+<!-- ===== AUTH MODAL ===== -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
     <div class="modal-logo">🦷</div>
-    <h2>خوش آمدید به <span>مجموعه پناه</span></h2>
-    <p class="sub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
+    <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
+    <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <div class="form-group">
-      <label>نام و نام خانوادگی</label>
-      <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
-      <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
+    <!-- REGISTER FIELDS -->
+    <div id="registerFields">
+      <div class="form-group">
+        <label>نام و نام خانوادگی</label>
+        <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
+        <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
+      </div>
+      
+      <div class="form-group">
+        <label>شماره تلفن همراه</label>
+        <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
+        <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+      </div>
+      
+      <div class="form-group">
+        <label>ایمیل <span class="optional">(اختیاری)</span></label>
+        <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+        <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
+      </div>
     </div>
     
-    <div class="form-group">
-      <label>شماره تلفن همراه</label>
-      <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
-      <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+    <!-- LOGIN FIELDS -->
+    <div id="loginFields" class="hidden">
+      <div class="form-group">
+        <label>شماره تلفن همراه</label>
+        <input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
+        <div class="err-msg" id="errLoginPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+      </div>
+      <div class="form-group">
+        <label>ایمیل <span class="optional">(اختیاری)</span></label>
+        <input type="email" id="loginEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+        <div class="err-msg" id="errLoginEmail">ایمیل وارد شده صحیح نیست</div>
+      </div>
     </div>
     
-    <div class="form-group">
-      <label>ایمیل <span class="optional">(اختیاری)</span></label>
-      <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
-      <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
-    </div>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitAuth()">ورود به مجموعه پناه</button>
     
-    <button class="btn btn-primary" onclick="register()">ورود به مجموعه پناه</button>
+    <div class="switch-auth" id="switchAuth">
+      اگر از قبل حساب دارید، <a onclick="switchMode('login')">وارد شوید</a>
+    </div>
   </div>
 </div>
 
@@ -413,6 +439,18 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
+/* ===== LOCK/UNLOCK BODY ===== */
+function lockBody(){
+  document.documentElement.classList.add('locked');
+  document.body.classList.add('locked');
+  document.body.style.top = '0px';
+}
+function unlockBody(){
+  document.documentElement.classList.remove('locked');
+  document.body.classList.remove('locked');
+  document.body.style.top = '';
+}
+
 /* ===== HEADER SCROLL ===== */
 window.addEventListener('scroll',()=>{
   document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
@@ -432,25 +470,60 @@ const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
-/* ===== REGISTER MODAL ===== */
+/* ===== AUTH MODE ===== */
+let authMode = 'register'; // or 'login'
+
+function switchMode(mode){
+  authMode = mode;
+  const regF = document.getElementById('registerFields');
+  const logF = document.getElementById('loginFields');
+  const title = document.getElementById('modalTitle');
+  const sub = document.getElementById('modalSub');
+  const btn = document.getElementById('submitBtn');
+  const sw = document.getElementById('switchAuth');
+  
+  document.querySelectorAll('.err-msg').forEach(e=>e.classList.remove('show'));
+  document.querySelectorAll('.modal input').forEach(e=>e.classList.remove('error'));
+  
+  if(mode==='login'){
+    regF.classList.add('hidden');
+    logF.classList.remove('hidden');
+    title.innerHTML = 'ورود به <span>مجموعه پناه</span>';
+    sub.textContent = 'شماره تلفنی که با آن ثبت‌نام کرده‌اید را وارد کنید';
+    btn.textContent = 'ورود به حساب';
+    sw.innerHTML = 'حساب ندارید؟ <a onclick="switchMode(\'register\')">ثبت‌نام کنید</a>';
+  } else {
+    regF.classList.remove('hidden');
+    logF.classList.add('hidden');
+    title.innerHTML = 'خوش آمدید به <span>مجموعه پناه</span>';
+    sub.textContent = 'برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید';
+    btn.textContent = 'ورود به مجموعه پناه';
+    sw.innerHTML = 'اگر از قبل حساب دارید، <a onclick="switchMode(\'login\')">وارد شوید</a>';
+  }
+}
+
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(cur){
     showUser(cur);
-    document.body.classList.remove('locked');
+    unlockBody();
     document.getElementById('registerModal').classList.add('hide');
+    switchMode('register');
   } else {
-    openRegister();
+    lockBody();
+    document.getElementById('registerModal').classList.remove('hide');
+    switchMode('register');
   }
 });
 
-function openRegister(){
+function openAuth(){
   document.getElementById('registerModal').classList.remove('hide');
-  document.body.classList.add('locked');
+  lockBody();
 }
-function closeRegister(){
+function closeAuth(){
   document.getElementById('registerModal').classList.add('hide');
-  document.body.classList.remove('locked');
+  unlockBody();
 }
 
 /* ===== VALIDATION ===== */
@@ -472,8 +545,14 @@ function validEmail(e){
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 
+/* ===== SUBMIT AUTH ===== */
+function submitAuth(){
+  if(authMode === 'register') doRegister();
+  else doLogin();
+}
+
 /* ===== REGISTER ===== */
-function register(){
+function doRegister(){
   const nameEl = document.getElementById('regName');
   const phoneEl = document.getElementById('regPhone');
   const emailEl = document.getElementById('regEmail');
@@ -522,11 +601,64 @@ function register(){
   
   setCurrent(user);
   showUser(user);
-  closeRegister();
+  closeAuth();
+}
+
+/* ===== LOGIN ===== */
+function doLogin(){
+  const phoneEl = document.getElementById('loginPhone');
+  const emailEl = document.getElementById('loginEmail');
+  const errPhone = document.getElementById('errLoginPhone');
+  const errEmail = document.getElementById('errLoginEmail');
+  
+  [errPhone,errEmail].forEach(e=>e.classList.remove('show'));
+  [phoneEl,emailEl].forEach(e=>e.classList.remove('error'));
+  
+  let ok = true;
+  
+  if(!validPhone(phoneEl.value)){
+    errPhone.classList.add('show');
+    errPhone.textContent = 'شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد';
+    phoneEl.classList.add('error');
+    ok = false;
+  }
+  if(!validEmail(emailEl.value)){
+    errEmail.classList.add('show');
+    emailEl.classList.add('error');
+    ok = false;
+  }
+  if(!ok) return;
+  
+  const phone = toEnglishDigits(phoneEl.value.trim());
+  const users = getUsers();
+  const found = users.find(u=>u.phone===phone);
+  
+  if(!found){
+    errPhone.classList.add('show');
+    errPhone.textContent = 'حسابی با این شماره پیدا نشد. لطفاً ثبت‌نام کنید.';
+    phoneEl.classList.add('error');
+    return;
+  }
+  
+  // اگه ایمیل وارد شده بود، با ایمیل ثبت‌شده چک کن
+  const email = emailEl.value.trim();
+  if(email && found.email && found.email.toLowerCase() !== email.toLowerCase()){
+    errEmail.classList.add('show');
+    errEmail.textContent = 'ایمیل با اطلاعات ثبت‌شده مطابقت ندارد';
+    emailEl.classList.add('error');
+    return;
+  }
+  
+  setCurrent(found);
+  showUser(found);
+  closeAuth();
 }
 
 /* ===== PHONE INPUT FORMATTING ===== */
-document.getElementById('regPhone').addEventListener('input',function(e){
+document.getElementById('regPhone').addEventListener('input',function(){
+  this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
+});
+document.getElementById('loginPhone').addEventListener('input',function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
 
@@ -571,13 +703,16 @@ function logout(){
   document.getElementById('regName').value='';
   document.getElementById('regPhone').value='';
   document.getElementById('regEmail').value='';
-  openRegister();
+  document.getElementById('loginPhone').value='';
+  document.getElementById('loginEmail').value='';
+  switchMode('register');
+  openAuth();
 }
 
 /* ===== BOOKING ===== */
 function book(){
   const cur = getCurrent();
-  if(!cur){ openRegister(); return; }
+  if(!cur){ openAuth(); return; }
   
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
