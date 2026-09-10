@@ -11,7 +11,6 @@ html,body{overflow-x:hidden;}
 html.locked,body.locked{overflow:hidden!important;height:100vh!important;position:fixed!important;width:100%!important;top:0;left:0;right:0;bottom:0;}
 body{background:#0b1220;color:#e8eef7;}
 
-/* ===== BACKGROUND SHAPES ===== */
 #bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
 .shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 20s infinite ease-in-out;}
 .shape:nth-child(1){width:400px;height:400px;background:#0a6ebd;top:-100px;right:-100px;animation-delay:0s;}
@@ -27,7 +26,6 @@ body{background:#0b1220;color:#e8eef7;}
 }
 .grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
 
-/* ===== HEADER ===== */
 header{position:fixed;top:0;width:100%;padding:20px 50px;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:.4s;}
 header.scrolled{background:rgba(11,18,32,.85);backdrop-filter:blur(20px);padding:14px 50px;border-bottom:1px solid rgba(255,255,255,.06);}
 .logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;}
@@ -38,12 +36,10 @@ nav a::after{content:'';position:absolute;bottom:-6px;right:0;width:0;height:2px
 nav a:hover{color:#fff;}
 nav a:hover::after{width:100%;}
 
-/* ===== USER BUTTON ===== */
 .user-btn{display:flex;align-items:center;gap:10px;padding:10px 18px;background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:50px;cursor:pointer;transition:.3s;font-family:inherit;color:#e8eef7;font-size:14px;font-weight:600;}
 .user-btn:hover{background:rgba(0,194,168,.2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,194,168,.2);}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
 
-/* ===== AUTH MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
@@ -75,7 +71,6 @@ nav a:hover::after{width:100%;}
 .btn-ghost{background:rgba(255,255,255,.05);color:#e8eef7;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-3px);}
 
-/* ===== HERO ===== */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px 60px;position:relative;z-index:2;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:50px;font-size:13px;color:#00c2a8;margin-bottom:30px;opacity:0;animation:fadeUp 1s .2s forwards;}
 .hero-badge .dot{width:8px;height:8px;background:#00c2a8;border-radius:50%;animation:pulse 2s infinite;}
@@ -91,7 +86,6 @@ nav a:hover::after{width:100%;}
 .stat-num{font-size:36px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .stat-label{font-size:13px;color:#7a8899;margin-top:6px;}
 
-/* ===== SECTIONS ===== */
 .container{max-width:1200px;margin:0 auto;padding:100px 30px;position:relative;z-index:2;}
 .section-head{text-align:center;margin-bottom:70px;}
 .section-tag{display:inline-block;font-size:13px;color:#00c2a8;letter-spacing:3px;font-weight:700;margin-bottom:15px;text-transform:uppercase;}
@@ -99,7 +93,6 @@ nav a:hover::after{width:100%;}
 .section-title span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .section-sub{color:#7a8899;font-size:15px;max-width:520px;margin:0 auto;line-height:1.9;font-weight:300;}
 
-/* ===== SERVICES ===== */
 .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
 .service-card{background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:38px 30px;transition:.5s cubic-bezier(.2,.9,.3,1);position:relative;overflow:hidden;cursor:pointer;}
 .service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,194,168,.15),rgba(10,110,189,.15));opacity:0;transition:.5s;border-radius:24px;}
@@ -110,7 +103,6 @@ nav a:hover::after{width:100%;}
 .service-card h3{font-size:19px;font-weight:700;margin-bottom:10px;position:relative;z-index:1;}
 .service-card p{color:#7a8899;font-size:14px;line-height:1.8;position:relative;z-index:1;font-weight:300;}
 
-/* ===== BRANCHES ===== */
 .branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
 .branch-card{background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:35px;transition:.5s;position:relative;overflow:hidden;}
 .branch-card:hover{transform:translateY(-8px);border-color:rgba(0,194,168,.4);}
@@ -119,7 +111,6 @@ nav a:hover::after{width:100%;}
 .branch-info{color:#a8b5c8;font-size:14px;line-height:2.2;font-weight:300;}
 .branch-info b{color:#00c2a8;font-weight:600;}
 
-/* ===== BOOKING FORM ===== */
 .form-box{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:50px;max-width:680px;margin:0 auto;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.4);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .form-group{margin-bottom:22px;}
@@ -133,7 +124,6 @@ nav a:hover::after{width:100%;}
 .msg.ok{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);display:block;}
 .msg.err{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);display:block;}
 
-/* ===== ADMIN ===== */
 .admin{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:40px;backdrop-filter:blur(20px);}
 .admin-login{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
 .admin-login input{flex:1;min-width:200px;padding:15px 18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:15px;color:#e8eef7;font-family:inherit;outline:none;transition:.3s;}
@@ -151,21 +141,17 @@ tr:hover{background:rgba(255,255,255,.03);}
 .hidden{display:none;}
 .empty{text-align:center;color:#556070;padding:40px;font-size:14px;}
 
-/* ===== FOOTER ===== */
 footer{background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.06);padding:50px 30px 30px;text-align:center;position:relative;z-index:2;margin-top:60px;}
 .footer-logo{font-size:26px;font-weight:900;background:linear-gradient(135deg,#00c2a8,#0a6ebd,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:15px;display:flex;align-items:center;justify-content:center;gap:10px;}
 footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 
-/* ===== SCROLL REVEAL ===== */
 .reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.9,.3,1);}
 .reveal.show{opacity:1;transform:translateY(0);}
 
-/* ===== CUSTOM SCROLLBAR ===== */
 ::-webkit-scrollbar{width:10px;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00c2a8,#0a6ebd);border-radius:10px;}
 ::-webkit-scrollbar-track{background:#0b1220;}
 
-/* ===== MOBILE ===== */
 @media(max-width:768px){
   header{padding:16px 20px;}
   header.scrolled{padding:12px 20px;}
@@ -229,14 +215,12 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <div class="grid-overlay"></div>
 </div>
 
-<!-- ===== AUTH MODAL ===== -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
     <div class="modal-logo">🦷</div>
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <!-- REGISTER FIELDS -->
     <div id="registerFields">
       <div class="form-group">
         <label>نام و نام خانوادگی</label>
@@ -263,7 +247,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
       </div>
     </div>
     
-    <!-- LOGIN FIELDS -->
     <div id="loginFields" class="hidden">
       <div class="form-group">
         <label>شماره تلفن همراه</label>
@@ -294,7 +277,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <a href="#booking">نوبت‌دهی</a>
     <a href="#admin">پنل منشی</a>
   </nav>
-  <button class="user-btn hidden" id="userBtn" onclick="goToDashboard()">
+  <button class="user-btn hidden" id="userBtn">
     <div class="user-avatar" id="userAvatar">ع</div>
     <span class="user-name" id="userName">کاربر</span>
   </button>
@@ -461,7 +444,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
-/* ===== LOCK/UNLOCK BODY ===== */
 function lockBody(){
   document.documentElement.classList.add('locked');
   document.body.classList.add('locked');
@@ -471,18 +453,15 @@ function unlockBody(){
   document.body.classList.remove('locked');
 }
 
-/* ===== HEADER SCROLL ===== */
 window.addEventListener('scroll',()=>{
   document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
 });
 
-/* ===== SCROLL REVEAL ===== */
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
 },{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ===== DATA HELPERS ===== */
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
 const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
@@ -490,7 +469,6 @@ const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
-/* ===== AUTH MODE ===== */
 let authMode = 'register';
 
 function switchMode(mode){
@@ -522,7 +500,6 @@ function switchMode(mode){
   }
 }
 
-/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(cur){
@@ -535,6 +512,8 @@ window.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('registerModal').classList.remove('hide');
     switchMode('register');
   }
+  
+  document.getElementById('userBtn').addEventListener('click', goToDashboard);
 });
 
 function openAuth(){
@@ -546,7 +525,6 @@ function closeAuth(){
   unlockBody();
 }
 
-/* ===== VALIDATION ===== */
 function toEnglishDigits(str){
   const fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
   return str.replace(/[۰-۹]/g,d=>fa.indexOf(d))
@@ -568,13 +546,11 @@ function validPass(p){
   return p.length >= 6;
 }
 
-/* ===== SUBMIT AUTH ===== */
 function submitAuth(){
   if(authMode === 'register') doRegister();
   else doLogin();
 }
 
-/* ===== REGISTER ===== */
 function doRegister(){
   const nameEl = document.getElementById('regName');
   const phoneEl = document.getElementById('regPhone');
@@ -635,7 +611,6 @@ function doRegister(){
   closeAuth();
 }
 
-/* ===== LOGIN ===== */
 function doLogin(){
   const phoneEl = document.getElementById('loginPhone');
   const passEl = document.getElementById('loginPass');
@@ -684,7 +659,6 @@ function doLogin(){
   closeAuth();
 }
 
-/* ===== PHONE INPUT FORMATTING ===== */
 document.getElementById('regPhone').addEventListener('input',function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
@@ -692,7 +666,6 @@ document.getElementById('loginPhone').addEventListener('input',function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
 
-/* ===== SHOW USER ===== */
 function showUser(user){
   const btn = document.getElementById('userBtn');
   const avatar = document.getElementById('userAvatar');
@@ -705,12 +678,10 @@ function showUser(user){
   uname.textContent = firstName;
 }
 
-/* ===== GO TO DASHBOARD ===== */
 function goToDashboard(){
   window.location.href = 'dashboard.html';
 }
 
-/* ===== BOOKING ===== */
 function book(){
   const cur = getCurrent();
   if(!cur){ openAuth(); return; }
@@ -736,7 +707,6 @@ function book(){
   ['name','phone','branch','service','date','time'].forEach(id=>document.getElementById(id).value='');
 }
 
-/* ===== ADMIN ===== */
 function login(){
   const pass = document.getElementById('pass').value;
   if(pass === '1234'){
