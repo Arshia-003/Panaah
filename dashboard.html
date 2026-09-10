@@ -72,6 +72,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 
 .new-appt-form{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:24px;}
 .new-appt-form .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:end;margin-bottom:14px;}
+.new-appt-form .row.two{grid-template-columns:1fr 1fr;}
 .new-appt-form .row.full{grid-template-columns:1fr;}
 .new-appt-form label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:7px;}
 .new-appt-form input,.new-appt-form select{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
@@ -92,6 +93,35 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .pay-opt .desc{font-size:11.5px;color:#7a8899;font-weight:400;}
 .pay-opt.selected .ttl{color:#00c2a8;}
 .pay-opt.selected .desc{color:#a8b5c8;}
+
+.pay-detail{margin-top:16px;padding:20px;background:rgba(0,194,168,.06);border:1px solid rgba(0,194,168,.2);border-radius:16px;display:none;animation:slideDown .35s cubic-bezier(.2,.9,.3,1);}
+.pay-detail.show{display:block;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+
+.installments-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin-top:12px;}
+.inst-opt{padding:14px 10px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:12px;cursor:pointer;transition:.3s;text-align:center;font-family:inherit;color:#e8eef7;}
+.inst-opt:hover{border-color:rgba(0,194,168,.4);background:rgba(0,0,0,.4);}
+.inst-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.15);box-shadow:0 0 0 4px rgba(0,194,168,.1);}
+.inst-opt .n{font-size:16px;font-weight:800;margin-bottom:4px;}
+.inst-opt.selected .n{color:#00c2a8;}
+.inst-opt .sm{font-size:10.5px;color:#7a8899;font-weight:500;}
+
+.calc-box{margin-top:16px;padding:18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:14px;}
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;}
+.calc-row:not(:last-child){border-bottom:1px dashed rgba(255,255,255,.06);}
+.calc-row .k{color:#a8b5c8;font-weight:500;}
+.calc-row .v{color:#e8eef7;font-weight:700;}
+.calc-row.total{padding-top:14px;margin-top:4px;border-top:2px solid rgba(0,194,168,.25);border-bottom:none;font-size:16px;}
+.calc-row.total .k{color:#00c2a8;font-weight:800;}
+.calc-row.total .v{color:#00c2a8;font-weight:900;font-size:18px;}
+.calc-row .v.green{color:#00c2a8;}
+.calc-row .v.orange{color:#ffa726;}
+.calc-row .v.red{color:#ff6b5b;}
+
+.discount-badge{display:inline-block;padding:4px 10px;background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);border-radius:8px;font-size:11px;font-weight:700;margin-right:8px;}
+
+.detail-title{font-size:14.5px;font-weight:800;color:#00c2a8;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.detail-sub{font-size:12px;color:#7a8899;line-height:1.7;margin-bottom:4px;font-weight:400;}
 
 .submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;margin-top:14px;}
 .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(10,110,189,.4);}
@@ -114,7 +144,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
 
-/* ===== DATE MODAL ===== */
 .date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
 .date-modal-overlay.hide{opacity:0;pointer-events:none;}
 .date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:440px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;overflow:hidden;transform:scale(1);transition:.35s;}
@@ -163,11 +192,12 @@ tr:hover{background:rgba(255,255,255,.03);}
   .section{padding:22px 18px;}
   th,td{padding:10px 8px;font-size:12px;}
   .stat-card .num{font-size:24px;}
-  .new-appt-form .row{grid-template-columns:1fr;}
+  .new-appt-form .row,.new-appt-form .row.two{grid-template-columns:1fr;}
   .pay-options{grid-template-columns:1fr;}
   .table-wrap{overflow-x:auto;}
   .date-modal{padding:22px 18px;}
   .cal-day{padding:9px 0;font-size:12.5px;}
+  .installments-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
@@ -281,19 +311,72 @@ tr:hover{background:rgba(255,255,255,.03);}
       </div>
       <div class="row full">
         <div>
+          <label>خدمت مورد نظر</label>
+          <select id="newService" onchange="onServiceChange()">
+            <option value="">-- انتخاب کنید --</option>
+            <option value="ایمپلنت" data-price="25000000">ایمپلنت — ۲۵,۰۰۰,۰۰۰ تومان</option>
+            <option value="ارتودنسی" data-price="45000000">ارتودنسی — ۴۵,۰۰۰,۰۰۰ تومان</option>
+            <option value="جرم‌گیری" data-price="1500000">جرم‌گیری — ۱,۵۰۰,۰۰۰ تومان</option>
+            <option value="کامپوزیت" data-price="3500000">کامپوزیت — ۳,۵۰۰,۰۰۰ تومان</option>
+            <option value="عصب‌کشی" data-price="5000000">عصب‌کشی — ۵,۰۰۰,۰۰۰ تومان</option>
+            <option value="کشیدن دندان" data-price="2000000">کشیدن دندان — ۲,۰۰۰,۰۰۰ تومان</option>
+          </select>
+        </div>
+      </div>
+      <div class="row full">
+        <div>
           <label>نوع پرداخت</label>
           <div class="pay-options">
-            <button type="button" class="pay-opt" data-pay="نقدی" onclick="selectPay(this)">
+            <button type="button" class="pay-opt" data-pay="نقدی" onclick="selectPay('نقدی')">
               <div class="ttl">💵 نقدی</div>
-              <div class="desc">پرداخت کامل در محل</div>
+              <div class="desc">۳٪ تخفیف نقدی</div>
             </button>
-            <button type="button" class="pay-opt" data-pay="قسطی" onclick="selectPay(this)">
+            <button type="button" class="pay-opt" data-pay="قسطی" onclick="selectPay('قسطی')">
               <div class="ttl">💳 قسطی</div>
               <div class="desc">پرداخت در چند قسط</div>
             </button>
           </div>
         </div>
       </div>
+      
+      <div class="pay-detail" id="cashDetail">
+        <div class="detail-title">💵 پرداخت نقدی <span class="discount-badge">۳٪ تخفیف</span></div>
+        <div class="detail-sub">با پرداخت نقدی، ۳٪ از مبلغ کل کسر می‌شود.</div>
+        <div class="calc-box">
+          <div class="calc-row"><span class="k">قیمت اصلی</span><span class="v" id="cashOriginal">—</span></div>
+          <div class="calc-row"><span class="k">تخفیف نقدی (۳٪)</span><span class="v green" id="cashDiscount">—</span></div>
+          <div class="calc-row total"><span class="k">مبلغ قابل پرداخت</span><span class="v" id="cashFinal">—</span></div>
+        </div>
+      </div>
+      
+      <div class="pay-detail" id="installmentDetail">
+        <div class="detail-title">💳 پرداخت قسطی</div>
+        <div class="detail-sub">تعداد اقساط را انتخاب کنید. برای هر ماه تاخیر ۳٪ به قیمت اضافه می‌شود.</div>
+        <div class="installments-grid" id="instGrid">
+          <button type="button" class="inst-opt" data-n="3" onclick="selectInstallments(3)">
+            <div class="n">۳</div><div class="sm">ماه</div>
+          </button>
+          <button type="button" class="inst-opt" data-n="6" onclick="selectInstallments(6)">
+            <div class="n">۶</div><div class="sm">ماه</div>
+          </button>
+          <button type="button" class="inst-opt" data-n="9" onclick="selectInstallments(9)">
+            <div class="n">۹</div><div class="sm">ماه</div>
+          </button>
+          <button type="button" class="inst-opt" data-n="12" onclick="selectInstallments(12)">
+            <div class="n">۱۲</div><div class="sm">ماه</div>
+          </button>
+          <button type="button" class="inst-opt" data-n="18" onclick="selectInstallments(18)">
+            <div class="n">۱۸</div><div class="sm">ماه</div>
+          </button>
+        </div>
+        <div class="calc-box" id="instCalcBox" style="display:none;">
+          <div class="calc-row"><span class="k">قیمت اصلی</span><span class="v" id="instOriginal">—</span></div>
+          <div class="calc-row"><span class="k">سود اقساط (<span id="instPct">—</span>٪)</span><span class="v orange" id="instProfit">—</span></div>
+          <div class="calc-row total"><span class="k">مبلغ کل</span><span class="v" id="instTotal">—</span></div>
+          <div class="calc-row" style="border-top:1px dashed rgba(255,255,255,.06);padding-top:14px;margin-top:6px;"><span class="k">مبلغ هر قسط</span><span class="v green" id="instPerMonth" style="font-size:17px;">—</span></div>
+        </div>
+      </div>
+      
       <button class="submit-btn" onclick="addAppointment()">ثبت نوبت</button>
       <div class="form-msg" id="formMsg"></div>
     </div>
@@ -312,7 +395,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 
 </div>
 
-<!-- ===== DATE PICKER MODAL ===== -->
 <div class="date-modal-overlay hide" id="dateModal">
   <div class="date-modal">
     <div class="cal-head">
@@ -344,6 +426,18 @@ const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null'
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
+
+/* ===== SERVICE PRICES ===== */
+const SERVICE_PRICES = {
+  'ایمپلنت': 25000000,
+  'ارتودنسی': 45000000,
+  'جرم‌گیری': 1500000,
+  'کامپوزیت': 3500000,
+  'عصب‌کشی': 5000000,
+  'کشیدن دندان': 2000000
+};
+const INSTALLMENT_RATE = 3;   // ۳٪ به ازای هر ماه
+const CASH_DISCOUNT = 3;      // ۳٪ تخفیف نقدی
 
 /* ===== JALALI DATE CONVERTER ===== */
 function toJalali(gy, gm, gd){
@@ -388,19 +482,25 @@ function toGregorian(jy, jm, jd){
 function jalaliMonthLength(jy, jm){
   if(jm <= 6) return 31;
   if(jm <= 11) return 30;
-  // اسفند
   const leap = ((jy + 12) % 33) % 4;
   return (leap === 1) ? 30 : 29;
 }
 function jalaliMonthName(jm){
   return ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'][jm-1];
 }
-function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+function toFa(n){
+  const fa = '۰۱۲۳۴۵۶۷۸۹';
+  return String(n).replace(/\d/g, d=>fa[d]);
+}
+function formatPrice(n){
+  return toFa(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+}
 
 /* ===== STATE ===== */
-let selectedJalali = null; // {jy, jm, jd}
-let calendarView = null;   // {jy, jm}
+let selectedJalali = null;
+let calendarView = null;
 let selectedPay = null;
+let selectedInstallments = null;
 
 /* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
@@ -451,11 +551,6 @@ function renderStats(user){
   document.getElementById('statPending').textContent = toFa(pending.length);
   document.getElementById('statApproved').textContent = toFa(approved.length);
   document.getElementById('statBranches').textContent = toFa(branches.size);
-}
-
-function toFa(n){
-  const fa = '۰۱۲۳۴۵۶۷۸۹';
-  return String(n).replace(/\d/g, d=>fa[d]);
 }
 
 /* ===== EDIT EMAIL ===== */
@@ -565,11 +660,76 @@ function validEmail(e){
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 
+/* ===== SERVICE CHANGE ===== */
+function onServiceChange(){
+  if(selectedPay === 'نقدی') updateCashCalc();
+  if(selectedPay === 'قسطی' && selectedInstallments) updateInstCalc();
+}
+
 /* ===== PAY SELECT ===== */
-function selectPay(btn){
-  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedPay = btn.dataset.pay;
+function selectPay(payType){
+  selectedPay = payType;
+  document.querySelectorAll('.pay-opt').forEach(b=>{
+    b.classList.toggle('selected', b.dataset.pay === payType);
+  });
+  
+  const cashEl = document.getElementById('cashDetail');
+  const instEl = document.getElementById('installmentDetail');
+  
+  if(payType === 'نقدی'){
+    cashEl.classList.add('show');
+    instEl.classList.remove('show');
+    selectedInstallments = null;
+    document.querySelectorAll('.inst-opt').forEach(b=>b.classList.remove('selected'));
+    updateCashCalc();
+  } else {
+    instEl.classList.add('show');
+    cashEl.classList.remove('show');
+    updateInstCalc();
+  }
+}
+
+/* ===== CASH CALC ===== */
+function updateCashCalc(){
+  const service = document.getElementById('newService').value;
+  if(!service) return;
+  const price = SERVICE_PRICES[service];
+  const discount = Math.round(price * CASH_DISCOUNT / 100);
+  const final = price - discount;
+  
+  document.getElementById('cashOriginal').textContent = formatPrice(price) + ' تومان';
+  document.getElementById('cashDiscount').textContent = '−' + formatPrice(discount) + ' تومان';
+  document.getElementById('cashFinal').textContent = formatPrice(final) + ' تومان';
+}
+
+/* ===== INSTALLMENTS ===== */
+function selectInstallments(n){
+  selectedInstallments = n;
+  document.querySelectorAll('.inst-opt').forEach(b=>{
+    b.classList.toggle('selected', parseInt(b.dataset.n) === n);
+  });
+  updateInstCalc();
+}
+
+function updateInstCalc(){
+  const service = document.getElementById('newService').value;
+  if(!service || !selectedInstallments) return;
+  
+  const price = SERVICE_PRICES[service];
+  const months = selectedInstallments;
+  // برای هر ماه تاخیر ۳٪ به قیمت اضافه می‌شود
+  // ماه اول بدون تاخیر → (n-1) ماه تاخیر
+  const profitPct = (months - 1) * INSTALLMENT_RATE;
+  const profit = Math.round(price * profitPct / 100);
+  const total = price + profit;
+  const perMonth = Math.round(total / months);
+  
+  document.getElementById('instOriginal').textContent = formatPrice(price) + ' تومان';
+  document.getElementById('instPct').textContent = toFa(profitPct);
+  document.getElementById('instProfit').textContent = '+' + formatPrice(profit) + ' تومان';
+  document.getElementById('instTotal').textContent = formatPrice(total) + ' تومان';
+  document.getElementById('instPerMonth').textContent = formatPrice(perMonth) + ' تومان';
+  document.getElementById('instCalcBox').style.display = 'block';
 }
 
 /* ===== DATE PICKER ===== */
@@ -601,14 +761,10 @@ function renderCalendar(){
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
   
-  // روز اول ماه شمسی -> تبدیل به میلادی -> گرفتن dayOfWeek
   const [gy, gm, gd] = toGregorian(jy, jm, 1);
   const firstDate = new Date(gy, gm - 1, gd);
-  // روزهای هفته در جاوااسکریپت: 0=یکشنبه ... 6=شنبه
-  // شنبه=6, یکشنبه=0, دوشنبه=1, سه‌شنبه=2, چهارشنبه=3, پنجشنبه=4, جمعه=5
-  // می‌خواهیم شنبه ستون اول باشه
   const jsDay = firstDate.getDay();
-  const offset = (jsDay + 1) % 7; // شنبه=0, یکشنبه=1, ... جمعه=6
+  const offset = (jsDay + 1) % 7;
   
   for(let i = 0; i < offset; i++){
     const empty = document.createElement('div');
@@ -626,20 +782,13 @@ function renderCalendar(){
     btn.className = 'cal-day';
     btn.textContent = toFa(d);
     
-    // disable گذشته‌ها
     let isPast = false;
     if(jy < tjy) isPast = true;
     else if(jy === tjy && jm < tjm) isPast = true;
     else if(jy === tjy && jm === tjm && d < tjd) isPast = true;
     
-    if(isPast){
-      btn.classList.add('disabled');
-    }
-    
-    if(jy === tjy && jm === tjm && d === tjd){
-      btn.classList.add('today');
-    }
-    
+    if(isPast) btn.classList.add('disabled');
+    if(jy === tjy && jm === tjm && d === tjd) btn.classList.add('today');
     if(selectedJalali && selectedJalali.jy === jy && selectedJalali.jm === jm && selectedJalali.jd === d){
       btn.classList.add('selected');
     }
@@ -672,31 +821,36 @@ function confirmDate(){
 /* ===== ADD APPOINTMENT ===== */
 function addAppointment(){
   const cur = getCurrent();
-  const dateText = document.getElementById('dateBtnText').textContent;
   const time = document.getElementById('newTime').value;
   const branch = document.getElementById('newBranch').value;
+  const service = document.getElementById('newService').value;
   const msg = document.getElementById('formMsg');
   
-  if(!selectedJalali){
-    msg.className = 'form-msg err';
-    msg.textContent = 'لطفاً تاریخ را انتخاب کنید';
-    return;
+  if(!selectedJalali){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً تاریخ را انتخاب کنید'; return; }
+  if(!time){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً ساعت را انتخاب کنید'; return; }
+  if(!branch){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً شعبه را انتخاب کنید'; return; }
+  if(!service){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً خدمت مورد نظر را انتخاب کنید'; return; }
+  if(!selectedPay){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً نوع پرداخت را انتخاب کنید'; return; }
+  if(selectedPay === 'قسطی' && !selectedInstallments){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً تعداد اقساط را انتخاب کنید'; return; }
+  
+  const price = SERVICE_PRICES[service];
+  let total = price;
+  let payInfo = '';
+  
+  if(selectedPay === 'نقدی'){
+    const discount = Math.round(price * CASH_DISCOUNT / 100);
+    total = price - discount;
+    payInfo = `نقدی — ${formatPrice(total)} تومان (${CASH_DISCOUNT}٪ تخفیف)`;
+  } else {
+    const profitPct = (selectedInstallments - 1) * INSTALLMENT_RATE;
+    const profit = Math.round(price * profitPct / 100);
+    total = price + profit;
+    const perMonth = Math.round(total / selectedInstallments);
+    payInfo = `${toFa(selectedInstallments)} قسط — هر قسط ${formatPrice(perMonth)} تومان`;
   }
-  if(!time){
-    msg.className = 'form-msg err';
-    msg.textContent = 'لطفاً ساعت را انتخاب کنید';
-    return;
-  }
-  if(!branch){
-    msg.className = 'form-msg err';
-    msg.textContent = 'لطفاً شعبه را انتخاب کنید';
-    return;
-  }
-  if(!selectedPay){
-    msg.className = 'form-msg err';
-    msg.textContent = 'لطفاً نوع پرداخت را انتخاب کنید';
-    return;
-  }
+  
+  const { jy, jm, jd } = selectedJalali;
+  const dateText = `${toFa(jd)} ${jalaliMonthName(jm)} ${toFa(jy)}`;
   
   const data = getData();
   data.push({
@@ -704,10 +858,14 @@ function addAppointment(){
     name: cur.name,
     phone: cur.phone,
     branch: branch,
-    service: '—',
+    service: service,
+    price: price,
+    total: total,
+    pay: selectedPay,
+    installments: selectedPay === 'قسطی' ? selectedInstallments : null,
+    payInfo: payInfo,
     date: dateText,
     time: time,
-    pay: selectedPay,
     user: cur.phone,
     status: 'pending'
   });
@@ -719,12 +877,18 @@ function addAppointment(){
   // reset
   selectedJalali = null;
   selectedPay = null;
+  selectedInstallments = null;
   document.getElementById('dateBtnText').textContent = 'انتخاب تاریخ';
   document.getElementById('dateBtnText').classList.add('ph');
   document.getElementById('dateBtn').classList.remove('filled');
   document.getElementById('newTime').value = '';
   document.getElementById('newBranch').value = '';
+  document.getElementById('newService').value = '';
   document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.inst-opt').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('cashDetail').classList.remove('show');
+  document.getElementById('installmentDetail').classList.remove('show');
+  document.getElementById('instCalcBox').style.display = 'none';
   
   renderStats(cur);
   renderAppointments(cur);
@@ -750,19 +914,21 @@ function renderAppointments(user){
   const table = document.createElement('table');
   table.innerHTML = `
     <thead>
-      <tr><th>تاریخ</th><th>ساعت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
+      <tr><th>تاریخ</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
     </thead>
   `;
   const tbody = document.createElement('tbody');
   mine.slice().reverse().forEach(a=>{
     const status = a.status || 'pending';
     const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
+    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments || 0)} قسط)` : 'نقدی';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${a.date}</td>
       <td>${a.time}</td>
+      <td>${a.service || '—'}</td>
       <td>${a.branch || '—'}</td>
-      <td>${a.pay || '—'}</td>
+      <td>${payLabel}</td>
       <td><span class="badge ${status}">${statusLabel}</span></td>
       <td><button class="del" onclick="delAppt(${a.id})">لغو</button></td>
     `;
