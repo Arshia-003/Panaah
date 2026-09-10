@@ -41,7 +41,7 @@ nav a:hover::after{width:100%;}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
 .user-avatar.admin{background:linear-gradient(135deg,#7c5cff,#0a6ebd);}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
+.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
 .modal-overlay.hide .modal{transform:scale(.9);}
@@ -303,6 +303,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامی حقوق محفوظ است</p>
 </footer>
 
+<script src="storage.js"></script>
 <script>
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
@@ -315,14 +316,6 @@ const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
 },{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
-const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
-const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
-const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
-
-const ADMIN_USERNAME = 'sherkat';
-const ADMIN_PASSWORD = '09126481838';
 
 let authMode = 'register';
 
@@ -356,7 +349,7 @@ function switchMode(mode){
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
-  const cur = getCurrent();
+  const cur = getCurrentUser();
   if(cur){
     showUser(cur);
     unlockBody();
@@ -413,7 +406,7 @@ function doRegister(){
   if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
-  const user = {
+  const newUser = {
     id: Date.now(),
     name: nameEl.value.trim(),
     phone: toEnglishDigits(phoneEl.value.trim()),
@@ -425,22 +418,22 @@ function doRegister(){
   };
   
   const users = getUsers();
-  const existing = users.find(u=>u.phone===user.phone);
+  const existing = users.find(u=>u.phone===newUser.phone);
   if(existing){
-    user.address = existing.address || '';
-    user.role = existing.role || 'user';
-    user.joinedAt = existing.joinedAt || user.joinedAt;
-    user.id = existing.id;
-    Object.assign(existing, user);
+    newUser.address = existing.address || '';
+    newUser.role = existing.role || 'user';
+    newUser.joinedAt = existing.joinedAt || newUser.joinedAt;
+    newUser.id = existing.id;
+    Object.assign(existing, newUser);
     setUsers(users);
-    setCurrent(existing);
+    setCurrentUser(existing);
   } else {
-    users.push(user);
+    users.push(newUser);
     setUsers(users);
-    setCurrent(user);
+    setCurrentUser(newUser);
   }
   
-  showUser(getCurrent());
+  showUser(getCurrentUser());
   closeAuth();
 }
 
@@ -461,38 +454,32 @@ function doLogin(){
   if(!ok) return;
   
   // چک ادمین
-  if(raw.toLowerCase() === ADMIN_USERNAME && passEl.value === ADMIN_PASSWORD){
-    const adminUser = {
-      id: 'admin',
-      name: 'شرکت',
-      username: ADMIN_USERNAME,
-      phone: '',
-      email: '',
-      address: '',
-      password: ADMIN_PASSWORD,
-      role: 'admin',
-      joinedAt: new Date().toISOString()
-    };
-    // اگه قبلاً ذخیره شده بود، نگهش دار
+  if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
     const users = getUsers();
-    const existing = users.find(u=>u.username === ADMIN_USERNAME);
-    if(existing){
-      existing.role = 'admin';
-      existing.password = ADMIN_PASSWORD;
+    let admin = users.find(u=>u.role === 'admin');
+    if(!admin){
+      admin = {
+        id: 'admin',
+        username: 'sherkat',
+        name: 'شرکت',
+        phone: '',
+        email: '',
+        address: '',
+        password: '09126481838',
+        role: 'admin',
+        joinedAt: new Date().toISOString()
+      };
+      users.push(admin);
       setUsers(users);
-      setCurrent(existing);
-    } else {
-      users.push(adminUser);
-      setUsers(users);
-      setCurrent(adminUser);
     }
-    showUser(getCurrent());
+    setCurrentUser(admin);
+    showUser(admin);
     closeAuth();
     setTimeout(()=>{ window.location.href = 'admin.html'; }, 300);
     return;
   }
   
-  // چک کاربرهای عادی
+  // چک کاربر عادی
   const users = getUsers();
   let found = null;
   const digits = toEnglishDigits(raw).replace(/\D/g,'');
@@ -517,7 +504,7 @@ function doLogin(){
     return;
   }
   
-  setCurrent(found);
+  setCurrentUser(found);
   showUser(found);
   closeAuth();
 }
@@ -546,7 +533,7 @@ function showUser(user){
 }
 
 function goToDashboard(){
-  const cur = getCurrent();
+  const cur = getCurrentUser();
   if(!cur){ openAuth(); return; }
   if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
   window.location.href = 'dashboard.html';
