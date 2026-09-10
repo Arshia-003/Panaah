@@ -90,7 +90,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 .tab-content.active{display:block;animation:fadeIn .4s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-/* ===== MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.5);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;overflow:auto;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(124,92,255,.3);border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);max-height:90vh;overflow-y:auto;}
@@ -138,7 +137,7 @@ tr:hover{background:rgba(255,255,255,.03);}
 <header class="admin-header">
   <a href="index.html" class="logo"><div class="logo-mark">⚙</div> پنل مدیریت پناه</a>
   <div class="header-actions">
-    <button class="header-btn refresh" onclick="refreshAll()">🔄 بروزرسانی</button>
+    <button class="header-btn refresh" onclick="refreshAll(event)">🔄 بروزرسانی</button>
     <a href="index.html" class="header-btn">← سایت</a>
     <button class="header-btn logout" onclick="logout()">خروج</button>
   </div>
@@ -183,7 +182,7 @@ tr:hover{background:rgba(255,255,255,.03);}
     <div class="section">
       <div class="section-head">
         <h2>لیست کاربران ثبت‌نام‌شده</h2>
-        <input type="text" class="search-box" placeholder="🔍 جستجو بر اساس نام، شماره یا ایمیل..." oninput="filterUsers(this.value)">
+        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterUsers(this.value)">
       </div>
       <div class="table-wrap">
         <table>
@@ -200,7 +199,7 @@ tr:hover{background:rgba(255,255,255,.03);}
     <div class="section">
       <div class="section-head">
         <h2>همه نوبت‌ها</h2>
-        <input type="text" class="search-box" placeholder="🔍 جستجو بر اساس نام، خدمت یا شعبه..." oninput="filterAppts(this.value)">
+        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterAppts(this.value)">
       </div>
       <div class="table-wrap">
         <table>
@@ -220,7 +219,7 @@ tr:hover{background:rgba(255,255,255,.03);}
     <h3>📅 تعیین نوبت برای کاربر</h3>
     <p class="sub" id="assignSub">—</p>
     <div class="form-group">
-      <label>تاریخ و بازه (متن آزاد)</label>
+      <label>تاریخ و بازه</label>
       <input type="text" id="assignDate" placeholder="مثلاً ۱۵ مهر تا ۲۰ مهر ۱۴۰۴">
     </div>
     <div class="form-group">
@@ -257,19 +256,14 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 </div>
 
+<script src="storage.js"></script>
 <script>
-const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
-const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
-const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
-const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
-const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
-
 let currentAssignPhone = null;
 let usersFilter = '';
 let apptsFilter = '';
 
 window.addEventListener('DOMContentLoaded',()=>{
-  const cur = getCurrent();
+  const cur = getCurrentUser();
   if(!cur || cur.role !== 'admin'){
     window.location.href = 'index.html';
     return;
@@ -279,16 +273,15 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 /* ===== AUTO SYNC ===== */
 window.addEventListener('storage',(e)=>{
-  if(e.key === 'appointments' || e.key === 'panaah_users'){
+  if(e.key === 'panaah_data_v1' || e.key === 'appointments' || e.key === 'panaah_users'){
     renderAll();
   }
 });
 
 /* ===== REFRESH ===== */
-function refreshAll(){
+function refreshAll(ev){
   renderAll();
-  // یه نوتیفیکیشن کوچیک
-  const btn = event.target;
+  const btn = ev ? ev.target : null;
   if(btn){
     const orig = btn.textContent;
     btn.textContent = '✓ بروز شد';
@@ -307,7 +300,7 @@ function renderAll(){
 
 function renderStats(){
   const users = getUsers().filter(u=>u.role !== 'admin');
-  const appts = getData();
+  const appts = getAppointments();
   const pending = appts.filter(a=>a.status === 'pending');
   const approved = appts.filter(a=>a.status === 'approved');
   
@@ -327,7 +320,7 @@ function renderStats(){
 
 function renderUsers(){
   const list = document.getElementById('usersList');
-  const appts = getData();
+  const appts = getAppointments();
   let users = getUsers().filter(u=>u.role !== 'admin');
   
   if(usersFilter){
@@ -366,7 +359,7 @@ function renderUsers(){
 
 function renderAppts(){
   const list = document.getElementById('apptsList');
-  let appts = getData();
+  let appts = getAppointments();
   
   if(apptsFilter){
     const f = apptsFilter.toLowerCase();
@@ -412,20 +405,20 @@ function filterUsers(v){ usersFilter = v.trim(); renderUsers(); }
 function filterAppts(v){ apptsFilter = v.trim(); renderAppts(); }
 
 function setStatus(id, status){
-  const data = getData();
-  const found = data.find(a=>a.id===id);
+  const appts = getAppointments();
+  const found = appts.find(a=>a.id===id);
   if(found){
     found.status = status;
-    setData(data);
+    setAppointments(appts);
     renderAll();
   }
 }
 
 function deleteAppt(id){
   if(!confirm('این نوبت حذف شود؟')) return;
-  let data = getData();
-  data = data.filter(a=>a.id!==id);
-  setData(data);
+  let appts = getAppointments();
+  appts = appts.filter(a=>a.id!==id);
+  setAppointments(appts);
   renderAll();
 }
 
@@ -433,8 +426,8 @@ function deleteUser(phone){
   if(!confirm('این کاربر و همه نوبت‌هایش حذف شوند؟')) return;
   let users = getUsers().filter(u=>u.phone !== phone);
   setUsers(users);
-  let data = getData().filter(a=>a.user !== phone);
-  setData(data);
+  let appts = getAppointments().filter(a=>a.user !== phone);
+  setAppointments(appts);
   renderAll();
 }
 
@@ -458,8 +451,8 @@ function saveAssign(){
   const users = getUsers();
   const user = users.find(u=>u.phone === currentAssignPhone);
   if(!user){ alert('کاربر پیدا نشد'); return; }
-  const data = getData();
-  data.push({
+  const appts = getAppointments();
+  appts.push({
     id: Date.now(),
     name: user.name,
     phone: user.phone,
@@ -472,14 +465,14 @@ function saveAssign(){
     user: user.phone,
     status: status
   });
-  setData(data);
+  setAppointments(appts);
   closeAssign();
   renderAll();
 }
 
 function logout(){
   if(!confirm('از حساب خارج می‌شوید؟')) return;
-  localStorage.removeItem('panaah_current');
+  clearCurrentUser();
   window.location.href = 'index.html';
 }
 
