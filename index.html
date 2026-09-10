@@ -41,7 +41,7 @@ nav a:hover::after{width:100%;}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
 .user-avatar.admin{background:linear-gradient(135deg,#7c5cff,#0a6ebd);}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
+.modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
 .modal-overlay.hide .modal{transform:scale(.9);}
@@ -156,17 +156,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
-}
-@media(max-height:700px){
-  .modal{padding:22px 32px 20px;}
-  .modal-logo{width:42px;height:42px;font-size:20px;margin-bottom:8px;border-radius:12px;}
-  .modal h2{font-size:17px;margin-bottom:4px;}
-  .modal .sub{font-size:11px;margin-bottom:12px;}
-  .modal .form-group{margin-bottom:8px;}
-  .modal .form-group label{font-size:11.5px;margin-bottom:4px;}
-  .modal .form-group input{padding:9px 13px;font-size:13.5px;}
-  .modal .btn-primary{padding:11px;font-size:14px;margin-top:4px;}
-  .switch-auth{margin-top:10px;font-size:12px;padding-top:10px;}
 }
 </style>
 </head>
@@ -309,7 +298,8 @@ function lockBody(){ document.documentElement.classList.add('locked'); document.
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
 window.addEventListener('scroll',()=>{
-  document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
+  const h = document.getElementById('header');
+  if(h) h.classList.toggle('scrolled', window.scrollY > 50);
 });
 
 const io = new IntersectionObserver((entries)=>{
@@ -418,13 +408,11 @@ function doRegister(){
   };
   
   const users = getUsers();
-  const existing = users.find(u=>u.phone===newUser.phone);
+  const existing = users.find(u => u.phone === newUser.phone && u.role !== 'admin');
   if(existing){
-    newUser.address = existing.address || '';
-    newUser.role = existing.role || 'user';
-    newUser.joinedAt = existing.joinedAt || newUser.joinedAt;
-    newUser.id = existing.id;
-    Object.assign(existing, newUser);
+    existing.name = newUser.name;
+    existing.email = newUser.email;
+    existing.password = newUser.password;
     setUsers(users);
     setCurrentUser(existing);
   } else {
@@ -453,10 +441,10 @@ function doLogin(){
   if(!passEl.value){ errPass.classList.add('show'); errPass.textContent = 'رمز عبور را وارد کنید'; passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
-  // چک ادمین
+  // ورود ادمین
   if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
-    const users = getUsers();
-    let admin = users.find(u=>u.role === 'admin');
+    let users = getUsers();
+    let admin = users.find(u => u.role === 'admin');
     if(!admin){
       admin = {
         id: 'admin',
@@ -471,6 +459,10 @@ function doLogin(){
       };
       users.push(admin);
       setUsers(users);
+    } else {
+      admin.password = '09126481838';
+      admin.role = 'admin';
+      setUsers(users);
     }
     setCurrentUser(admin);
     showUser(admin);
@@ -479,15 +471,19 @@ function doLogin(){
     return;
   }
   
-  // چک کاربر عادی
+  // ورود کاربر عادی
   const users = getUsers();
   let found = null;
   const digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
-    found = users.find(u=>u.phone === digits && u.role !== 'admin');
+    found = users.find(u => u.phone === digits && u.role !== 'admin');
   } else {
     const nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
-    found = users.find(u=>u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm && u.role !== 'admin');
+    found = users.find(u =>
+      u.role !== 'admin' &&
+      u.name &&
+      u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm
+    );
   }
   
   if(!found){
@@ -509,7 +505,7 @@ function doLogin(){
   closeAuth();
 }
 
-document.getElementById('regPhone').addEventListener('input',function(){
+document.getElementById('regPhone').addEventListener('input', function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
 
