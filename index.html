@@ -53,14 +53,14 @@ nav a:hover::after{width:100%;}
 /* ===== REGISTER MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
-.modal{background:linear-gradient(145deg,rgba(20,30,50,.94),rgba(11,18,32,.94));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:50px 45px;max-width:480px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;max-height:calc(100vh - 40px);overflow-y:auto;overscroll-behavior:contain;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.94),rgba(11,18,32,.94));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:55px 50px 45px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal::before{content:'';position:absolute;top:-100px;right:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
 .modal::after{content:'';position:absolute;bottom:-100px;left:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(10,110,189,.2),transparent 70%);pointer-events:none;}
 .modal-logo{width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 15px 40px rgba(0,194,168,.4);position:relative;z-index:1;}
 .modal h2{text-align:center;font-size:26px;font-weight:900;margin-bottom:10px;position:relative;z-index:1;letter-spacing:-.5px;}
 .modal h2 span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.modal .sub{text-align:center;color:#7a8899;font-size:13px;margin-bottom:30px;position:relative;z-index:1;font-weight:300;line-height:1.8;}
+.modal .sub{text-align:center;color:#7a8899;font-size:13px;margin-bottom:28px;position:relative;z-index:1;font-weight:300;line-height:1.8;}
 .modal .form-group{margin-bottom:18px;position:relative;z-index:1;}
 .modal .form-group label{display:block;margin-bottom:8px;font-size:13px;font-weight:600;color:#a8b5c8;}
 .modal .form-group label .optional{color:#556070;font-weight:400;font-size:11px;margin-right:5px;}
@@ -73,7 +73,7 @@ nav a:hover::after{width:100%;}
 .modal .btn-primary{width:100%;padding:16px;font-size:16px;margin-top:10px;position:relative;z-index:1;}
 
 /* ===== SWITCH AUTH LINK ===== */
-.switch-auth{text-align:center;margin-top:22px;font-size:13px;color:#7a8899;position:relative;z-index:1;line-height:1.9;}
+.switch-auth{text-align:center;margin-top:24px;font-size:14px;color:#a8b5c8;position:relative;z-index:1;line-height:1.9;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
@@ -186,13 +186,31 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .stats{gap:35px;}
   .container{padding:70px 20px;}
   .admin{padding:25px 20px;}
-  .modal{padding:35px 25px;}
   .user-panel{left:20px;right:20px;width:auto;}
   .user-btn{padding:8px 14px;font-size:13px;}
   .user-btn .user-name{display:none;}
+  .modal{padding:35px 28px 30px;max-width:100%;}
+  .modal h2{font-size:22px;}
+  .modal .sub{font-size:12px;margin-bottom:22px;}
+  .modal-logo{width:52px;height:52px;font-size:24px;margin-bottom:15px;}
+  .modal .form-group{margin-bottom:14px;}
+  .modal .form-group input{padding:12px 14px;font-size:14px;}
+  .modal .btn-primary{padding:14px;font-size:15px;}
+  .switch-auth{margin-top:16px;font-size:12px;padding-top:14px;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
+}
+@media(max-height:680px){
+  .modal{padding:28px 35px 24px;}
+  .modal-logo{width:46px;height:46px;font-size:22px;margin-bottom:10px;}
+  .modal h2{font-size:19px;margin-bottom:5px;}
+  .modal .sub{font-size:11px;margin-bottom:16px;}
+  .modal .form-group{margin-bottom:10px;}
+  .modal .form-group label{font-size:12px;margin-bottom:5px;}
+  .modal .form-group input{padding:10px 14px;font-size:14px;}
+  .modal .btn-primary{padding:12px;font-size:14px;margin-top:4px;}
+  .switch-auth{margin-top:12px;font-size:12px;padding-top:12px;}
 }
 </style>
 </head>
@@ -471,7 +489,7 @@ const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null'
 const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 
 /* ===== AUTH MODE ===== */
-let authMode = 'register'; // or 'login'
+let authMode = 'register';
 
 function switchMode(mode){
   authMode = mode;
@@ -640,7 +658,6 @@ function doLogin(){
     return;
   }
   
-  // اگه ایمیل وارد شده بود، با ایمیل ثبت‌شده چک کن
   const email = emailEl.value.trim();
   if(email && found.email && found.email.toLowerCase() !== email.toLowerCase()){
     errEmail.classList.add('show');
