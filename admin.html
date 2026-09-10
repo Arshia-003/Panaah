@@ -66,8 +66,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .table-wrap{overflow-x:auto;border-radius:14px;}
 table{width:100%;border-collapse:collapse;min-width:750px;}
 th,td{padding:14px 12px;text-align:right;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);}
-th{background:rgba(124,92,255,.08);color:#a395ff;font-weight:700;font-size:12px;letter-spacing:.3px;}
-tr{transition:.3s;}
+th{background:rgba(124,92,255,.08);color:#a395ff;font-weight:700;font-size:12px;}
 tr:hover{background:rgba(255,255,255,.03);}
 .badge{display:inline-block;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;}
 .badge.pending{background:rgba(255,193,7,.15);color:#ffc107;border:1px solid rgba(255,193,7,.3);}
@@ -106,12 +105,10 @@ tr:hover{background:rgba(255,255,255,.03);}
 .btn-save{background:linear-gradient(135deg,#7c5cff,#0a6ebd);color:#fff;}
 .btn-save:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(124,92,255,.4);}
 .btn-cancel-modal{background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);}
-.btn-cancel-modal:hover{background:rgba(255,255,255,.1);}
 
 @media(max-width:768px){
   .admin-header{padding:14px 20px;}
   .logo{font-size:16px;}
-  .logo-mark{width:32px;height:32px;font-size:15px;}
   .header-btn{padding:8px 14px;font-size:12.5px;}
   .wrap{padding:25px 18px 60px;}
   .admin-title{padding:24px 22px;}
@@ -151,26 +148,10 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 
   <div class="grid-stats">
-    <div class="stat-card">
-      <div class="ic">👥</div>
-      <div class="num" id="statUsers">۰</div>
-      <div class="lbl">کاربران ثبت‌نام‌شده</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">📅</div>
-      <div class="num" id="statAppts">۰</div>
-      <div class="lbl">کل نوبت‌ها</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">⏳</div>
-      <div class="num" id="statPending">۰</div>
-      <div class="lbl">در انتظار تایید</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">✅</div>
-      <div class="num" id="statApproved">۰</div>
-      <div class="lbl">تایید شده</div>
-    </div>
+    <div class="stat-card"><div class="ic">👥</div><div class="num" id="statUsers">۰</div><div class="lbl">کاربران ثبت‌نام‌شده</div></div>
+    <div class="stat-card"><div class="ic">📅</div><div class="num" id="statAppts">۰</div><div class="lbl">کل نوبت‌ها</div></div>
+    <div class="stat-card"><div class="ic">⏳</div><div class="num" id="statPending">۰</div><div class="lbl">در انتظار تایید</div></div>
+    <div class="stat-card"><div class="ic">✅</div><div class="num" id="statApproved">۰</div><div class="lbl">تایید شده</div></div>
   </div>
 
   <div class="tabs">
@@ -271,14 +252,12 @@ window.addEventListener('DOMContentLoaded',()=>{
   renderAll();
 });
 
-/* ===== AUTO SYNC ===== */
 window.addEventListener('storage',(e)=>{
-  if(e.key === 'panaah_data_v1' || e.key === 'appointments' || e.key === 'panaah_users'){
+  if(e.key === 'panaah_data_v1'){
     renderAll();
   }
 });
 
-/* ===== REFRESH ===== */
 function refreshAll(ev){
   renderAll();
   const btn = ev ? ev.target : null;
@@ -289,7 +268,6 @@ function refreshAll(ev){
   }
 }
 
-/* ===== RENDER ===== */
 function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, d=>fa[d]); }
 
 function renderAll(){
@@ -303,12 +281,10 @@ function renderStats(){
   const appts = getAppointments();
   const pending = appts.filter(a=>a.status === 'pending');
   const approved = appts.filter(a=>a.status === 'approved');
-  
   document.getElementById('statUsers').textContent = toFa(users.length);
   document.getElementById('statAppts').textContent = toFa(appts.length);
   document.getElementById('statPending').textContent = toFa(pending.length);
   document.getElementById('statApproved').textContent = toFa(approved.length);
-  
   const badge = document.getElementById('tabPendingBadge');
   if(pending.length){
     badge.style.display = 'inline-block';
@@ -322,7 +298,6 @@ function renderUsers(){
   const list = document.getElementById('usersList');
   const appts = getAppointments();
   let users = getUsers().filter(u=>u.role !== 'admin');
-  
   if(usersFilter){
     const f = usersFilter.toLowerCase();
     users = users.filter(u =>
@@ -331,12 +306,10 @@ function renderUsers(){
       (u.email || '').toLowerCase().includes(f)
     );
   }
-  
   if(!users.length){
     list.innerHTML = '<tr><td colspan="7" class="empty">هنوز هیچ کاربری ثبت‌نام نکرده است</td></tr>';
     return;
   }
-  
   list.innerHTML = '';
   users.slice().reverse().forEach(u=>{
     const cnt = appts.filter(a=>a.user === u.phone).length;
@@ -360,7 +333,6 @@ function renderUsers(){
 function renderAppts(){
   const list = document.getElementById('apptsList');
   let appts = getAppointments();
-  
   if(apptsFilter){
     const f = apptsFilter.toLowerCase();
     appts = appts.filter(a =>
@@ -370,12 +342,10 @@ function renderAppts(){
       (a.branch || '').toLowerCase().includes(f)
     );
   }
-  
   if(!appts.length){
     list.innerHTML = '<tr><td colspan="8" class="empty">هنوز هیچ نوبتی ثبت نشده است</td></tr>';
     return;
   }
-  
   list.innerHTML = '';
   appts.slice().reverse().forEach(a=>{
     const status = a.status || 'pending';
