@@ -157,7 +157,7 @@ tr:hover{background:rgba(255,255,255,.03);}
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
 
-.date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
+.date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
 .date-modal-overlay.hide{opacity:0;pointer-events:none;}
 .date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:460px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;overflow:hidden;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);}
 .date-modal-overlay.hide .date-modal{transform:scale(.9);}
@@ -438,14 +438,8 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 </div>
 
+<script src="storage.js"></script>
 <script>
-const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
-const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
-const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
-const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
-const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
-const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
-
 const SERVICE_PRICES = {
   'ایمپلنت': 25000000,
   'ارتودنسی': 45000000,
@@ -457,7 +451,6 @@ const SERVICE_PRICES = {
 const INSTALLMENT_RATE = 3;
 const CASH_DISCOUNT = 3;
 
-/* ===== JALALI ===== */
 function toJalali(gy, gm, gd){
   const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
   let jy = (gy <= 1600) ? 0 : 979;
@@ -502,18 +495,18 @@ function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\
 function formatPrice(n){ return toFa(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',')); }
 function jalaliToNum(j){ return j.jy * 10000 + j.jm * 100 + j.jd; }
 
-/* ===== STATE ===== */
 let rangeStart = null;
 let rangeEnd = null;
 let calendarView = null;
 let selectedPay = null;
 let selectedInstallments = null;
+let currentUser = null;
 
-/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
-  const cur = getCurrent();
+  const cur = getCurrentUser();
   if(!cur){ window.location.href = 'index.html'; return; }
   if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
+  currentUser = cur;
   renderUser(cur);
   renderStats(cur);
   renderAppointments(cur);
@@ -537,7 +530,7 @@ function renderUser(user){
 }
 
 function renderStats(user){
-  const mine = getData().filter(a => a.user === user.phone);
+  const mine = getAppointments().filter(a => a.user === user.phone);
   const pending = mine.filter(a => a.status === 'pending');
   const approved = mine.filter(a => a.status === 'approved');
   const branches = new Set(mine.map(a=>a.branch));
@@ -547,15 +540,14 @@ function renderStats(user){
   document.getElementById('statBranches').textContent = toFa(branches.size);
 }
 
-/* ===== EDIT ===== */
 function editEmail(){
-  const cur = getCurrent();
+  const user = getCurrentUser();
   const item = document.getElementById('emailItem');
   item.classList.add('editing');
   item.innerHTML = `
     <div class="k">ایمیل</div>
     <div class="input-wrap">
-      <input type="email" id="emailInput" value="${cur.email || ''}" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+      <input type="email" id="emailInput" value="${user.email || ''}" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
       <button class="save-btn" onclick="saveEmail()">ذخیره</button>
       <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
     </div>
@@ -571,13 +563,13 @@ function saveEmail(){
   updateUserField('email', val); cancelEdit();
 }
 function editAddress(){
-  const cur = getCurrent();
+  const user = getCurrentUser();
   const item = document.getElementById('addressItem');
   item.classList.add('editing');
   item.innerHTML = `
     <div class="k">آدرس</div>
     <div class="input-wrap">
-      <input type="text" id="addressInput" value="${cur.address || ''}" placeholder="مثلاً: تهران، خیابان ولیعصر، پلاک ۱۲" maxlength="120">
+      <input type="text" id="addressInput" value="${user.address || ''}" placeholder="مثلاً: تهران، خیابان ولیعصر، پلاک ۱۲" maxlength="120">
       <button class="save-btn" onclick="saveAddress()">ذخیره</button>
       <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
     </div>
@@ -593,35 +585,34 @@ function saveAddress(){
   updateUserField('address', val); cancelEdit();
 }
 function cancelEdit(){
-  const cur = getCurrent();
+  const user = getCurrentUser();
   const item1 = document.getElementById('emailItem');
   const item2 = document.getElementById('addressItem');
   item1.classList.remove('editing');
   item2.classList.remove('editing');
   item1.innerHTML = `<div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div><div class="v" id="infoEmail">—</div>`;
   item2.innerHTML = `<div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div><div class="v" id="infoAddress">—</div>`;
-  renderUser(cur);
+  renderUser(user);
 }
 function updateUserField(field, value){
-  const cur = getCurrent();
-  cur[field] = value;
-  setCurrent(cur);
+  const user = getCurrentUser();
+  user[field] = value;
+  setCurrentUser(user);
   const users = getUsers();
-  const found = users.find(u=>u.phone===cur.phone);
+  const found = users.find(u=>u.phone===user.phone && u.role !== 'admin');
   if(found){ found[field] = value; setUsers(users); }
 }
+
 function validEmail(e){
   if(!e.trim()) return true;
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 
-/* ===== SERVICE ===== */
 function onServiceChange(){
   if(selectedPay === 'نقدی') updateCashCalc();
   if(selectedPay === 'قسطی' && selectedInstallments) updateInstCalc();
 }
 
-/* ===== PAY ===== */
 function selectPay(payType){
   selectedPay = payType;
   document.querySelectorAll('.pay-opt').forEach(b=>{
@@ -682,7 +673,6 @@ function updateInstCalc(){
   box.classList.add('show');
 }
 
-/* ===== DATE PICKER ===== */
 function openDatePicker(){
   document.getElementById('dateModal').classList.remove('hide');
   if(!calendarView){
@@ -787,9 +777,8 @@ function confirmDate(){
   closeDatePicker();
 }
 
-/* ===== ADD APPOINTMENT ===== */
 function addAppointment(){
-  const cur = getCurrent();
+  const cur = getCurrentUser();
   const time = document.getElementById('newTime').value;
   const branch = document.getElementById('newBranch').value;
   const service = document.getElementById('newService').value;
@@ -815,8 +804,8 @@ function addAppointment(){
     payInfo = `${toFa(selectedInstallments)} قسط — هر قسط ${formatPrice(perMonth)} تومان`;
   }
   const rangeText = `${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} تا ${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}`;
-  const data = getData();
-  data.push({
+  const appts = getAppointments();
+  appts.push({
     id: Date.now(),
     name: cur.name,
     phone: cur.phone,
@@ -832,7 +821,7 @@ function addAppointment(){
     user: cur.phone,
     status: 'pending'
   });
-  setData(data);
+  setAppointments(appts);
   msg.className = 'form-msg ok';
   msg.textContent = '✅ نوبت شما ثبت شد و در انتظار تایید است';
   rangeStart = null; rangeEnd = null; selectedPay = null; selectedInstallments = null;
@@ -852,10 +841,9 @@ function addAppointment(){
   setTimeout(()=>{ msg.className = 'form-msg'; }, 4000);
 }
 
-/* ===== APPOINTMENTS ===== */
 function renderAppointments(user){
   const box = document.getElementById('appointmentsBox');
-  const mine = getData().filter(a => a.user === user.phone);
+  const mine = getAppointments().filter(a => a.user === user.phone);
   if(!mine.length){
     box.innerHTML = `<div class="empty"><div class="big">📭</div><p>هنوز نوبتی رزرو نکرده‌اید</p></div>`;
     return;
@@ -890,16 +878,16 @@ function renderAppointments(user){
 }
 function delAppt(id){
   if(!confirm('از لغو این نوبت مطمئن هستید؟')) return;
-  let data = getData();
-  data = data.filter(a => a.id !== id);
-  setData(data);
-  const cur = getCurrent();
+  let appts = getAppointments();
+  appts = appts.filter(a => a.id !== id);
+  setAppointments(appts);
+  const cur = getCurrentUser();
   renderAppointments(cur);
   renderStats(cur);
 }
 function logout(){
   if(!confirm('از حساب خود خارج می‌شوید؟')) return;
-  localStorage.removeItem('panaah_current');
+  clearCurrentUser();
   window.location.href = 'index.html';
 }
 </script>
