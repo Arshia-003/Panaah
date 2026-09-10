@@ -50,8 +50,6 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
 .section-head h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;}
 .section-head h2::before{content:'';width:4px;height:22px;background:linear-gradient(180deg,#00c2a8,#0a6ebd);border-radius:4px;}
-.section-head .action{font-size:13px;color:#00c2a8;font-weight:700;text-decoration:none;padding:8px 16px;border:1px solid rgba(0,194,168,.3);border-radius:10px;transition:.3s;cursor:pointer;background:transparent;font-family:inherit;}
-.section-head .action:hover{background:rgba(0,194,168,.15);}
 
 .info-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .info-item{padding:16px 20px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.05);position:relative;}
@@ -72,14 +70,32 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .edit-err{color:#ff6b5b;font-size:11.5px;margin-top:6px;display:none;font-weight:500;}
 .edit-err.show{display:block;}
 
-.new-appt-form{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:24px;margin-bottom:25px;}
-.new-appt-form .row{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;}
+.new-appt-form{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:24px;}
+.new-appt-form .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:end;margin-bottom:14px;}
+.new-appt-form .row.full{grid-template-columns:1fr;}
 .new-appt-form label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:7px;}
 .new-appt-form input,.new-appt-form select{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
 .new-appt-form input:focus,.new-appt-form select:focus{border-color:#00c2a8;box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .new-appt-form select option{background:#0b1220;color:#e8eef7;}
-.new-appt-form button{padding:12px 26px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;white-space:nowrap;}
-.new-appt-form button:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(10,110,189,.4);}
+
+.date-picker-btn{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;text-align:right;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;align-items:center;}
+.date-picker-btn:hover{border-color:rgba(0,194,168,.4);}
+.date-picker-btn.filled{color:#00c2a8;font-weight:700;}
+.date-picker-btn .ph{color:#556070;font-weight:400;}
+.date-picker-btn .ico{color:#00c2a8;font-size:16px;}
+
+.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pay-opt{padding:16px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:14px;cursor:pointer;transition:.3s;text-align:center;font-family:inherit;color:#e8eef7;}
+.pay-opt:hover{border-color:rgba(0,194,168,.4);background:rgba(0,0,0,.4);}
+.pay-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.12);box-shadow:0 0 0 4px rgba(0,194,168,.1);}
+.pay-opt .ttl{font-size:15px;font-weight:800;margin-bottom:4px;}
+.pay-opt .desc{font-size:11.5px;color:#7a8899;font-weight:400;}
+.pay-opt.selected .ttl{color:#00c2a8;}
+.pay-opt.selected .desc{color:#a8b5c8;}
+
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;margin-top:14px;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(10,110,189,.4);}
+
 .form-msg{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:13px;text-align:center;display:none;font-weight:600;}
 .form-msg.ok{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);display:block;}
 .form-msg.err{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);display:block;}
@@ -97,6 +113,38 @@ tr:hover{background:rgba(255,255,255,.03);}
 
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
+
+/* ===== DATE MODAL ===== */
+.date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
+.date-modal-overlay.hide{opacity:0;pointer-events:none;}
+.date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:440px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;overflow:hidden;transform:scale(1);transition:.35s;}
+.date-modal-overlay.hide .date-modal{transform:scale(.9);}
+.date-modal::before{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
+
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;position:relative;z-index:1;}
+.cal-nav{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#e8eef7;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;font-family:inherit;}
+.cal-nav:hover{background:rgba(0,194,168,.15);border-color:rgba(0,194,168,.4);color:#00c2a8;}
+.cal-title{font-size:17px;font-weight:800;}
+.cal-title span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px;}
+.cal-wd{text-align:center;font-size:12px;color:#7a8899;font-weight:600;padding:8px 0;}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;position:relative;z-index:1;}
+.cal-day{padding:11px 0;text-align:center;border-radius:10px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.25s;background:rgba(255,255,255,.03);border:1px solid transparent;font-family:inherit;color:#e8eef7;position:relative;}
+.cal-day:hover:not(.disabled):not(.selected){background:rgba(0,194,168,.12);border-color:rgba(0,194,168,.3);}
+.cal-day.empty{background:transparent;cursor:default;pointer-events:none;}
+.cal-day.disabled{color:#3a4454;background:rgba(255,255,255,.02);cursor:not-allowed;}
+.cal-day.today{border-color:rgba(0,194,168,.4);color:#00c2a8;font-weight:800;}
+.cal-day.selected{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;font-weight:800;box-shadow:0 6px 18px rgba(0,194,168,.4);transform:scale(1.05);}
+
+.cal-foot{display:flex;gap:10px;margin-top:20px;position:relative;z-index:1;}
+.cal-foot button{flex:1;padding:12px;border-radius:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:.3s;border:none;}
+.cal-ok{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;}
+.cal-ok:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(10,110,189,.4);}
+.cal-ok:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.cal-cancel{background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);}
+.cal-cancel:hover{background:rgba(255,255,255,.1);}
 
 .logout-area{text-align:center;margin-top:35px;}
 .logout-area button{padding:14px 36px;background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);border-radius:14px;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;transition:.3s;}
@@ -116,8 +164,10 @@ tr:hover{background:rgba(255,255,255,.03);}
   th,td{padding:10px 8px;font-size:12px;}
   .stat-card .num{font-size:24px;}
   .new-appt-form .row{grid-template-columns:1fr;}
-  .new-appt-form button{width:100%;}
+  .pay-options{grid-template-columns:1fr;}
   .table-wrap{overflow-x:auto;}
+  .date-modal{padding:22px 18px;}
+  .cal-day{padding:9px 0;font-size:12.5px;}
 }
 </style>
 </head>
@@ -199,8 +249,11 @@ tr:hover{background:rgba(255,255,255,.03);}
     <div class="new-appt-form">
       <div class="row">
         <div>
-          <label>تاریخ</label>
-          <input type="date" id="newDate">
+          <label>تاریخ (شمسی)</label>
+          <button type="button" class="date-picker-btn" id="dateBtn" onclick="openDatePicker()">
+            <span class="ph" id="dateBtnText">انتخاب تاریخ</span>
+            <span class="ico">📅</span>
+          </button>
         </div>
         <div>
           <label>ساعت</label>
@@ -217,9 +270,31 @@ tr:hover{background:rgba(255,255,255,.03);}
           </select>
         </div>
         <div>
-          <button onclick="addAppointment()">ثبت نوبت</button>
+          <label>شعبه</label>
+          <select id="newBranch">
+            <option value="">-- انتخاب کنید --</option>
+            <option>شعبه مرکزی</option>
+            <option>شعبه شمال</option>
+            <option>شعبه غرب</option>
+          </select>
         </div>
       </div>
+      <div class="row full">
+        <div>
+          <label>نوع پرداخت</label>
+          <div class="pay-options">
+            <button type="button" class="pay-opt" data-pay="نقدی" onclick="selectPay(this)">
+              <div class="ttl">💵 نقدی</div>
+              <div class="desc">پرداخت کامل در محل</div>
+            </button>
+            <button type="button" class="pay-opt" data-pay="قسطی" onclick="selectPay(this)">
+              <div class="ttl">💳 قسطی</div>
+              <div class="desc">پرداخت در چند قسط</div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="addAppointment()">ثبت نوبت</button>
       <div class="form-msg" id="formMsg"></div>
     </div>
   </div>
@@ -237,6 +312,31 @@ tr:hover{background:rgba(255,255,255,.03);}
 
 </div>
 
+<!-- ===== DATE PICKER MODAL ===== -->
+<div class="date-modal-overlay hide" id="dateModal">
+  <div class="date-modal">
+    <div class="cal-head">
+      <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+      <div class="cal-title"><span id="calMonthTitle">—</span></div>
+      <button class="cal-nav" onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="cal-weekdays">
+      <div class="cal-wd">ش</div>
+      <div class="cal-wd">ی</div>
+      <div class="cal-wd">د</div>
+      <div class="cal-wd">س</div>
+      <div class="cal-wd">چ</div>
+      <div class="cal-wd">پ</div>
+      <div class="cal-wd">ج</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-foot">
+      <button class="cal-cancel" onclick="closeDatePicker()">انصراف</button>
+      <button class="cal-ok" id="calOk" disabled onclick="confirmDate()">تایید تاریخ</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
 const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
@@ -245,12 +345,74 @@ const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
 const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
 const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
 
+/* ===== JALALI DATE CONVERTER ===== */
+function toJalali(gy, gm, gd){
+  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+  let jy = (gy <= 1600) ? 0 : 979;
+  gy -= (gy <= 1600) ? 621 : 1600;
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  let days = (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
+  jy += 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if(days > 365){ jy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
+  const jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+  return [jy, jm, jd];
+}
+function toGregorian(jy, jm, jd){
+  let gy = (jy <= 979) ? 621 : 1600;
+  jy -= (jy <= 979) ? 0 : 979;
+  let days = (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+  gy += 400 * Math.floor(days / 146097);
+  days %= 146097;
+  if(days > 36524){
+    gy += 100 * Math.floor(--days / 36524);
+    days %= 36524;
+    if(days >= 365) days++;
+  }
+  gy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if(days > 365){ gy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
+  let gd = days + 1;
+  const sal_a = [0,31,((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28,31,30,31,30,31,31,30,31,30,31];
+  let gm;
+  for(gm = 0; gm < 13; gm++){
+    const v = sal_a[gm];
+    if(gd <= v) break;
+    gd -= v;
+  }
+  return [gy, gm, gd];
+}
+function jalaliMonthLength(jy, jm){
+  if(jm <= 6) return 31;
+  if(jm <= 11) return 30;
+  // اسفند
+  const leap = ((jy + 12) % 33) % 4;
+  return (leap === 1) ? 30 : 29;
+}
+function jalaliMonthName(jm){
+  return ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'][jm-1];
+}
+function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+
+/* ===== STATE ===== */
+let selectedJalali = null; // {jy, jm, jd}
+let calendarView = null;   // {jy, jm}
+let selectedPay = null;
+
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(!cur){ window.location.href = 'index.html'; return; }
   renderUser(cur);
   renderStats(cur);
   renderAppointments(cur);
+  
+  const now = new Date();
+  const j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  calendarView = { jy: j[0], jm: j[1] };
 });
 
 function renderUser(user){
@@ -280,8 +442,7 @@ function renderUser(user){
 }
 
 function renderStats(user){
-  const all = getData();
-  const mine = all.filter(a => a.user === user.phone);
+  const mine = getData().filter(a => a.user === user.phone);
   const pending = mine.filter(a => a.status === 'pending');
   const approved = mine.filter(a => a.status === 'approved');
   const branches = new Set(mine.map(a=>a.branch));
@@ -404,23 +565,136 @@ function validEmail(e){
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 
+/* ===== PAY SELECT ===== */
+function selectPay(btn){
+  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedPay = btn.dataset.pay;
+}
+
+/* ===== DATE PICKER ===== */
+function openDatePicker(){
+  document.getElementById('dateModal').classList.remove('hide');
+  if(!calendarView){
+    const now = new Date();
+    const j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    calendarView = { jy: j[0], jm: j[1] };
+  }
+  renderCalendar();
+}
+function closeDatePicker(){
+  document.getElementById('dateModal').classList.add('hide');
+}
+function changeMonth(dir){
+  let { jy, jm } = calendarView;
+  jm += dir;
+  if(jm > 12){ jm = 1; jy++; }
+  if(jm < 1){ jm = 12; jy--; }
+  calendarView = { jy, jm };
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const { jy, jm } = calendarView;
+  document.getElementById('calMonthTitle').textContent = `${jalaliMonthName(jm)} ${toFa(jy)}`;
+  
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  
+  // روز اول ماه شمسی -> تبدیل به میلادی -> گرفتن dayOfWeek
+  const [gy, gm, gd] = toGregorian(jy, jm, 1);
+  const firstDate = new Date(gy, gm - 1, gd);
+  // روزهای هفته در جاوااسکریپت: 0=یکشنبه ... 6=شنبه
+  // شنبه=6, یکشنبه=0, دوشنبه=1, سه‌شنبه=2, چهارشنبه=3, پنجشنبه=4, جمعه=5
+  // می‌خواهیم شنبه ستون اول باشه
+  const jsDay = firstDate.getDay();
+  const offset = (jsDay + 1) % 7; // شنبه=0, یکشنبه=1, ... جمعه=6
+  
+  for(let i = 0; i < offset; i++){
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+  
+  const monthLen = jalaliMonthLength(jy, jm);
+  const today = new Date();
+  const [tjy, tjm, tjd] = toJalali(today.getFullYear(), today.getMonth()+1, today.getDate());
+  
+  for(let d = 1; d <= monthLen; d++){
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cal-day';
+    btn.textContent = toFa(d);
+    
+    // disable گذشته‌ها
+    let isPast = false;
+    if(jy < tjy) isPast = true;
+    else if(jy === tjy && jm < tjm) isPast = true;
+    else if(jy === tjy && jm === tjm && d < tjd) isPast = true;
+    
+    if(isPast){
+      btn.classList.add('disabled');
+    }
+    
+    if(jy === tjy && jm === tjm && d === tjd){
+      btn.classList.add('today');
+    }
+    
+    if(selectedJalali && selectedJalali.jy === jy && selectedJalali.jm === jm && selectedJalali.jd === d){
+      btn.classList.add('selected');
+    }
+    
+    if(!isPast){
+      btn.onclick = ()=>{
+        selectedJalali = { jy, jm, jd: d };
+        renderCalendar();
+        document.getElementById('calOk').disabled = false;
+      };
+    }
+    
+    grid.appendChild(btn);
+  }
+  
+  document.getElementById('calOk').disabled = !selectedJalali || 
+    selectedJalali.jy !== jy || selectedJalali.jm !== jm;
+}
+
+function confirmDate(){
+  if(!selectedJalali) return;
+  const { jy, jm, jd } = selectedJalali;
+  const text = `${toFa(jd)} ${jalaliMonthName(jm)} ${toFa(jy)}`;
+  document.getElementById('dateBtnText').textContent = text;
+  document.getElementById('dateBtnText').classList.remove('ph');
+  document.getElementById('dateBtn').classList.add('filled');
+  closeDatePicker();
+}
+
 /* ===== ADD APPOINTMENT ===== */
 function addAppointment(){
   const cur = getCurrent();
-  const date = document.getElementById('newDate').value;
+  const dateText = document.getElementById('dateBtnText').textContent;
   const time = document.getElementById('newTime').value;
+  const branch = document.getElementById('newBranch').value;
   const msg = document.getElementById('formMsg');
   
-  if(!date || !time){
+  if(!selectedJalali){
     msg.className = 'form-msg err';
-    msg.textContent = 'لطفاً تاریخ و ساعت را انتخاب کنید';
+    msg.textContent = 'لطفاً تاریخ را انتخاب کنید';
     return;
   }
-  
-  const today = new Date().toISOString().split('T')[0];
-  if(date < today){
+  if(!time){
     msg.className = 'form-msg err';
-    msg.textContent = 'تاریخ نمی‌تواند در گذشته باشد';
+    msg.textContent = 'لطفاً ساعت را انتخاب کنید';
+    return;
+  }
+  if(!branch){
+    msg.className = 'form-msg err';
+    msg.textContent = 'لطفاً شعبه را انتخاب کنید';
+    return;
+  }
+  if(!selectedPay){
+    msg.className = 'form-msg err';
+    msg.textContent = 'لطفاً نوع پرداخت را انتخاب کنید';
     return;
   }
   
@@ -429,10 +703,11 @@ function addAppointment(){
     id: Date.now(),
     name: cur.name,
     phone: cur.phone,
-    branch: '—',
+    branch: branch,
     service: '—',
-    date: date,
+    date: dateText,
     time: time,
+    pay: selectedPay,
     user: cur.phone,
     status: 'pending'
   });
@@ -441,8 +716,15 @@ function addAppointment(){
   msg.className = 'form-msg ok';
   msg.textContent = '✅ نوبت شما ثبت شد و در انتظار تایید است';
   
-  document.getElementById('newDate').value = '';
+  // reset
+  selectedJalali = null;
+  selectedPay = null;
+  document.getElementById('dateBtnText').textContent = 'انتخاب تاریخ';
+  document.getElementById('dateBtnText').classList.add('ph');
+  document.getElementById('dateBtn').classList.remove('filled');
   document.getElementById('newTime').value = '';
+  document.getElementById('newBranch').value = '';
+  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('selected'));
   
   renderStats(cur);
   renderAppointments(cur);
@@ -468,7 +750,7 @@ function renderAppointments(user){
   const table = document.createElement('table');
   table.innerHTML = `
     <thead>
-      <tr><th>تاریخ</th><th>ساعت</th><th>وضعیت</th><th>عملیات</th></tr>
+      <tr><th>تاریخ</th><th>ساعت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
     </thead>
   `;
   const tbody = document.createElement('tbody');
@@ -479,6 +761,8 @@ function renderAppointments(user){
     tr.innerHTML = `
       <td>${a.date}</td>
       <td>${a.time}</td>
+      <td>${a.branch || '—'}</td>
+      <td>${a.pay || '—'}</td>
       <td><span class="badge ${status}">${statusLabel}</span></td>
       <td><button class="del" onclick="delAppt(${a.id})">لغو</button></td>
     `;
