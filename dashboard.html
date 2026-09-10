@@ -54,22 +54,49 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .section-head .action:hover{background:rgba(0,194,168,.15);}
 
 .info-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.info-item{padding:16px 20px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.05);}
-.info-item .k{font-size:12px;color:#7a8899;margin-bottom:6px;font-weight:500;}
+.info-item{padding:16px 20px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.05);position:relative;}
+.info-item .k{font-size:12px;color:#7a8899;margin-bottom:6px;font-weight:500;display:flex;justify-content:space-between;align-items:center;}
+.info-item .k .edit-btn{font-size:11px;color:#00c2a8;cursor:pointer;font-weight:600;background:transparent;border:none;font-family:inherit;padding:2px 6px;border-radius:6px;transition:.3s;}
+.info-item .k .edit-btn:hover{background:rgba(0,194,168,.15);}
 .info-item .v{font-size:15px;color:#e8eef7;font-weight:600;word-break:break-all;}
+.info-item .v.empty-val{color:#556070;font-weight:400;font-style:italic;font-size:14px;}
+.info-item.editing{padding:12px 16px;}
+.info-item.editing .input-wrap{display:flex;gap:8px;margin-top:6px;}
+.info-item.editing input{flex:1;padding:10px 12px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:10px;font-size:14px;color:#e8eef7;font-family:inherit;outline:none;transition:.3s;}
+.info-item.editing input:focus{border-color:#00c2a8;box-shadow:0 0 0 3px rgba(0,194,168,.15);}
+.info-item.editing input.error{border-color:#ff6b5b;box-shadow:0 0 0 3px rgba(231,76,60,.15);}
+.info-item.editing .save-btn{padding:10px 18px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;}
+.info-item.editing .save-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(10,110,189,.4);}
+.info-item.editing .cancel-btn{padding:10px 14px;background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.3s;}
+.info-item.editing .cancel-btn:hover{background:rgba(255,255,255,.1);}
+.edit-err{color:#ff6b5b;font-size:11.5px;margin-top:6px;display:none;font-weight:500;}
+.edit-err.show{display:block;}
+
+.new-appt-form{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:24px;margin-bottom:25px;}
+.new-appt-form .row{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;}
+.new-appt-form label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:7px;}
+.new-appt-form input,.new-appt-form select{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
+.new-appt-form input:focus,.new-appt-form select:focus{border-color:#00c2a8;box-shadow:0 0 0 4px rgba(0,194,168,.15);}
+.new-appt-form select option{background:#0b1220;color:#e8eef7;}
+.new-appt-form button{padding:12px 26px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;white-space:nowrap;}
+.new-appt-form button:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(10,110,189,.4);}
+.form-msg{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:13px;text-align:center;display:none;font-weight:600;}
+.form-msg.ok{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);display:block;}
+.form-msg.err{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);display:block;}
 
 table{width:100%;border-collapse:collapse;margin-top:6px;}
 th,td{padding:14px 12px;text-align:right;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);}
 th{background:rgba(0,194,168,.08);color:#00c2a8;font-weight:700;font-size:12.5px;letter-spacing:.3px;}
 tr:hover{background:rgba(255,255,255,.03);}
+.badge{display:inline-block;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;}
+.badge.pending{background:rgba(255,193,7,.15);color:#ffc107;border:1px solid rgba(255,193,7,.3);}
+.badge.approved{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);}
+.badge.canceled{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);}
 .del{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;transition:.3s;}
 .del:hover{background:rgba(231,76,60,.3);}
 
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
-
-.book-again{display:inline-block;padding:13px 28px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;text-decoration:none;border-radius:14px;font-size:14.5px;font-weight:700;box-shadow:0 10px 30px rgba(10,110,189,.35);transition:.3s;}
-.book-again:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(10,110,189,.5);}
 
 .logout-area{text-align:center;margin-top:35px;}
 .logout-area button{padding:14px 36px;background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);border-radius:14px;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;transition:.3s;}
@@ -88,6 +115,9 @@ tr:hover{background:rgba(255,255,255,.03);}
   .section{padding:22px 18px;}
   th,td{padding:10px 8px;font-size:12px;}
   .stat-card .num{font-size:24px;}
+  .new-appt-form .row{grid-template-columns:1fr;}
+  .new-appt-form button{width:100%;}
+  .table-wrap{overflow-x:auto;}
 }
 </style>
 </head>
@@ -122,14 +152,14 @@ tr:hover{background:rgba(255,255,255,.03);}
       <div class="lbl">کل نوبت‌ها</div>
     </div>
     <div class="stat-card">
-      <div class="ic">✅</div>
-      <div class="num" id="statUpcoming">۰</div>
-      <div class="lbl">نوبت‌های فعال</div>
+      <div class="ic">⏳</div>
+      <div class="num" id="statPending">۰</div>
+      <div class="lbl">در انتظار تایید</div>
     </div>
     <div class="stat-card">
-      <div class="ic">🦷</div>
-      <div class="num" id="statServices">۰</div>
-      <div class="lbl">خدمت استفاده‌شده</div>
+      <div class="ic">✅</div>
+      <div class="num" id="statApproved">۰</div>
+      <div class="lbl">تایید شده</div>
     </div>
     <div class="stat-card">
       <div class="ic">🏢</div>
@@ -143,17 +173,60 @@ tr:hover{background:rgba(255,255,255,.03);}
       <h2>اطلاعات حساب</h2>
     </div>
     <div class="info-row">
-      <div class="info-item"><div class="k">نام و نام خانوادگی</div><div class="v" id="infoName">—</div></div>
-      <div class="info-item"><div class="k">شماره تلفن</div><div class="v" id="infoPhone">—</div></div>
-      <div class="info-item"><div class="k">ایمیل</div><div class="v" id="infoEmail">—</div></div>
-      <div class="info-item"><div class="k">وضعیت حساب</div><div class="v" style="color:#00c2a8;">فعال ✓</div></div>
+      <div class="info-item">
+        <div class="k">نام و نام خانوادگی</div>
+        <div class="v" id="infoName">—</div>
+      </div>
+      <div class="info-item">
+        <div class="k">شماره تلفن</div>
+        <div class="v" id="infoPhone">—</div>
+      </div>
+      <div class="info-item" id="emailItem">
+        <div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div>
+        <div class="v" id="infoEmail">—</div>
+      </div>
+      <div class="info-item" id="addressItem">
+        <div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div>
+        <div class="v" id="infoAddress">—</div>
+      </div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-head">
-      <h2>نوبت‌های من</h2>
-      <a href="index.html#booking" class="action">+ رزرو نوبت جدید</a>
+      <h2>رزرو نوبت جدید</h2>
+    </div>
+    <div class="new-appt-form">
+      <div class="row">
+        <div>
+          <label>تاریخ</label>
+          <input type="date" id="newDate">
+        </div>
+        <div>
+          <label>ساعت</label>
+          <select id="newTime">
+            <option value="">-- انتخاب کنید --</option>
+            <option>۰۹:۰۰</option>
+            <option>۱۰:۰۰</option>
+            <option>۱۱:۰۰</option>
+            <option>۱۲:۰۰</option>
+            <option>۱۴:۰۰</option>
+            <option>۱۵:۰۰</option>
+            <option>۱۶:۰۰</option>
+            <option>۱۷:۰۰</option>
+          </select>
+        </div>
+        <div>
+          <button onclick="addAppointment()">ثبت نوبت</button>
+        </div>
+      </div>
+      <div class="form-msg" id="formMsg"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>نوبت‌های رزرو شده</h2>
     </div>
     <div id="appointmentsBox"></div>
   </div>
@@ -168,13 +241,16 @@ tr:hover{background:rgba(255,255,255,.03);}
 const getData = ()=>JSON.parse(localStorage.getItem('appointments')||'[]');
 const setData = d=>localStorage.setItem('appointments',JSON.stringify(d));
 const getCurrent = ()=>JSON.parse(localStorage.getItem('panaah_current')||'null');
+const setCurrent = u=>localStorage.setItem('panaah_current',JSON.stringify(u));
+const getUsers = ()=>JSON.parse(localStorage.getItem('panaah_users')||'[]');
+const setUsers = d=>localStorage.setItem('panaah_users',JSON.stringify(d));
 
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrent();
   if(!cur){ window.location.href = 'index.html'; return; }
   renderUser(cur);
-  renderAppointments(cur);
   renderStats(cur);
+  renderAppointments(cur);
 });
 
 function renderUser(user){
@@ -183,20 +259,36 @@ function renderUser(user){
   document.getElementById('greetName').textContent = firstName;
   document.getElementById('infoName').textContent = user.name;
   document.getElementById('infoPhone').textContent = user.phone;
-  document.getElementById('infoEmail').textContent = user.email || '—';
+  
+  const emailEl = document.getElementById('infoEmail');
+  if(user.email){
+    emailEl.textContent = user.email;
+    emailEl.classList.remove('empty-val');
+  } else {
+    emailEl.textContent = 'ثبت نشده — برای افزودن کلیک کنید';
+    emailEl.classList.add('empty-val');
+  }
+  
+  const addrEl = document.getElementById('infoAddress');
+  if(user.address){
+    addrEl.textContent = user.address;
+    addrEl.classList.remove('empty-val');
+  } else {
+    addrEl.textContent = 'ثبت نشده — برای افزودن کلیک کنید';
+    addrEl.classList.add('empty-val');
+  }
 }
 
 function renderStats(user){
   const all = getData();
   const mine = all.filter(a => a.user === user.phone);
-  const today = new Date().toISOString().split('T')[0];
-  const upcoming = mine.filter(a => a.date >= today);
-  const services = new Set(mine.map(a=>a.service));
+  const pending = mine.filter(a => a.status === 'pending');
+  const approved = mine.filter(a => a.status === 'approved');
   const branches = new Set(mine.map(a=>a.branch));
   
   document.getElementById('statTotal').textContent = toFa(mine.length);
-  document.getElementById('statUpcoming').textContent = toFa(upcoming.length);
-  document.getElementById('statServices').textContent = toFa(services.size);
+  document.getElementById('statPending').textContent = toFa(pending.length);
+  document.getElementById('statApproved').textContent = toFa(approved.length);
   document.getElementById('statBranches').textContent = toFa(branches.size);
 }
 
@@ -205,6 +297,160 @@ function toFa(n){
   return String(n).replace(/\d/g, d=>fa[d]);
 }
 
+/* ===== EDIT EMAIL ===== */
+function editEmail(){
+  const cur = getCurrent();
+  const item = document.getElementById('emailItem');
+  const currentVal = cur.email || '';
+  
+  item.classList.add('editing');
+  item.innerHTML = `
+    <div class="k">ایمیل</div>
+    <div class="input-wrap">
+      <input type="email" id="emailInput" value="${currentVal}" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+      <button class="save-btn" onclick="saveEmail()">ذخیره</button>
+      <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
+    </div>
+    <div class="edit-err" id="emailErr">ایمیل وارد شده صحیح نیست</div>
+  `;
+  setTimeout(()=>document.getElementById('emailInput').focus(), 100);
+}
+
+function saveEmail(){
+  const val = document.getElementById('emailInput').value.trim();
+  const err = document.getElementById('emailErr');
+  const input = document.getElementById('emailInput');
+  
+  if(!validEmail(val)){
+    err.textContent = 'ایمیل وارد شده صحیح نیست';
+    err.classList.add('show');
+    input.classList.add('error');
+    return;
+  }
+  
+  updateUserField('email', val);
+  cancelEdit();
+}
+
+/* ===== EDIT ADDRESS ===== */
+function editAddress(){
+  const cur = getCurrent();
+  const item = document.getElementById('addressItem');
+  const currentVal = cur.address || '';
+  
+  item.classList.add('editing');
+  item.innerHTML = `
+    <div class="k">آدرس</div>
+    <div class="input-wrap">
+      <input type="text" id="addressInput" value="${currentVal}" placeholder="مثلاً: تهران، خیابان ولیعصر، پلاک ۱۲" maxlength="120">
+      <button class="save-btn" onclick="saveAddress()">ذخیره</button>
+      <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
+    </div>
+    <div class="edit-err" id="addressErr">آدرس باید حداقل ۱۰ کاراکتر باشد</div>
+  `;
+  setTimeout(()=>document.getElementById('addressInput').focus(), 100);
+}
+
+function saveAddress(){
+  const val = document.getElementById('addressInput').value.trim();
+  const err = document.getElementById('addressErr');
+  const input = document.getElementById('addressInput');
+  
+  if(val.length < 10){
+    err.classList.add('show');
+    input.classList.add('error');
+    return;
+  }
+  
+  updateUserField('address', val);
+  cancelEdit();
+}
+
+function cancelEdit(){
+  const cur = getCurrent();
+  const item1 = document.getElementById('emailItem');
+  const item2 = document.getElementById('addressItem');
+  
+  item1.classList.remove('editing');
+  item2.classList.remove('editing');
+  
+  item1.innerHTML = `
+    <div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div>
+    <div class="v" id="infoEmail">—</div>
+  `;
+  item2.innerHTML = `
+    <div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div>
+    <div class="v" id="infoAddress">—</div>
+  `;
+  
+  renderUser(cur);
+}
+
+function updateUserField(field, value){
+  const cur = getCurrent();
+  cur[field] = value;
+  setCurrent(cur);
+  
+  const users = getUsers();
+  const found = users.find(u=>u.phone===cur.phone);
+  if(found){
+    found[field] = value;
+    setUsers(users);
+  }
+}
+
+function validEmail(e){
+  if(!e.trim()) return true;
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
+}
+
+/* ===== ADD APPOINTMENT ===== */
+function addAppointment(){
+  const cur = getCurrent();
+  const date = document.getElementById('newDate').value;
+  const time = document.getElementById('newTime').value;
+  const msg = document.getElementById('formMsg');
+  
+  if(!date || !time){
+    msg.className = 'form-msg err';
+    msg.textContent = 'لطفاً تاریخ و ساعت را انتخاب کنید';
+    return;
+  }
+  
+  const today = new Date().toISOString().split('T')[0];
+  if(date < today){
+    msg.className = 'form-msg err';
+    msg.textContent = 'تاریخ نمی‌تواند در گذشته باشد';
+    return;
+  }
+  
+  const data = getData();
+  data.push({
+    id: Date.now(),
+    name: cur.name,
+    phone: cur.phone,
+    branch: '—',
+    service: '—',
+    date: date,
+    time: time,
+    user: cur.phone,
+    status: 'pending'
+  });
+  setData(data);
+  
+  msg.className = 'form-msg ok';
+  msg.textContent = '✅ نوبت شما ثبت شد و در انتظار تایید است';
+  
+  document.getElementById('newDate').value = '';
+  document.getElementById('newTime').value = '';
+  
+  renderStats(cur);
+  renderAppointments(cur);
+  
+  setTimeout(()=>{ msg.className = 'form-msg'; }, 4000);
+}
+
+/* ===== RENDER APPOINTMENTS ===== */
 function renderAppointments(user){
   const box = document.getElementById('appointmentsBox');
   const mine = getData().filter(a => a.user === user.phone);
@@ -214,7 +460,6 @@ function renderAppointments(user){
       <div class="empty">
         <div class="big">📭</div>
         <p>هنوز نوبتی رزرو نکرده‌اید</p>
-        <a href="index.html#booking" class="book-again" style="margin-top:20px;display:inline-block;">رزرو اولین نوبت</a>
       </div>
     `;
     return;
@@ -223,17 +468,18 @@ function renderAppointments(user){
   const table = document.createElement('table');
   table.innerHTML = `
     <thead>
-      <tr><th>خدمت</th><th>شعبه</th><th>تاریخ</th><th>ساعت</th><th>عملیات</th></tr>
+      <tr><th>تاریخ</th><th>ساعت</th><th>وضعیت</th><th>عملیات</th></tr>
     </thead>
   `;
   const tbody = document.createElement('tbody');
   mine.slice().reverse().forEach(a=>{
+    const status = a.status || 'pending';
+    const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${a.service}</td>
-      <td>${a.branch}</td>
       <td>${a.date}</td>
       <td>${a.time}</td>
+      <td><span class="badge ${status}">${statusLabel}</span></td>
       <td><button class="del" onclick="delAppt(${a.id})">لغو</button></td>
     `;
     tbody.appendChild(tr);
