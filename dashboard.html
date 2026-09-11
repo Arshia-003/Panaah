@@ -29,7 +29,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .back-btn{padding:10px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#e8eef7;text-decoration:none;font-size:14px;font-weight:600;transition:.3s;display:flex;align-items:center;gap:8px;}
 .back-btn:hover{background:rgba(0,194,168,.15);border-color:rgba(0,194,168,.4);transform:translateX(-3px);}
 
-.wrap{max-width:1100px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
 
 .welcome{background:linear-gradient(145deg,rgba(0,194,168,.12),rgba(10,110,189,.12));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px;margin-bottom:30px;display:flex;align-items:center;gap:25px;position:relative;overflow:hidden;}
 .welcome::before{content:'';position:absolute;top:-80px;left:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(0,194,168,.25),transparent 70%);pointer-events:none;}
@@ -138,7 +138,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .form-msg.err{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);display:block;}
 
 table{width:100%;border-collapse:collapse;margin-top:6px;}
-th,td{padding:14px 12px;text-align:right;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);}
+th,td{padding:14px 12px;text-align:right;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:middle;}
 th{background:rgba(0,194,168,.08);color:#00c2a8;font-weight:700;font-size:12.5px;}
 tr:hover{background:rgba(255,255,255,.03);}
 .badge{display:inline-block;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;}
@@ -147,6 +147,10 @@ tr:hover{background:rgba(255,255,255,.03);}
 .badge.canceled{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);}
 .del{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;transition:.3s;}
 .del:hover{background:rgba(231,76,60,.3);}
+
+.final-time{background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:10px;padding:7px 12px;font-size:12.5px;color:#00c2a8;font-weight:700;display:inline-block;line-height:1.6;}
+.final-time small{display:block;font-weight:400;color:#7a8899;font-size:10.5px;margin-top:3px;}
+.waiting-badge{color:#ffc107;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;}
 
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
@@ -230,32 +234,14 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 
   <div class="grid-stats">
-    <div class="stat-card">
-      <div class="ic">📅</div>
-      <div class="num" id="statTotal">۰</div>
-      <div class="lbl">کل نوبت‌ها</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">⏳</div>
-      <div class="num" id="statPending">۰</div>
-      <div class="lbl">در انتظار تایید</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">✅</div>
-      <div class="num" id="statApproved">۰</div>
-      <div class="lbl">تایید شده</div>
-    </div>
-    <div class="stat-card">
-      <div class="ic">🏢</div>
-      <div class="num" id="statBranches">۰</div>
-      <div class="lbl">شعبه‌های مراجعه</div>
-    </div>
+    <div class="stat-card"><div class="ic">📅</div><div class="num" id="statTotal">۰</div><div class="lbl">کل نوبت‌ها</div></div>
+    <div class="stat-card"><div class="ic">⏳</div><div class="num" id="statPending">۰</div><div class="lbl">در انتظار تایید</div></div>
+    <div class="stat-card"><div class="ic">✅</div><div class="num" id="statApproved">۰</div><div class="lbl">تایید شده</div></div>
+    <div class="stat-card"><div class="ic">🏢</div><div class="num" id="statBranches">۰</div><div class="lbl">شعبه‌های مراجعه</div></div>
   </div>
 
   <div class="section">
-    <div class="section-head">
-      <h2>اطلاعات حساب</h2>
-    </div>
+    <div class="section-head"><h2>اطلاعات حساب</h2></div>
     <div class="info-row">
       <div class="info-item">
         <div class="k">نام و نام خانوادگی</div>
@@ -277,9 +263,7 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 
   <div class="section">
-    <div class="section-head">
-      <h2>رزرو نوبت جدید</h2>
-    </div>
+    <div class="section-head"><h2>رزرو نوبت جدید</h2></div>
     <div class="new-appt-form">
       <div class="row">
         <div>
@@ -372,15 +356,13 @@ tr:hover{background:rgba(255,255,255,.03);}
         </div>
       </div>
       
-      <button class="submit-btn" onclick="addAppointment()">ثبت نوبت</button>
+      <button class="submit-btn" onclick="addAppointment()">ثبت درخواست نوبت</button>
       <div class="form-msg" id="formMsg"></div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-head">
-      <h2>نوبت‌های رزرو شده</h2>
-    </div>
+    <div class="section-head"><h2>نوبت‌های من</h2></div>
     <div id="appointmentsBox"></div>
   </div>
 
@@ -783,7 +765,7 @@ function addAppointment(){
   });
   setAppointments(appts);
   msg.className = 'form-msg ok';
-  msg.textContent = '✅ نوبت شما ثبت شد و در انتظار تایید است';
+  msg.textContent = '✅ درخواست نوبت شما ثبت شد. منتظر تایید و تعیین زمان از طرف مجموعه باشید.';
   rangeStart = null; rangeEnd = null; selectedPay = null; selectedInstallments = null;
   document.getElementById('dateBtnText').textContent = 'انتخاب بازه';
   document.getElementById('dateBtnText').classList.add('ph');
@@ -798,7 +780,7 @@ function addAppointment(){
   document.getElementById('instCalcBox').classList.remove('show');
   renderStats(cur);
   renderAppointments(cur);
-  setTimeout(()=>{ msg.className = 'form-msg'; }, 4000);
+  setTimeout(()=>{ msg.className = 'form-msg'; }, 6000);
 }
 
 function renderAppointments(user){
@@ -811,7 +793,7 @@ function renderAppointments(user){
   const table = document.createElement('table');
   table.innerHTML = `
     <thead>
-      <tr><th>بازه زمانی</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
+      <tr><th>بازه درخواستی</th><th>زمان تعیین‌شده</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
     </thead>
   `;
   const tbody = document.createElement('tbody');
@@ -820,10 +802,20 @@ function renderAppointments(user){
     const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
     const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments || 0)} قسط)` : (a.pay || '—');
     const rangeText = a.dateRange || a.date || '—';
+    
+    let finalCell;
+    if(status === 'approved' && a.finalDate){
+      finalCell = `<div class="final-time">${a.finalDate} — ساعت ${a.finalTime || a.time}<small>زمان قطعی مجموعه پناه</small></div>`;
+    } else if(status === 'canceled'){
+      finalCell = `<span style="color:#ff6b5b;">لغو شده</span>`;
+    } else {
+      finalCell = `<span class="waiting-badge">⏳ در انتظار تعیین زمان</span>`;
+    }
+    
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${rangeText}</td>
-      <td>${a.time}</td>
+      <td>${rangeText}<br><small style="color:#7a8899;">ساعت درخواستی: ${a.time}</small></td>
+      <td>${finalCell}</td>
       <td>${a.service || '—'}</td>
       <td>${a.branch || '—'}</td>
       <td>${payLabel}</td>
