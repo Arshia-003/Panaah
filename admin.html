@@ -65,7 +65,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 
 .table-wrap{overflow-x:auto;border-radius:14px;}
 table{width:100%;border-collapse:collapse;min-width:750px;}
-th,td{padding:14px 12px;text-align:right;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);}
+th,td{padding:14px 12px;text-align:right;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:middle;}
 th{background:rgba(124,92,255,.08);color:#a395ff;font-weight:700;font-size:12px;}
 tr:hover{background:rgba(255,255,255,.03);}
 .badge{display:inline-block;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;}
@@ -252,22 +252,151 @@ let usersFilter = '';
 let requestsFilter = '';
 let approvedFilter = '';
 
+/* ===== خوندن همه‌ی کاربران از همه منابع ===== */
+function getAllUsers(){
+  const result = [];
+  const seen = new Set();
+  
+  function tryAdd(u){
+    if(!u || typeof u !== 'object') return;
+    const key = u.phone || u.username || u.id;
+    if(key && !seen.has(key)){
+      seen.add(key);
+      result.push(u);
+    }
+  }
+  
+  // ۱. از storage.js (نسخه جدید)
+  try { getUsers().forEach(tryAdd); } catch(e){}
+  
+  // ۲. از panaah_users (نسخه قدیمی)
+  try {
+    const old = JSON.parse(localStorage.getItem('panaah_users') || '[]');
+    if(Array.isArray(old)) old.forEach(tryAdd);
+  } catch(e){}
+  
+  // ۳. گشتن توی همه کلیدهای localStorage
+  try {
+    for(let i = 0; i < localStorage.length; i++){
+      const k = localStorage.key(i);
+      if(!k || k === 'panaah_current' || k === 'panaah_data_v1') continue;
+      try {
+        const val = JSON.parse(localStorage.getItem(k));
+        if(Array.isArray(val)){
+          val.forEach(item=>{
+            if(item && typeof item === 'object' && (item.name || item.phone)){
+              tryAdd(item);
+            }
+          });
+        } else if(val && typeof val === 'object'){
+          if(val.users && Array.isArray(val.users)){
+            val.users.forEach(tryAdd);
+          }
+        }
+      } catch(e){}
+    }
+  } catch(e){}
+  
+  return result;
+}
+
+/* ===== خوندن همه‌ی نوبت‌ها از همه منابع ===== */
+function getAllAppointments(){
+  const result = [];
+  const seen = new Set();
+  
+  function tryAdd(a){
+    if(!a || typeof a !== 'object' || !a.id) return;
+    if(!seen.has(a.id)){
+      seen.add(a.id);
+      result.push(a);
+    }
+  }
+  
+  // ۱. از storage.js (نسخه جدید)
+  try { getAppointments().forEach(tryAdd); } catch(e){}
+  
+  // ۲. از appointments (نسخه قدیمی)
+  try {
+    const old = JSON.parse(localStorage.getItem('appointments') || '[]');
+    if(Array.isArray(old)) old.forEach(tryAdd);
+  } catch(e){}
+  
+  // ۳. گشتن توی همه کلیدهای localStorage
+  try {
+    for(let i = 0; i < localStorage.length; i++){
+      const k = localStorage.key(i);
+      if(!k || k === 'panaah_current' || k === 'panaah_data_v1' || k === 'panaah_users') continue;
+      try {
+        const val = JSON.parse(localStorage.getItem(k));
+        if(Array.isArray(val)){
+          val.forEach(item=>{
+            if(item && typeof item === 'object' && item.id && (item.user || item.phone)){
+              tryAdd(item);
+            }
+          });
+        } else if(val && typeof val === 'object'){
+          if(val.appointments && Array.isArray(val.appointments)){
+            val.appointments.forEach(tryAdd);
+          }
+        }
+      } catch(e){}
+    }
+  } catch(e){}
+  
+  return result;
+}
+
+/* ===== همگام‌سازی همه‌چی توی panaah_data_v1 ===== */
+function syncAllData(){
+  const allUsers = getAllUsers();
+  const allAppts = getAllAppointments();
+  
+  const data = loadData();
+  
+  // کاربران
+  const userMap = new Map();
+  (data.users || []).forEach(u=>{
+    const key = u.phone || u.username || u.id;
+    if(key) userMap.set(key, u);
+  });
+  allUsers.forEach(u=>{
+    const key = u.phone || u.username || u.id;
+    if(key && !userMap.has(key)) userMap.set(key, u);
+  });
+  data.users = Array.from(userMap.values());
+  
+  // نوبت‌ها
+  const apptMap = new Map();
+  (data.appointments || []).forEach(a=>{
+    if(a.id) apptMap.set(a.id, a);
+  });
+  allAppts.forEach(a=>{
+    if(a.id && !apptMap.has(a.id)) apptMap.set(a.id, a);
+  });
+  data.appointments = Array.from(apptMap.values());
+  
+  saveData(data);
+}
+
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrentUser();
   if(!cur || cur.role !== 'admin'){
     window.location.href = 'index.html';
     return;
   }
+  syncAllData();
   renderAll();
 });
 
-window.addEventListener('storage',(e)=>{
-  if(e.key === 'panaah_data_v1'){
-    renderAll();
-  }
+window.addEventListener('storage',()=>{
+  syncAllData();
+  renderAll();
 });
 
 function refreshAll(ev){
+  syncAllData();
   renderAll();
   const btn = ev ? ev.target : null;
   if(btn){
@@ -304,7 +433,6 @@ function renderStats(){
   }
 }
 
-/* ===== TAB 1: USERS ===== */
 function renderUsers(){
   const list = document.getElementById('usersList');
   const appts = getAppointments();
@@ -340,7 +468,6 @@ function renderUsers(){
   });
 }
 
-/* ===== TAB 2: REQUESTS (pending) ===== */
 function renderRequests(){
   const list = document.getElementById('requestsList');
   let appts = getAppointments().filter(a => a.status === 'pending');
@@ -366,7 +493,7 @@ function renderRequests(){
       <td>${a.name || '—'}<br><small style="color:#7a8899;">${a.phone || ''}</small></td>
       <td>
         <div class="req-info">
-          بازه درخواستی کاربر:<br><b>${rangeText}</b>
+          بازه درخواستی:<br><b>${rangeText}</b>
         </div>
       </td>
       <td>${a.time || '—'}</td>
@@ -382,7 +509,6 @@ function renderRequests(){
   });
 }
 
-/* ===== TAB 3: APPROVED ===== */
 function renderApproved(){
   const list = document.getElementById('approvedList');
   let appts = getAppointments().filter(a => a.status === 'approved' || a.status === 'canceled');
@@ -462,16 +588,13 @@ function deleteUser(phone){
   renderAll();
 }
 
-/* ===== ASSIGN MODAL ===== */
 function openAssign(id){
   currentAssignId = id;
   const appts = getAppointments();
   const a = appts.find(x=>x.id===id);
   if(!a) return;
-  
   const rangeText = a.dateRange || a.date || '—';
   const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)} قسط)` : (a.pay || '—');
-  
   document.getElementById('assignReqBox').innerHTML = `
     <b>کاربر:</b> ${a.name} (${a.phone})<br>
     <b>بازه درخواستی:</b> ${rangeText}<br>
@@ -480,7 +603,6 @@ function openAssign(id){
     <b>شعبه:</b> ${a.branch || '—'}<br>
     <b>پرداخت:</b> ${payLabel}
   `;
-  
   document.getElementById('assignDate').value = a.finalDate || '';
   document.getElementById('assignTime').value = a.finalTime || a.time || '۰۹:۰۰';
   document.getElementById('assignModal').classList.remove('hide');
@@ -496,16 +618,13 @@ function saveAssign(){
   const time = document.getElementById('assignTime').value;
   if(!date){ alert('لطفاً تاریخ دقیق را وارد کنید'); return; }
   if(!currentAssignId){ alert('خطا: نوبت پیدا نشد'); return; }
-  
   const appts = getAppointments();
   const found = appts.find(a=>a.id === currentAssignId);
   if(!found){ alert('نوبت پیدا نشد'); return; }
-  
   found.finalDate = date;
   found.finalTime = time;
   found.status = 'approved';
   found.approvedAt = new Date().toISOString();
-  
   setAppointments(appts);
   closeAssign();
   renderAll();
