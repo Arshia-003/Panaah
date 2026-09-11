@@ -292,34 +292,110 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامی حقوق محفوظ است</p>
 </footer>
 
-<script src="storage.js"></script>
 <script>
+/* ============================================
+   توابع localStorage — همه چیز داخل همین فایل
+============================================ */
+var STORAGE_KEY = 'panaah_data_v1';
+var CURRENT_KEY = 'panaah_current';
+
+function getDefaultData(){
+  return {
+    users: [
+      {
+        id: 'admin',
+        username: 'sherkat',
+        name: 'شرکت',
+        phone: '',
+        email: '',
+        address: '',
+        password: '09126481838',
+        role: 'admin',
+        joinedAt: new Date().toISOString()
+      }
+    ],
+    appointments: []
+  };
+}
+
+function loadData(){
+  var raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw){
+    var def = getDefaultData();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(def));
+    return def;
+  }
+  try {
+    var parsed = JSON.parse(raw);
+    if(!parsed.users) parsed.users = [];
+    if(!parsed.appointments) parsed.appointments = [];
+    return parsed;
+  } catch(e){
+    var def2 = getDefaultData();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(def2));
+    return def2;
+  }
+}
+
+function saveData(data){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getUsers(){ return loadData().users || []; }
+function setUsers(users){
+  var data = loadData();
+  data.users = users;
+  saveData(data);
+}
+
+function getAppointments(){ return loadData().appointments || []; }
+function setAppointments(appts){
+  var data = loadData();
+  data.appointments = appts;
+  saveData(data);
+}
+
+function getCurrentUser(){
+  var raw = localStorage.getItem(CURRENT_KEY);
+  if(!raw) return null;
+  try { return JSON.parse(raw); } catch(e){ return null; }
+}
+function setCurrentUser(user){
+  localStorage.setItem(CURRENT_KEY, JSON.stringify(user));
+}
+function clearCurrentUser(){
+  localStorage.removeItem(CURRENT_KEY);
+}
+
+/* ============================================
+   بقیه کد صفحه
+============================================ */
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
-window.addEventListener('scroll',()=>{
-  const h = document.getElementById('header');
+window.addEventListener('scroll',function(){
+  var h = document.getElementById('header');
   if(h) h.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('show'); });
 },{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-let authMode = 'register';
+var authMode = 'register';
 
 function switchMode(mode){
   authMode = mode;
-  const regF = document.getElementById('registerFields');
-  const logF = document.getElementById('loginFields');
-  const title = document.getElementById('modalTitle');
-  const sub = document.getElementById('modalSub');
-  const btn = document.getElementById('submitBtn');
-  const sw = document.getElementById('switchAuth');
+  var regF = document.getElementById('registerFields');
+  var logF = document.getElementById('loginFields');
+  var title = document.getElementById('modalTitle');
+  var sub = document.getElementById('modalSub');
+  var btn = document.getElementById('submitBtn');
+  var sw = document.getElementById('switchAuth');
   
-  document.querySelectorAll('.err-msg').forEach(e=>e.classList.remove('show'));
-  document.querySelectorAll('.modal input').forEach(e=>e.classList.remove('error'));
+  document.querySelectorAll('.err-msg').forEach(function(e){ e.classList.remove('show'); });
+  document.querySelectorAll('.modal input').forEach(function(e){ e.classList.remove('error'); });
   
   if(mode==='login'){
     regF.classList.add('hidden');
@@ -338,8 +414,8 @@ function switchMode(mode){
   }
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
-  const cur = getCurrentUser();
+window.addEventListener('DOMContentLoaded',function(){
+  var cur = getCurrentUser();
   if(cur){
     showUser(cur);
     unlockBody();
@@ -357,8 +433,9 @@ function openAuth(){ document.getElementById('registerModal').classList.remove('
 function closeAuth(){ document.getElementById('registerModal').classList.add('hide'); unlockBody(); }
 
 function toEnglishDigits(str){
-  const fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
-  return str.replace(/[۰-۹]/g,d=>fa.indexOf(d)).replace(/[٠-٩]/g,d=>ar.indexOf(d));
+  var fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
+  return str.replace(/[۰-۹]/g,function(d){ return fa.indexOf(d); })
+            .replace(/[٠-٩]/g,function(d){ return ar.indexOf(d); });
 }
 function validName(n){
   n = n.trim();
@@ -377,26 +454,26 @@ function submitAuth(){
 }
 
 function doRegister(){
-  const nameEl = document.getElementById('regName');
-  const phoneEl = document.getElementById('regPhone');
-  const emailEl = document.getElementById('regEmail');
-  const passEl = document.getElementById('regPass');
-  const errName = document.getElementById('errName');
-  const errPhone = document.getElementById('errPhone');
-  const errEmail = document.getElementById('errEmail');
-  const errPass = document.getElementById('errRegPass');
+  var nameEl = document.getElementById('regName');
+  var phoneEl = document.getElementById('regPhone');
+  var emailEl = document.getElementById('regEmail');
+  var passEl = document.getElementById('regPass');
+  var errName = document.getElementById('errName');
+  var errPhone = document.getElementById('errPhone');
+  var errEmail = document.getElementById('errEmail');
+  var errPass = document.getElementById('errRegPass');
   
-  [errName,errPhone,errEmail,errPass].forEach(e=>e.classList.remove('show'));
-  [nameEl,phoneEl,emailEl,passEl].forEach(e=>e.classList.remove('error'));
+  [errName,errPhone,errEmail,errPass].forEach(function(e){ e.classList.remove('show'); });
+  [nameEl,phoneEl,emailEl,passEl].forEach(function(e){ e.classList.remove('error'); });
   
-  let ok = true;
+  var ok = true;
   if(!validName(nameEl.value)){ errName.classList.add('show'); nameEl.classList.add('error'); ok = false; }
   if(!validPhone(phoneEl.value)){ errPhone.classList.add('show'); phoneEl.classList.add('error'); ok = false; }
   if(!validEmail(emailEl.value)){ errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
   if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
-  const newUser = {
+  var newUser = {
     id: Date.now(),
     name: nameEl.value.trim(),
     phone: toEnglishDigits(phoneEl.value.trim()),
@@ -407,8 +484,8 @@ function doRegister(){
     joinedAt: new Date().toISOString()
   };
   
-  const users = getUsers();
-  const existing = users.find(u => u.phone === newUser.phone && u.role !== 'admin');
+  var users = getUsers();
+  var existing = users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
   if(existing){
     existing.name = newUser.name;
     existing.email = newUser.email;
@@ -426,25 +503,24 @@ function doRegister(){
 }
 
 function doLogin(){
-  const inputEl = document.getElementById('loginInput');
-  const passEl = document.getElementById('loginPass');
-  const errInput = document.getElementById('errLoginInput');
-  const errPass = document.getElementById('errLoginPass');
+  var inputEl = document.getElementById('loginInput');
+  var passEl = document.getElementById('loginPass');
+  var errInput = document.getElementById('errLoginInput');
+  var errPass = document.getElementById('errLoginPass');
   
-  [errInput,errPass].forEach(e=>e.classList.remove('show'));
-  [inputEl,passEl].forEach(e=>e.classList.remove('error'));
+  [errInput,errPass].forEach(function(e){ e.classList.remove('show'); });
+  [inputEl,passEl].forEach(function(e){ e.classList.remove('error'); });
   
-  let ok = true;
-  const raw = inputEl.value.trim();
+  var ok = true;
+  var raw = inputEl.value.trim();
   
   if(!raw){ errInput.classList.add('show'); errInput.textContent = 'نام یا شماره همراه را وارد کنید'; inputEl.classList.add('error'); ok = false; }
   if(!passEl.value){ errPass.classList.add('show'); errPass.textContent = 'رمز عبور را وارد کنید'; passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
-  // ورود ادمین
   if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
-    let users = getUsers();
-    let admin = users.find(u => u.role === 'admin');
+    var users = getUsers();
+    var admin = users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
       admin = {
         id: 'admin',
@@ -467,23 +543,20 @@ function doLogin(){
     setCurrentUser(admin);
     showUser(admin);
     closeAuth();
-    setTimeout(()=>{ window.location.href = 'admin.html'; }, 300);
+    setTimeout(function(){ window.location.href = 'admin.html'; }, 300);
     return;
   }
   
-  // ورود کاربر عادی
-  const users = getUsers();
-  let found = null;
-  const digits = toEnglishDigits(raw).replace(/\D/g,'');
+  var users2 = getUsers();
+  var found = null;
+  var digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
-    found = users.find(u => u.phone === digits && u.role !== 'admin');
+    found = users2.find(function(u){ return u.phone === digits && u.role !== 'admin'; });
   } else {
-    const nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
-    found = users.find(u =>
-      u.role !== 'admin' &&
-      u.name &&
-      u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm
-    );
+    var nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
+    found = users2.find(function(u){
+      return u.role !== 'admin' && u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm;
+    });
   }
   
   if(!found){
@@ -510,9 +583,9 @@ document.getElementById('regPhone').addEventListener('input', function(){
 });
 
 function showUser(user){
-  const btn = document.getElementById('userBtn');
-  const avatar = document.getElementById('userAvatar');
-  const uname = document.getElementById('userName');
+  var btn = document.getElementById('userBtn');
+  var avatar = document.getElementById('userAvatar');
+  var uname = document.getElementById('userName');
   
   btn.classList.remove('hidden');
   
@@ -521,7 +594,7 @@ function showUser(user){
     avatar.classList.add('admin');
     uname.textContent = 'پنل مدیریت';
   } else {
-    const firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
+    var firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
     avatar.textContent = firstName.charAt(0);
     avatar.classList.remove('admin');
     uname.textContent = firstName;
@@ -529,7 +602,7 @@ function showUser(user){
 }
 
 function goToDashboard(){
-  const cur = getCurrentUser();
+  var cur = getCurrentUser();
   if(!cur){ openAuth(); return; }
   if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
   window.location.href = 'dashboard.html';
