@@ -50,7 +50,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .stat-card .lbl{font-size:12.5px;color:#7a8899;font-weight:500;}
 
 .tabs{display:flex;gap:8px;margin-bottom:25px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;}
-.tab{padding:13px 22px;background:transparent;border:none;color:#7a8899;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.tab{padding:14px 24px;background:transparent;border:none;color:#7a8899;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px;}
 .tab:hover{color:#e8eef7;}
 .tab.active{color:#00c2a8;border-bottom-color:#00c2a8;}
 .tab .badge-cnt{display:inline-block;padding:2px 8px;background:rgba(255,193,7,.2);color:#ffc107;border-radius:8px;font-size:10.5px;font-weight:800;}
@@ -81,6 +81,8 @@ tr:hover{background:rgba(255,255,255,.03);}
 .btn-cancel:hover{background:rgba(231,76,60,.3);}
 .btn-delete{background:rgba(231,76,60,.15);color:#ff6b5b;border-color:rgba(231,76,60,.3);}
 .btn-delete:hover{background:rgba(231,76,60,.3);}
+.btn-time{background:rgba(124,92,255,.15);color:#a395ff;border-color:rgba(124,92,255,.3);}
+.btn-time:hover{background:rgba(124,92,255,.3);}
 
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;line-height:2;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
@@ -89,12 +91,20 @@ tr:hover{background:rgba(255,255,255,.03);}
 .tab-content.active{display:block;animation:fadeIn .4s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
+.req-info{background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.2);border-radius:12px;padding:10px 14px;font-size:12.5px;color:#ffc107;line-height:1.7;margin-top:6px;}
+.req-info b{color:#fff;font-weight:700;}
+
+.final-time{background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:10px;padding:8px 12px;font-size:12.5px;color:#00c2a8;font-weight:700;display:inline-block;line-height:1.6;}
+.final-time small{display:block;font-weight:400;color:#7a8899;font-size:11px;margin-top:3px;}
+
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.5);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;overflow:auto;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(124,92,255,.3);border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);max-height:90vh;overflow-y:auto;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal h3{font-size:20px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
-.modal .sub{color:#7a8899;font-size:13px;margin-bottom:22px;line-height:1.7;}
+.modal .sub{color:#7a8899;font-size:13px;margin-bottom:18px;line-height:1.7;}
+.modal .req-box{background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.2);border-radius:12px;padding:14px;margin-bottom:18px;font-size:13px;line-height:1.9;}
+.modal .req-box b{color:#ffc107;}
 .modal .form-group{margin-bottom:14px;}
 .modal label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:6px;}
 .modal input,.modal select{width:100%;padding:12px 15px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
@@ -115,7 +125,7 @@ tr:hover{background:rgba(255,255,255,.03);}
   .admin-title h1{font-size:20px;}
   .section{padding:20px 16px;}
   th,td{padding:10px 8px;font-size:11.5px;}
-  .tab{padding:11px 15px;font-size:13px;}
+  .tab{padding:11px 15px;font-size:12.5px;}
   .stat-card .num{font-size:22px;}
   .modal{padding:24px 20px;}
   .search-box{min-width:100%;width:100%;}
@@ -144,19 +154,20 @@ tr:hover{background:rgba(255,255,255,.03);}
 
   <div class="admin-title">
     <h1>خوش آمدی <span>مدیر</span> ⚙️</h1>
-    <p>از این پنل می‌تونی کاربران، نوبت‌ها و درخواست‌های مشتری‌ها رو مدیریت کنی.</p>
+    <p>از این پنل می‌تونی کاربران، درخواست‌های نوبت و نوبت‌های تایید‌شده رو مدیریت کنی.</p>
   </div>
 
   <div class="grid-stats">
     <div class="stat-card"><div class="ic">👥</div><div class="num" id="statUsers">۰</div><div class="lbl">کاربران ثبت‌نام‌شده</div></div>
+    <div class="stat-card"><div class="ic">📥</div><div class="num" id="statPending">۰</div><div class="lbl">درخواست‌های در انتظار</div></div>
+    <div class="stat-card"><div class="ic">✅</div><div class="num" id="statApproved">۰</div><div class="lbl">نوبت‌های تایید‌شده</div></div>
     <div class="stat-card"><div class="ic">📅</div><div class="num" id="statAppts">۰</div><div class="lbl">کل نوبت‌ها</div></div>
-    <div class="stat-card"><div class="ic">⏳</div><div class="num" id="statPending">۰</div><div class="lbl">در انتظار تایید</div></div>
-    <div class="stat-card"><div class="ic">✅</div><div class="num" id="statApproved">۰</div><div class="lbl">تایید شده</div></div>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('users', this)">👥 کاربران</button>
-    <button class="tab" onclick="switchTab('appts', this)">📅 نوبت‌ها <span class="badge-cnt" id="tabPendingBadge" style="display:none;">۰</span></button>
+    <button class="tab active" onclick="switchTab('users', this)">👥 لیست کاربران</button>
+    <button class="tab" onclick="switchTab('requests', this)">📥 درخواست‌های نوبت <span class="badge-cnt" id="tabPendingBadge" style="display:none;">۰</span></button>
+    <button class="tab" onclick="switchTab('approved', this)">✅ نوبت‌های ثبت‌شده</button>
   </div>
 
   <div class="tab-content active" id="tabUsers">
@@ -176,18 +187,35 @@ tr:hover{background:rgba(255,255,255,.03);}
     </div>
   </div>
 
-  <div class="tab-content" id="tabAppts">
+  <div class="tab-content" id="tabRequests">
     <div class="section">
       <div class="section-head">
-        <h2>همه نوبت‌ها</h2>
-        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterAppts(this.value)">
+        <h2>درخواست‌های نوبت (در انتظار تایید)</h2>
+        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterRequests(this.value)">
       </div>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>کاربر</th><th>بازه</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
+            <tr><th>کاربر</th><th>بازه درخواستی</th><th>ساعت درخواستی</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>عملیات</th></tr>
           </thead>
-          <tbody id="apptsList"></tbody>
+          <tbody id="requestsList"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tabApproved">
+    <div class="section">
+      <div class="section-head">
+        <h2>نوبت‌های ثبت‌شده (تایید شده)</h2>
+        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterApproved(this.value)">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>کاربر</th><th>تاریخ نهایی</th><th>ساعت نهایی</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
+          </thead>
+          <tbody id="approvedList"></tbody>
         </table>
       </div>
     </div>
@@ -197,51 +225,32 @@ tr:hover{background:rgba(255,255,255,.03);}
 
 <div class="modal-overlay hide" id="assignModal">
   <div class="modal">
-    <h3>📅 تعیین نوبت برای کاربر</h3>
-    <p class="sub" id="assignSub">—</p>
+    <h3>📅 تعیین زمان دقیق نوبت</h3>
+    <div class="req-box" id="assignReqBox">—</div>
     <div class="form-group">
-      <label>تاریخ و بازه</label>
-      <input type="text" id="assignDate" placeholder="مثلاً ۱۵ مهر تا ۲۰ مهر ۱۴۰۴">
+      <label>تاریخ دقیق (شمسی)</label>
+      <input type="text" id="assignDate" placeholder="مثلاً ۱۸ مهر ۱۴۰۴">
     </div>
     <div class="form-group">
-      <label>ساعت</label>
+      <label>ساعت دقیق</label>
       <select id="assignTime">
         <option>۰۹:۰۰</option><option>۱۰:۰۰</option><option>۱۱:۰۰</option><option>۱۲:۰۰</option>
         <option>۱۴:۰۰</option><option>۱۵:۰۰</option><option>۱۶:۰۰</option><option>۱۷:۰۰</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>شعبه</label>
-      <select id="assignBranch">
-        <option>شعبه مرکزی</option><option>شعبه شمال</option><option>شعبه غرب</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>خدمت</label>
-      <select id="assignService">
-        <option>ایمپلنت</option><option>ارتودنسی</option><option>جرم‌گیری</option>
-        <option>کامپوزیت</option><option>عصب‌کشی</option><option>کشیدن دندان</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>وضعیت</label>
-      <select id="assignStatus">
-        <option value="approved">تایید شده</option>
-        <option value="pending">در انتظار تایید</option>
-      </select>
-    </div>
     <div class="modal-btns">
       <button class="btn-cancel-modal" onclick="closeAssign()">لغو</button>
-      <button class="btn-save" onclick="saveAssign()">ثبت نوبت</button>
+      <button class="btn-save" onclick="saveAssign()">تایید و ثبت نوبت</button>
     </div>
   </div>
 </div>
 
 <script src="storage.js"></script>
 <script>
-let currentAssignPhone = null;
+let currentAssignId = null;
 let usersFilter = '';
-let apptsFilter = '';
+let requestsFilter = '';
+let approvedFilter = '';
 
 window.addEventListener('DOMContentLoaded',()=>{
   const cur = getCurrentUser();
@@ -273,7 +282,8 @@ function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\
 function renderAll(){
   renderStats();
   renderUsers();
-  renderAppts();
+  renderRequests();
+  renderApproved();
 }
 
 function renderStats(){
@@ -294,6 +304,7 @@ function renderStats(){
   }
 }
 
+/* ===== TAB 1: USERS ===== */
 function renderUsers(){
   const list = document.getElementById('usersList');
   const appts = getAppointments();
@@ -322,7 +333,6 @@ function renderUsers(){
       <td><span class="badge user">کاربر</span></td>
       <td>${toFa(cnt)}</td>
       <td>
-        <button class="btn-sm btn-approve" onclick="openAssign('${u.phone}','${(u.name||'').replace(/'/g,"\\'")}')">تعیین نوبت</button>
         <button class="btn-sm btn-delete" onclick="deleteUser('${u.phone}')">حذف</button>
       </td>
     `;
@@ -330,11 +340,12 @@ function renderUsers(){
   });
 }
 
-function renderAppts(){
-  const list = document.getElementById('apptsList');
-  let appts = getAppointments();
-  if(apptsFilter){
-    const f = apptsFilter.toLowerCase();
+/* ===== TAB 2: REQUESTS (pending) ===== */
+function renderRequests(){
+  const list = document.getElementById('requestsList');
+  let appts = getAppointments().filter(a => a.status === 'pending');
+  if(requestsFilter){
+    const f = requestsFilter.toLowerCase();
     appts = appts.filter(a =>
       (a.name || '').toLowerCase().includes(f) ||
       (a.phone || '').includes(f) ||
@@ -343,27 +354,75 @@ function renderAppts(){
     );
   }
   if(!appts.length){
-    list.innerHTML = '<tr><td colspan="8" class="empty">هنوز هیچ نوبتی ثبت نشده است</td></tr>';
+    list.innerHTML = '<tr><td colspan="7" class="empty">هیچ درخواست نوبتی در انتظار تایید نیست</td></tr>';
+    return;
+  }
+  list.innerHTML = '';
+  appts.slice().reverse().forEach(a=>{
+    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)} قسط)` : (a.pay || '—');
+    const rangeText = a.dateRange || a.date || '—';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${a.name || '—'}<br><small style="color:#7a8899;">${a.phone || ''}</small></td>
+      <td>
+        <div class="req-info">
+          بازه درخواستی کاربر:<br><b>${rangeText}</b>
+        </div>
+      </td>
+      <td>${a.time || '—'}</td>
+      <td>${a.service || '—'}</td>
+      <td>${a.branch || '—'}</td>
+      <td>${payLabel}</td>
+      <td>
+        <button class="btn-sm btn-time" onclick="openAssign(${a.id})">📅 تعیین زمان</button>
+        <button class="btn-sm btn-cancel" onclick="cancelAppt(${a.id})">لغو</button>
+      </td>
+    `;
+    list.appendChild(tr);
+  });
+}
+
+/* ===== TAB 3: APPROVED ===== */
+function renderApproved(){
+  const list = document.getElementById('approvedList');
+  let appts = getAppointments().filter(a => a.status === 'approved' || a.status === 'canceled');
+  if(approvedFilter){
+    const f = approvedFilter.toLowerCase();
+    appts = appts.filter(a =>
+      (a.name || '').toLowerCase().includes(f) ||
+      (a.phone || '').includes(f) ||
+      (a.service || '').toLowerCase().includes(f) ||
+      (a.branch || '').toLowerCase().includes(f)
+    );
+  }
+  if(!appts.length){
+    list.innerHTML = '<tr><td colspan="8" class="empty">هنوز هیچ نوبتی تایید نشده است</td></tr>';
     return;
   }
   list.innerHTML = '';
   appts.slice().reverse().forEach(a=>{
     const status = a.status || 'pending';
-    const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
-    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)})` : (a.pay || '—');
-    const rangeText = a.dateRange || a.date || '—';
+    const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار';
+    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)} قسط)` : (a.pay || '—');
+    const finalDate = a.finalDate || '—';
+    const finalTime = a.finalTime || a.time || '—';
+    const requestedRange = a.dateRange || a.date || '—';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${a.name || '—'}<br><small style="color:#7a8899;">${a.phone || ''}</small></td>
-      <td>${rangeText}</td>
-      <td>${a.time || '—'}</td>
+      <td>
+        <div class="final-time">
+          ${finalDate}
+          <small>درخواست کاربر: ${requestedRange}</small>
+        </div>
+      </td>
+      <td>${finalTime}</td>
       <td>${a.service || '—'}</td>
       <td>${a.branch || '—'}</td>
       <td>${payLabel}</td>
       <td><span class="badge ${status}">${statusLabel}</span></td>
       <td>
-        ${status === 'pending' ? `<button class="btn-sm btn-approve" onclick="setStatus(${a.id},'approved')">تایید</button>` : ''}
-        ${status !== 'canceled' ? `<button class="btn-sm btn-cancel" onclick="setStatus(${a.id},'canceled')">لغو</button>` : ''}
+        ${status === 'approved' ? `<button class="btn-sm btn-time" onclick="openAssign(${a.id})">✏️ ویرایش زمان</button>` : ''}
         <button class="btn-sm btn-delete" onclick="deleteAppt(${a.id})">حذف</button>
       </td>
     `;
@@ -372,13 +431,15 @@ function renderAppts(){
 }
 
 function filterUsers(v){ usersFilter = v.trim(); renderUsers(); }
-function filterAppts(v){ apptsFilter = v.trim(); renderAppts(); }
+function filterRequests(v){ requestsFilter = v.trim(); renderRequests(); }
+function filterApproved(v){ approvedFilter = v.trim(); renderApproved(); }
 
-function setStatus(id, status){
+function cancelAppt(id){
+  if(!confirm('این درخواست لغو شود؟')) return;
   const appts = getAppointments();
   const found = appts.find(a=>a.id===id);
   if(found){
-    found.status = status;
+    found.status = 'canceled';
     setAppointments(appts);
     renderAll();
   }
@@ -401,40 +462,50 @@ function deleteUser(phone){
   renderAll();
 }
 
-function openAssign(phone, name){
-  currentAssignPhone = phone;
-  document.getElementById('assignSub').textContent = `نوبت برای ${name} (${phone})`;
-  document.getElementById('assignDate').value = '';
+/* ===== ASSIGN MODAL ===== */
+function openAssign(id){
+  currentAssignId = id;
+  const appts = getAppointments();
+  const a = appts.find(x=>x.id===id);
+  if(!a) return;
+  
+  const rangeText = a.dateRange || a.date || '—';
+  const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments||0)} قسط)` : (a.pay || '—');
+  
+  document.getElementById('assignReqBox').innerHTML = `
+    <b>کاربر:</b> ${a.name} (${a.phone})<br>
+    <b>بازه درخواستی:</b> ${rangeText}<br>
+    <b>ساعت درخواستی:</b> ${a.time || '—'}<br>
+    <b>خدمت:</b> ${a.service || '—'}<br>
+    <b>شعبه:</b> ${a.branch || '—'}<br>
+    <b>پرداخت:</b> ${payLabel}
+  `;
+  
+  document.getElementById('assignDate').value = a.finalDate || '';
+  document.getElementById('assignTime').value = a.finalTime || a.time || '۰۹:۰۰';
   document.getElementById('assignModal').classList.remove('hide');
 }
+
 function closeAssign(){
   document.getElementById('assignModal').classList.add('hide');
-  currentAssignPhone = null;
+  currentAssignId = null;
 }
+
 function saveAssign(){
   const date = document.getElementById('assignDate').value.trim();
   const time = document.getElementById('assignTime').value;
-  const branch = document.getElementById('assignBranch').value;
-  const service = document.getElementById('assignService').value;
-  const status = document.getElementById('assignStatus').value;
-  if(!date){ alert('لطفاً تاریخ را وارد کنید'); return; }
-  const users = getUsers();
-  const user = users.find(u=>u.phone === currentAssignPhone);
-  if(!user){ alert('کاربر پیدا نشد'); return; }
+  if(!date){ alert('لطفاً تاریخ دقیق را وارد کنید'); return; }
+  if(!currentAssignId){ alert('خطا: نوبت پیدا نشد'); return; }
+  
   const appts = getAppointments();
-  appts.push({
-    id: Date.now(),
-    name: user.name,
-    phone: user.phone,
-    branch: branch,
-    service: service,
-    date: date,
-    dateRange: date,
-    time: time,
-    pay: '—',
-    user: user.phone,
-    status: status
-  });
+  const found = appts.find(a=>a.id === currentAssignId);
+  if(!found){ alert('نوبت پیدا نشد'); return; }
+  
+  found.finalDate = date;
+  found.finalTime = time;
+  found.status = 'approved';
+  found.approvedAt = new Date().toISOString();
+  
   setAppointments(appts);
   closeAssign();
   renderAll();
