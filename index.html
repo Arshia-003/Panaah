@@ -293,9 +293,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
-/* ============================================
-   توابع localStorage — همه چیز داخل همین فایل
-============================================ */
 var STORAGE_KEY = 'panaah_data_v1';
 var CURRENT_KEY = 'panaah_current';
 
@@ -303,7 +300,7 @@ function getDefaultData(){
   return {
     users: [
       {
-        id: 'admin',
+        id: 1,
         username: 'sherkat',
         name: 'شرکت',
         phone: '',
@@ -367,9 +364,6 @@ function clearCurrentUser(){
   localStorage.removeItem(CURRENT_KEY);
 }
 
-/* ============================================
-   بقیه کد صفحه
-============================================ */
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
@@ -523,7 +517,7 @@ function doLogin(){
     var admin = users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
       admin = {
-        id: 'admin',
+        id: 1,
         username: 'sherkat',
         name: 'شرکت',
         phone: '',
