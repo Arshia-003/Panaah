@@ -293,6 +293,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
+/* ===== JSONBin ===== */
 var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
 var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
 var API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
@@ -301,9 +302,7 @@ var CACHE = { users: [], appointments: [] };
 
 async function fetchData(){
   try {
-    var res = await fetch(API_URL + '/latest', {
-      headers: { 'X-Master-Key': JSONBIN_KEY }
-    });
+    var res = await fetch(API_URL + '/latest', { headers: { 'X-Master-Key': JSONBIN_KEY } });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
     var record = json.record || {};
@@ -320,14 +319,8 @@ async function saveData(){
   try {
     var res = await fetch(API_URL, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': JSONBIN_KEY
-      },
-      body: JSON.stringify({
-        users: CACHE.users,
-        appointments: CACHE.appointments
-      })
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+      body: JSON.stringify({ users: CACHE.users, appointments: CACHE.appointments })
     });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     return true;
@@ -336,9 +329,6 @@ async function saveData(){
     return false;
   }
 }
-
-function getUsers(){ return CACHE.users; }
-function getAppointments(){ return CACHE.appointments; }
 
 function getCurrentUser(){
   var raw = localStorage.getItem('panaah_current');
@@ -352,6 +342,7 @@ function clearCurrentUser(){
   localStorage.removeItem('panaah_current');
 }
 
+/* ===== UI ===== */
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
@@ -396,9 +387,23 @@ function switchMode(mode){
   }
 }
 
-window.addEventListener('DOMContentLoaded',async function(){
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded', async function(){
   await fetchData();
   var cur = getCurrentUser();
+  
+  // اگه کاربر عادی لاگین بود، چک کن هنوز توی دیتابیس هست یا نه
+  if(cur && cur.role !== 'admin'){
+    var stillExists = CACHE.users.some(function(u){
+      return u.role !== 'admin' && u.phone === cur.phone;
+    });
+    if(!stillExists){
+      // کاربر حذف شده
+      clearCurrentUser();
+      cur = null;
+    }
+  }
+  
   if(cur){
     showUser(cur);
     unlockBody();
@@ -415,6 +420,7 @@ window.addEventListener('DOMContentLoaded',async function(){
 function openAuth(){ document.getElementById('registerModal').classList.remove('hide'); lockBody(); }
 function closeAuth(){ document.getElementById('registerModal').classList.add('hide'); unlockBody(); }
 
+/* ===== VALIDATION ===== */
 function toEnglishDigits(str){
   var fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
   return str.replace(/[۰-۹]/g,function(d){ return fa.indexOf(d); })
@@ -436,6 +442,7 @@ function submitAuth(){
   else doLogin();
 }
 
+/* ===== REGISTER ===== */
 async function doRegister(){
   var nameEl = document.getElementById('regName');
   var phoneEl = document.getElementById('regPhone');
@@ -499,6 +506,7 @@ async function doRegister(){
   closeAuth();
 }
 
+/* ===== LOGIN ===== */
 async function doLogin(){
   var inputEl = document.getElementById('loginInput');
   var passEl = document.getElementById('loginPass');
@@ -524,6 +532,7 @@ async function doLogin(){
   btn.textContent = 'ورود به حساب';
   btn.disabled = false;
   
+  // ادمین
   if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
     var admin = CACHE.users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
@@ -548,6 +557,7 @@ async function doLogin(){
     return;
   }
   
+  // کاربر عادی
   var found = null;
   var digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
