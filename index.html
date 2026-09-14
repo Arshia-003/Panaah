@@ -42,9 +42,10 @@ nav a:hover::after{width:100%;}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
 .user-avatar.admin{background:linear-gradient(135deg,#7c5cff,#0a6ebd);}
 
+/* ===== MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
-.modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;max-height:95vh;overflow-y:auto;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal::before{content:'';position:absolute;top:-100px;right:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
 .modal::after{content:'';position:absolute;bottom:-100px;left:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(10,110,189,.2),transparent 70%);pointer-events:none;}
@@ -54,7 +55,7 @@ nav a:hover::after{width:100%;}
 .modal .sub{text-align:center;color:#7a8899;font-size:12px;margin-bottom:22px;position:relative;z-index:1;font-weight:300;line-height:1.7;flex-shrink:0;}
 .modal .form-group{margin-bottom:14px;position:relative;z-index:1;flex-shrink:0;}
 .modal .form-group label{display:block;margin-bottom:6px;font-size:12.5px;font-weight:600;color:#a8b5c8;}
-.modal .form-group label .optional{color:#556070;font-weight:400;font-size:11px;margin-right:5px;}
+.modal .form-group label .required{color:#ff6b5b;font-size:12px;margin-right:4px;}
 .modal .form-group input{width:100%;padding:12px 15px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
 .modal .form-group input:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .modal .form-group input.error{border-color:#ff6b5b;box-shadow:0 0 0 4px rgba(231,76,60,.15);}
@@ -70,7 +71,7 @@ nav a:hover::after{width:100%;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
-/* ===== OTP BOX (بخش کد تایید) ===== */
+/* ===== OTP BOX ===== */
 .otp-box{margin-top:16px;padding:20px;background:linear-gradient(145deg,rgba(0,194,168,.08),rgba(10,110,189,.06));border:1px solid rgba(0,194,168,.25);border-radius:16px;position:relative;z-index:1;display:none;animation:otpSlide .4s cubic-bezier(.2,.9,.3,1);}
 .otp-box.show{display:block;}
 @keyframes otpSlide{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
@@ -185,6 +186,15 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .form-group input.otp-input{letter-spacing:10px;font-size:22px;padding:15px;}
   .otp-actions{flex-direction:column;}
 }
+
+/* ===== وقتی صفحه کوتاهه، مودال خودش اسکرول می‌خوره ===== */
+@media(max-height:700px){
+  .modal{padding:25px 35px 25px;max-height:95vh;overflow-y:auto;}
+}
+@media(max-height:600px){
+  .modal{padding:20px 28px 20px;max-height:95vh;overflow-y:auto;}
+}
+
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
 }
@@ -207,30 +217,28 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <!-- REGISTER FIELDS -->
     <div id="registerFields">
       <div class="form-group">
-        <label>نام و نام خانوادگی</label>
+        <label>نام و نام خانوادگی <span class="required">*</span></label>
         <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
         <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
       </div>
       <div class="form-group">
-        <label>شماره تلفن همراه</label>
+        <label>شماره تلفن همراه <span class="required">*</span></label>
         <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
         <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
       </div>
       <div class="form-group">
-        <label>ایمیل <span class="optional">(برای دریافت کد تایید)</span></label>
+        <label>ایمیل <span class="required">*</span></label>
         <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
         <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
       </div>
       <div class="form-group">
-        <label>رمز عبور</label>
+        <label>رمز عبور <span class="required">*</span></label>
         <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
         <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
       </div>
       
-      <!-- OTP BOX — اینجا باز می‌شه -->
       <div class="otp-box" id="otpBox">
         <div class="otp-header">
           <div class="otp-icon">📧</div>
@@ -254,7 +262,6 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
       </div>
     </div>
     
-    <!-- LOGIN FIELDS -->
     <div id="loginFields" class="hidden">
       <div class="form-group">
         <label>نام و نام خانوادگی یا شماره همراه</label>
@@ -345,7 +352,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 
 <footer>
   <div class="footer-logo"><div class="logo-mark">🦷</div> مجموعه پناه</div>
-  <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامى حقوق محفوظ است</p>
+  <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامی حقوق محفوظ است</p>
 </footer>
 
 <script>
@@ -451,7 +458,6 @@ function switchMode(mode){
   document.querySelectorAll('.err-msg').forEach(function(e){ e.classList.remove('show'); });
   document.querySelectorAll('.modal input').forEach(function(e){ e.classList.remove('error'); });
   
-  // مخفی کردن OTP box وقتی بین حالت‌ها عوض می‌شیم
   otpBox.classList.remove('show');
   stopOtpTimer();
   
@@ -474,9 +480,6 @@ function switchMode(mode){
   }
 }
 
-/* ============================================
-   INIT
-============================================ */
 window.addEventListener('DOMContentLoaded', async function(){
   await fetchData();
   var cur = getCurrentUser();
@@ -527,11 +530,8 @@ function validPass(p){ return p.length >= 6; }
 
 function submitAuth(){
   if(authMode === 'login'){ doLogin(); return; }
-  // اگه کد قبلاً تایید شده، ثبت‌نام نهایی
   if(otpState.verified){ finalizeRegister(); return; }
-  // اگه OTP در جریانه
   if(otpState.code){ verifyOtp(); return; }
-  // در غیر این صورت، اطلاعات رو ثبت کن و کد بفرست
   doRegister();
 }
 
@@ -555,14 +555,14 @@ async function doRegister(){
   var ok = true;
   if(!validName(nameEl.value)){ errName.classList.add('show'); nameEl.classList.add('error'); ok = false; }
   if(!validPhone(phoneEl.value)){ errPhone.classList.add('show'); phoneEl.classList.add('error'); ok = false; }
-  if(!validEmail(emailEl.value)){ errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
+  if(!emailEl.value.trim()){ errEmail.textContent = 'لطفاً ایمیل خود را وارد کنید'; errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
+  else if(!validEmail(emailEl.value)){ errEmail.textContent = 'ایمیل وارد شده صحیح نیست'; errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
   if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
   btn.textContent = 'در حال ارسال کد...';
   btn.disabled = true;
   
-  // چک شماره تکراری
   await fetchData();
   var existingPhone = CACHE.users.find(function(u){
     return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role !== 'admin';
@@ -588,7 +588,6 @@ async function doRegister(){
   otpState.expiresAt = Date.now() + 5 * 60 * 1000;
   otpState.verified = false;
   
-  // ارسال ایمیل
   try {
     var result = await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
       to_email: email,
@@ -600,7 +599,6 @@ async function doRegister(){
     console.error('❌ EmailJS Error:');
     console.error('Status:', err && err.status);
     console.error('Text:', err && err.text);
-    console.error('Full:', JSON.stringify(err, null, 2));
     
     btn.textContent = 'ورود به مجموعه پناه';
     btn.disabled = false;
@@ -619,7 +617,6 @@ async function doRegister(){
   btn.textContent = 'تایید کد و تکمیل ثبت‌نام';
   btn.disabled = false;
   
-  // نمایش OTP box
   showOtpBox(email);
 }
 
@@ -760,7 +757,6 @@ async function verifyOtp(){
     return;
   }
   
-  // کد درست — ثبت‌نام نهایی
   otpState.verified = true;
   stopOtpTimer();
   await finalizeRegister();
@@ -785,7 +781,6 @@ async function finalizeRegister(){
     joinedAt: new Date().toISOString()
   };
   
-  // چک دوباره تکراری نباشه
   var exists = CACHE.users.find(function(u){
     return u.phone === newUser.phone && u.role !== 'admin';
   });
@@ -807,7 +802,6 @@ async function finalizeRegister(){
     return;
   }
   
-  // پاک کردن state
   otpState = {
     code: null, email: null, name: null, phone: null,
     password: null, expiresAt: null, timerId: null, verified: false
@@ -816,7 +810,6 @@ async function finalizeRegister(){
   setCurrentUser(newUser);
   showUser(newUser);
   
-  // ریست فرم
   document.getElementById('regName').value = '';
   document.getElementById('regPhone').value = '';
   document.getElementById('regEmail').value = '';
@@ -912,9 +905,6 @@ document.getElementById('regPhone').addEventListener('input', function(){
 });
 document.getElementById('otpInput').addEventListener('input', function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,6);
-  if(this.value.length === 6){
-    // اختیاری: خودکار تایید کن
-  }
 });
 
 /* ============================================
