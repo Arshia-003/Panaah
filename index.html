@@ -293,75 +293,63 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
-var STORAGE_KEY = 'panaah_data_v1';
-var CURRENT_KEY = 'panaah_current';
+var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
+var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
+var API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
 
-function getDefaultData(){
-  return {
-    users: [
-      {
-        id: 1,
-        username: 'sherkat',
-        name: 'شرکت',
-        phone: '',
-        email: '',
-        address: '',
-        password: '09126481838',
-        role: 'admin',
-        joinedAt: new Date().toISOString()
-      }
-    ],
-    appointments: []
-  };
-}
+var CACHE = { users: [], appointments: [] };
 
-function loadData(){
-  var raw = localStorage.getItem(STORAGE_KEY);
-  if(!raw){
-    var def = getDefaultData();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(def));
-    return def;
-  }
+async function fetchData(){
   try {
-    var parsed = JSON.parse(raw);
-    if(!parsed.users) parsed.users = [];
-    if(!parsed.appointments) parsed.appointments = [];
-    return parsed;
+    var res = await fetch(API_URL + '/latest', {
+      headers: { 'X-Master-Key': JSONBIN_KEY }
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    var json = await res.json();
+    var record = json.record || {};
+    CACHE.users = record.users || [];
+    CACHE.appointments = record.appointments || [];
+    return CACHE;
   } catch(e){
-    var def2 = getDefaultData();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(def2));
-    return def2;
+    console.error('خطا در خواندن:', e);
+    return CACHE;
   }
 }
 
-function saveData(data){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+async function saveData(){
+  try {
+    var res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY
+      },
+      body: JSON.stringify({
+        users: CACHE.users,
+        appointments: CACHE.appointments
+      })
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return true;
+  } catch(e){
+    console.error('خطا در ذخیره:', e);
+    return false;
+  }
 }
 
-function getUsers(){ return loadData().users || []; }
-function setUsers(users){
-  var data = loadData();
-  data.users = users;
-  saveData(data);
-}
-
-function getAppointments(){ return loadData().appointments || []; }
-function setAppointments(appts){
-  var data = loadData();
-  data.appointments = appts;
-  saveData(data);
-}
+function getUsers(){ return CACHE.users; }
+function getAppointments(){ return CACHE.appointments; }
 
 function getCurrentUser(){
-  var raw = localStorage.getItem(CURRENT_KEY);
+  var raw = localStorage.getItem('panaah_current');
   if(!raw) return null;
   try { return JSON.parse(raw); } catch(e){ return null; }
 }
 function setCurrentUser(user){
-  localStorage.setItem(CURRENT_KEY, JSON.stringify(user));
+  localStorage.setItem('panaah_current', JSON.stringify(user));
 }
 function clearCurrentUser(){
-  localStorage.removeItem(CURRENT_KEY);
+  localStorage.removeItem('panaah_current');
 }
 
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
@@ -408,7 +396,8 @@ function switchMode(mode){
   }
 }
 
-window.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('DOMContentLoaded',async function(){
+  await fetchData();
   var cur = getCurrentUser();
   if(cur){
     showUser(cur);
@@ -447,7 +436,7 @@ function submitAuth(){
   else doLogin();
 }
 
-function doRegister(){
+async function doRegister(){
   var nameEl = document.getElementById('regName');
   var phoneEl = document.getElementById('regPhone');
   var emailEl = document.getElementById('regEmail');
@@ -456,6 +445,7 @@ function doRegister(){
   var errPhone = document.getElementById('errPhone');
   var errEmail = document.getElementById('errEmail');
   var errPass = document.getElementById('errRegPass');
+  var btn = document.getElementById('submitBtn');
   
   [errName,errPhone,errEmail,errPass].forEach(function(e){ e.classList.remove('show'); });
   [nameEl,phoneEl,emailEl,passEl].forEach(function(e){ e.classList.remove('error'); });
@@ -466,6 +456,11 @@ function doRegister(){
   if(!validEmail(emailEl.value)){ errEmail.classList.add('show'); emailEl.classList.add('error'); ok = false; }
   if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
+  
+  btn.textContent = 'در حال ذخیره...';
+  btn.disabled = true;
+  
+  await fetchData();
   
   var newUser = {
     id: Date.now(),
@@ -478,29 +473,38 @@ function doRegister(){
     joinedAt: new Date().toISOString()
   };
   
-  var users = getUsers();
-  var existing = users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
+  var existing = CACHE.users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
   if(existing){
     existing.name = newUser.name;
     existing.email = newUser.email;
     existing.password = newUser.password;
-    setUsers(users);
-    setCurrentUser(existing);
   } else {
-    users.push(newUser);
-    setUsers(users);
-    setCurrentUser(newUser);
+    CACHE.users.push(newUser);
   }
   
-  showUser(getCurrentUser());
+  var saved = await saveData();
+  
+  btn.textContent = 'ورود به مجموعه پناه';
+  btn.disabled = false;
+  
+  if(!saved){
+    errName.textContent = 'خطا در ذخیره‌سازی. لطفاً دوباره امتحان کنید.';
+    errName.classList.add('show');
+    return;
+  }
+  
+  var curUser = existing || newUser;
+  setCurrentUser(curUser);
+  showUser(curUser);
   closeAuth();
 }
 
-function doLogin(){
+async function doLogin(){
   var inputEl = document.getElementById('loginInput');
   var passEl = document.getElementById('loginPass');
   var errInput = document.getElementById('errLoginInput');
   var errPass = document.getElementById('errLoginPass');
+  var btn = document.getElementById('submitBtn');
   
   [errInput,errPass].forEach(function(e){ e.classList.remove('show'); });
   [inputEl,passEl].forEach(function(e){ e.classList.remove('error'); });
@@ -512,9 +516,16 @@ function doLogin(){
   if(!passEl.value){ errPass.classList.add('show'); errPass.textContent = 'رمز عبور را وارد کنید'; passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
+  btn.textContent = 'در حال بررسی...';
+  btn.disabled = true;
+  
+  await fetchData();
+  
+  btn.textContent = 'ورود به حساب';
+  btn.disabled = false;
+  
   if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
-    var users = getUsers();
-    var admin = users.find(function(u){ return u.role === 'admin'; });
+    var admin = CACHE.users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
       admin = {
         id: 1,
@@ -527,12 +538,8 @@ function doLogin(){
         role: 'admin',
         joinedAt: new Date().toISOString()
       };
-      users.push(admin);
-      setUsers(users);
-    } else {
-      admin.password = '09126481838';
-      admin.role = 'admin';
-      setUsers(users);
+      CACHE.users.push(admin);
+      await saveData();
     }
     setCurrentUser(admin);
     showUser(admin);
@@ -541,14 +548,13 @@ function doLogin(){
     return;
   }
   
-  var users2 = getUsers();
   var found = null;
   var digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
-    found = users2.find(function(u){ return u.phone === digits && u.role !== 'admin'; });
+    found = CACHE.users.find(function(u){ return u.phone === digits && u.role !== 'admin'; });
   } else {
     var nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
-    found = users2.find(function(u){
+    found = CACHE.users.find(function(u){
       return u.role !== 'admin' && u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm;
     });
   }
