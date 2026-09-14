@@ -9,18 +9,12 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',sans-serif;}
 html,body{overflow-x:hidden;}
 body{background:#0b1220;color:#e8eef7;min-height:100vh;}
-
 #bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
 .shape{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 20s infinite ease-in-out;}
 .shape:nth-child(1){width:400px;height:400px;background:#0a6ebd;top:-100px;right:-100px;}
 .shape:nth-child(2){width:300px;height:300px;background:#00c2a8;bottom:-80px;left:-80px;animation-delay:-5s;}
 .shape:nth-child(3){width:250px;height:250px;background:#7c5cff;top:40%;left:10%;animation-delay:-10s;}
-@keyframes float{
-  0%,100%{transform:translate(0,0) scale(1);}
-  25%{transform:translate(60px,-40px) scale(1.15);}
-  50%{transform:translate(-40px,60px) scale(.9);}
-  75%{transform:translate(30px,30px) scale(1.08);}
-}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1);}25%{transform:translate(60px,-40px) scale(1.15);}50%{transform:translate(-40px,60px) scale(.9);}75%{transform:translate(30px,30px) scale(1.08);}}
 .grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
 
 .dash-header{background:rgba(11,18,32,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;}
@@ -28,9 +22,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .logo-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;box-shadow:0 8px 20px rgba(0,194,168,.3);}
 .back-btn{padding:10px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#e8eef7;text-decoration:none;font-size:14px;font-weight:600;transition:.3s;display:flex;align-items:center;gap:8px;}
 .back-btn:hover{background:rgba(0,194,168,.15);border-color:rgba(0,194,168,.4);transform:translateX(-3px);}
-
 .wrap{max-width:1200px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
-
 .welcome{background:linear-gradient(145deg,rgba(0,194,168,.12),rgba(10,110,189,.12));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px;margin-bottom:30px;display:flex;align-items:center;gap:25px;position:relative;overflow:hidden;}
 .welcome::before{content:'';position:absolute;top:-80px;left:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(0,194,168,.25),transparent 70%);pointer-events:none;}
 .welcome-avatar{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:#fff;box-shadow:0 15px 35px rgba(0,194,168,.4);flex-shrink:0;position:relative;z-index:1;}
@@ -64,9 +56,7 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .info-item.editing input:focus{border-color:#00c2a8;box-shadow:0 0 0 3px rgba(0,194,168,.15);}
 .info-item.editing input.error{border-color:#ff6b5b;box-shadow:0 0 0 3px rgba(231,76,60,.15);}
 .info-item.editing .save-btn{padding:10px 18px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s;}
-.info-item.editing .save-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(10,110,189,.4);}
 .info-item.editing .cancel-btn{padding:10px 14px;background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.3s;}
-.info-item.editing .cancel-btn:hover{background:rgba(255,255,255,.1);}
 .edit-err{color:#ff6b5b;font-size:11.5px;margin-top:6px;display:none;font-weight:500;}
 .edit-err.show{display:block;}
 
@@ -74,51 +64,42 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 .new-appt-form .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:end;margin-bottom:16px;}
 .new-appt-form .row.full{grid-template-columns:1fr;}
 .new-appt-form label{display:block;font-size:12.5px;color:#a8b5c8;font-weight:600;margin-bottom:8px;}
-.new-appt-form input,.new-appt-form select{width:100%;padding:13px 16px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s cubic-bezier(.2,.9,.3,1);outline:none;}
-.new-appt-form input:hover,.new-appt-form select:hover{border-color:rgba(255,255,255,.16);background:rgba(0,0,0,.4);}
-.new-appt-form input:focus,.new-appt-form select:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
+.new-appt-form input,.new-appt-form select{width:100%;padding:13px 16px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px;color:#e8eef7;font-family:inherit;transition:.3s;outline:none;}
+.new-appt-form input:focus,.new-appt-form select:focus{border-color:#00c2a8;box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .new-appt-form select option{background:#0b1220;color:#e8eef7;}
-
 .select-wrap{position:relative;}
 .select-wrap select{padding-right:46px;appearance:none;-webkit-appearance:none;cursor:pointer;}
-.select-wrap .select-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;opacity:.8;transition:.3s;}
-.select-wrap select:focus ~ .select-ico{opacity:1;transform:translateY(-50%) scale(1.15);}
-.select-wrap::after{content:'';position:absolute;left:16px;top:50%;width:8px;height:8px;border-right:2px solid #7a8899;border-bottom:2px solid #7a8899;transform:translateY(-70%) rotate(45deg);pointer-events:none;transition:.3s;}
-.select-wrap:hover::after{border-color:#00c2a8;}
-
-.date-picker-btn{width:100%;padding:13px 16px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px;color:#e8eef7;font-family:inherit;text-align:right;cursor:pointer;transition:.3s cubic-bezier(.2,.9,.3,1);display:flex;justify-content:space-between;align-items:center;gap:10px;}
-.date-picker-btn:hover{border-color:rgba(0,194,168,.4);background:rgba(0,0,0,.4);transform:translateY(-1px);}
+.select-wrap .select-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;opacity:.8;}
+.date-picker-btn{width:100%;padding:13px 16px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px;color:#e8eef7;font-family:inherit;text-align:right;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.3s;}
+.date-picker-btn:hover{border-color:rgba(0,194,168,.4);}
 .date-picker-btn.filled{color:#00c2a8;font-weight:700;border-color:rgba(0,194,168,.4);background:rgba(0,194,168,.05);}
 .date-picker-btn .ph{color:#556070;font-weight:400;}
-.date-picker-btn .ico{color:#00c2a8;font-size:16px;transition:.3s;}
-.date-picker-btn:hover .ico{transform:scale(1.15) rotate(-5deg);}
+.date-picker-btn .ico{color:#00c2a8;font-size:16px;}
 
 .pay-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.pay-opt{padding:18px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:16px;cursor:pointer;transition:.35s cubic-bezier(.2,.9,.3,1);text-align:center;font-family:inherit;color:#e8eef7;position:relative;overflow:hidden;}
-.pay-opt::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,194,168,.15),rgba(10,110,189,.15));opacity:0;transition:.35s;border-radius:14px;}
-.pay-opt:hover{border-color:rgba(0,194,168,.4);background:rgba(0,0,0,.4);transform:translateY(-2px);}
-.pay-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.12);box-shadow:0 0 0 4px rgba(0,194,168,.1);transform:translateY(-2px);}
-.pay-opt .ttl{font-size:15.5px;font-weight:800;margin-bottom:5px;position:relative;z-index:1;}
-.pay-opt .desc{font-size:11.5px;color:#7a8899;font-weight:400;position:relative;z-index:1;}
+.pay-opt{padding:18px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:16px;cursor:pointer;transition:.35s;text-align:center;font-family:inherit;color:#e8eef7;}
+.pay-opt:hover{border-color:rgba(0,194,168,.4);transform:translateY(-2px);}
+.pay-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.12);box-shadow:0 0 0 4px rgba(0,194,168,.1);}
+.pay-opt .ttl{font-size:15.5px;font-weight:800;margin-bottom:5px;}
+.pay-opt .desc{font-size:11.5px;color:#7a8899;}
 .pay-opt.selected .ttl{color:#00c2a8;}
-.pay-opt.selected .desc{color:#a8b5c8;}
 
 .pay-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.2,.9,.3,1),opacity .35s ease,margin .35s ease,padding .35s ease;margin-top:0;padding:0 20px;background:rgba(0,194,168,.06);border:1px solid transparent;border-radius:16px;}
 .pay-detail.show{max-height:900px;opacity:1;margin-top:16px;padding:22px 20px;border-color:rgba(0,194,168,.2);}
 
 .installments-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin-top:12px;}
-.inst-opt{padding:15px 10px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:14px;cursor:pointer;transition:.35s cubic-bezier(.2,.9,.3,1);text-align:center;font-family:inherit;color:#e8eef7;}
-.inst-opt:hover{border-color:rgba(0,194,168,.4);background:rgba(0,0,0,.45);transform:translateY(-3px);}
-.inst-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.15);box-shadow:0 0 0 4px rgba(0,194,168,.1);transform:translateY(-3px);}
+.inst-opt{padding:15px 10px;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.08);border-radius:14px;cursor:pointer;transition:.35s;text-align:center;font-family:inherit;color:#e8eef7;}
+.inst-opt:hover{border-color:rgba(0,194,168,.4);transform:translateY(-3px);}
+.inst-opt.selected{border-color:#00c2a8;background:rgba(0,194,168,.15);box-shadow:0 0 0 4px rgba(0,194,168,.1);}
 .inst-opt .n{font-size:17px;font-weight:800;margin-bottom:4px;}
 .inst-opt.selected .n{color:#00c2a8;}
-.inst-opt .sm{font-size:10.5px;color:#7a8899;font-weight:500;}
+.inst-opt .sm{font-size:10.5px;color:#7a8899;}
 
 .calc-box{margin-top:16px;padding:18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:14px;opacity:0;transform:translateY(-8px);transition:opacity .4s ease,transform .4s cubic-bezier(.2,.9,.3,1);}
 .calc-box.show{opacity:1;transform:translateY(0);}
 .calc-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;}
 .calc-row:not(:last-child){border-bottom:1px dashed rgba(255,255,255,.06);}
-.calc-row .k{color:#a8b5c8;font-weight:500;}
+.calc-row .k{color:#a8b5c8;}
 .calc-row .v{color:#e8eef7;font-weight:700;}
 .calc-row.total{padding-top:14px;margin-top:4px;border-top:2px solid rgba(0,194,168,.25);border-bottom:none;font-size:16px;}
 .calc-row.total .k{color:#00c2a8;font-weight:800;}
@@ -128,10 +109,11 @@ body{background:#0b1220;color:#e8eef7;min-height:100vh;}
 
 .discount-badge{display:inline-block;padding:4px 10px;background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);border-radius:8px;font-size:11px;font-weight:700;margin-right:8px;}
 .detail-title{font-size:14.5px;font-weight:800;color:#00c2a8;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
-.detail-sub{font-size:12px;color:#7a8899;line-height:1.7;margin-bottom:4px;font-weight:400;}
+.detail-sub{font-size:12px;color:#7a8899;line-height:1.7;margin-bottom:4px;}
 
-.submit-btn{width:100%;padding:15px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.35s cubic-bezier(.2,.9,.3,1);margin-top:18px;box-shadow:0 8px 22px rgba(10,110,189,.3);}
+.submit-btn{width:100%;padding:15px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.35s;margin-top:18px;box-shadow:0 8px 22px rgba(10,110,189,.3);}
 .submit-btn:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(10,110,189,.45);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;}
 
 .form-msg{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:13px;text-align:center;display:none;font-weight:600;}
 .form-msg.ok{background:rgba(0,194,168,.15);color:#00c2a8;border:1px solid rgba(0,194,168,.3);display:block;}
@@ -147,40 +129,34 @@ tr:hover{background:rgba(255,255,255,.03);}
 .badge.canceled{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);}
 .del{background:rgba(231,76,60,.15);color:#ff6b5b;border:1px solid rgba(231,76,60,.3);padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;transition:.3s;}
 .del:hover{background:rgba(231,76,60,.3);}
-
 .final-time{background:rgba(0,194,168,.1);border:1px solid rgba(0,194,168,.3);border-radius:10px;padding:7px 12px;font-size:12.5px;color:#00c2a8;font-weight:700;display:inline-block;line-height:1.6;}
 .final-time small{display:block;font-weight:400;color:#7a8899;font-size:10.5px;margin-top:3px;}
-.waiting-badge{color:#ffc107;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+.waiting-badge{color:#ffc107;font-size:12.5px;font-weight:600;}
 
 .empty{text-align:center;color:#556070;padding:50px 20px;font-size:14px;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
 
 .date-modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.45);backdrop-filter:blur(5px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;}
 .date-modal-overlay.hide{opacity:0;pointer-events:none;}
-.date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:460px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);}
+.date-modal{background:linear-gradient(145deg,rgba(20,30,50,.98),rgba(11,18,32,.98));border:1px solid rgba(0,194,168,.3);border-radius:24px;padding:28px;max-width:460px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative;transform:scale(1);transition:.35s;}
 .date-modal-overlay.hide .date-modal{transform:scale(.9);}
-
 .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .cal-nav{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#e8eef7;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;font-family:inherit;}
-.cal-nav:hover{background:rgba(0,194,168,.15);border-color:rgba(0,194,168,.4);color:#00c2a8;}
+.cal-nav:hover{background:rgba(0,194,168,.15);color:#00c2a8;}
 .cal-title{font-size:17px;font-weight:800;}
 .cal-title span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
-
 .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px;}
 .cal-wd{text-align:center;font-size:12px;color:#7a8899;font-weight:600;padding:8px 0;}
-
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
 .cal-day{padding:11px 0;text-align:center;border-radius:10px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.25s;background:rgba(255,255,255,.03);border:1px solid transparent;font-family:inherit;color:#e8eef7;}
-.cal-day:hover:not(.disabled):not(.selected){background:rgba(0,194,168,.12);border-color:rgba(0,194,168,.3);}
+.cal-day:hover:not(.disabled):not(.selected){background:rgba(0,194,168,.12);}
 .cal-day.empty{background:transparent;cursor:default;pointer-events:none;}
 .cal-day.disabled{color:#3a4454;background:rgba(255,255,255,.02);cursor:not-allowed;}
 .cal-day.today{border-color:rgba(0,194,168,.4);color:#00c2a8;font-weight:800;}
 .cal-day.selected{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;font-weight:800;box-shadow:0 6px 18px rgba(0,194,168,.4);}
 .cal-day.in-range{background:rgba(0,194,168,.18);border-color:rgba(0,194,168,.25);color:#00c2a8;}
-
 .range-info{margin-top:14px;padding:12px 16px;background:rgba(0,194,168,.08);border:1px solid rgba(0,194,168,.2);border-radius:12px;font-size:13px;text-align:center;color:#a8b5c8;line-height:1.8;}
 .range-info b{color:#00c2a8;font-weight:700;}
-
 .cal-foot{display:flex;gap:10px;margin-top:16px;}
 .cal-foot button{flex:1;padding:12px;border-radius:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:.3s;border:none;}
 .cal-ok{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;}
@@ -224,7 +200,6 @@ tr:hover{background:rgba(255,255,255,.03);}
 </header>
 
 <div class="wrap">
-
   <div class="welcome">
     <div class="welcome-avatar" id="avatar">؟</div>
     <div class="welcome-text">
@@ -243,22 +218,10 @@ tr:hover{background:rgba(255,255,255,.03);}
   <div class="section">
     <div class="section-head"><h2>اطلاعات حساب</h2></div>
     <div class="info-row">
-      <div class="info-item">
-        <div class="k">نام و نام خانوادگی</div>
-        <div class="v" id="infoName">—</div>
-      </div>
-      <div class="info-item">
-        <div class="k">شماره تلفن</div>
-        <div class="v" id="infoPhone">—</div>
-      </div>
-      <div class="info-item" id="emailItem">
-        <div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div>
-        <div class="v" id="infoEmail">—</div>
-      </div>
-      <div class="info-item" id="addressItem">
-        <div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div>
-        <div class="v" id="infoAddress">—</div>
-      </div>
+      <div class="info-item"><div class="k">نام و نام خانوادگی</div><div class="v" id="infoName">—</div></div>
+      <div class="info-item"><div class="k">شماره تلفن</div><div class="v" id="infoPhone">—</div></div>
+      <div class="info-item" id="emailItem"><div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div><div class="v" id="infoEmail">—</div></div>
+      <div class="info-item" id="addressItem"><div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div><div class="v" id="infoAddress">—</div></div>
     </div>
   </div>
 
@@ -317,12 +280,10 @@ tr:hover{background:rgba(255,255,255,.03);}
           <label>نوع پرداخت</label>
           <div class="pay-options">
             <button type="button" class="pay-opt" data-pay="نقدی" onclick="selectPay('نقدی')">
-              <div class="ttl">💵 نقدی</div>
-              <div class="desc">۳٪ تخفیف نقدی</div>
+              <div class="ttl">💵 نقدی</div><div class="desc">۳٪ تخفیف نقدی</div>
             </button>
             <button type="button" class="pay-opt" data-pay="قسطی" onclick="selectPay('قسطی')">
-              <div class="ttl">💳 قسطی</div>
-              <div class="desc">پرداخت در چند قسط</div>
+              <div class="ttl">💳 قسطی</div><div class="desc">پرداخت در چند قسط</div>
             </button>
           </div>
         </div>
@@ -356,7 +317,7 @@ tr:hover{background:rgba(255,255,255,.03);}
         </div>
       </div>
       
-      <button class="submit-btn" onclick="addAppointment()">ثبت درخواست نوبت</button>
+      <button class="submit-btn" id="submitApptBtn" onclick="addAppointment()">ثبت درخواست نوبت</button>
       <div class="form-msg" id="formMsg"></div>
     </div>
   </div>
@@ -369,7 +330,6 @@ tr:hover{background:rgba(255,255,255,.03);}
   <div class="logout-area">
     <button onclick="logout()">خروج از حساب</button>
   </div>
-
 </div>
 
 <div class="date-modal-overlay hide" id="dateModal">
@@ -392,187 +352,222 @@ tr:hover{background:rgba(255,255,255,.03);}
   </div>
 </div>
 
-<script src="storage.js"></script>
 <script>
-const SERVICE_PRICES = {
-  'ایمپلنت': 25000000,
-  'ارتودنسی': 45000000,
-  'جرم‌گیری': 1500000,
-  'کامپوزیت': 3500000,
-  'عصب‌کشی': 5000000,
-  'کشیدن دندان': 2000000
-};
-const INSTALLMENT_RATE = 3;
-const CASH_DISCOUNT = 3;
+/* ===== JSONBin ===== */
+var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
+var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
+var API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
 
+var CACHE = { users: [], appointments: [] };
+
+async function fetchData(){
+  try {
+    var res = await fetch(API_URL + '/latest', { headers: { 'X-Master-Key': JSONBIN_KEY } });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    var json = await res.json();
+    var record = json.record || {};
+    CACHE.users = record.users || [];
+    CACHE.appointments = record.appointments || [];
+    return CACHE;
+  } catch(e){
+    console.error('خطا در خواندن:', e);
+    return CACHE;
+  }
+}
+
+async function saveData(){
+  try {
+    var res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+      body: JSON.stringify({ users: CACHE.users, appointments: CACHE.appointments })
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return true;
+  } catch(e){
+    console.error('خطا در ذخیره:', e);
+    return false;
+  }
+}
+
+function getCurrentUser(){
+  var raw = localStorage.getItem('panaah_current');
+  if(!raw) return null;
+  try { return JSON.parse(raw); } catch(e){ return null; }
+}
+function setCurrentUser(user){ localStorage.setItem('panaah_current', JSON.stringify(user)); }
+function clearCurrentUser(){ localStorage.removeItem('panaah_current'); }
+
+/* ===== CONSTANTS ===== */
+var SERVICE_PRICES = {
+  'ایمپلنت': 25000000, 'ارتودنسی': 45000000, 'جرم‌گیری': 1500000,
+  'کامپوزیت': 3500000, 'عصب‌کشی': 5000000, 'کشیدن دندان': 2000000
+};
+var INSTALLMENT_RATE = 3;
+var CASH_DISCOUNT = 3;
+
+/* ===== JALALI ===== */
 function toJalali(gy, gm, gd){
-  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
-  let jy = (gy <= 1600) ? 0 : 979;
+  var g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+  var jy = (gy <= 1600) ? 0 : 979;
   gy -= (gy <= 1600) ? 621 : 1600;
-  const gy2 = (gm > 2) ? (gy + 1) : gy;
-  let days = (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
+  var gy2 = (gm > 2) ? (gy + 1) : gy;
+  var days = (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
   jy += 33 * Math.floor(days / 12053);
   days %= 12053;
   jy += 4 * Math.floor(days / 1461);
   days %= 1461;
   if(days > 365){ jy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
-  const jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
-  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+  var jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+  var jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
   return [jy, jm, jd];
 }
 function toGregorian(jy, jm, jd){
-  let gy = (jy <= 979) ? 621 : 1600;
+  var gy = (jy <= 979) ? 621 : 1600;
   jy -= (jy <= 979) ? 0 : 979;
-  let days = (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+  var days = (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
   gy += 400 * Math.floor(days / 146097);
   days %= 146097;
   if(days > 36524){ gy += 100 * Math.floor(--days / 36524); days %= 36524; if(days >= 365) days++; }
   gy += 4 * Math.floor(days / 1461);
   days %= 1461;
   if(days > 365){ gy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
-  let gd = days + 1;
-  const sal_a = [0,31,((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28,31,30,31,30,31,31,30,31,30,31];
-  let gm;
-  for(gm = 0; gm < 13; gm++){ const v = sal_a[gm]; if(gd <= v) break; gd -= v; }
+  var gd = days + 1;
+  var sal_a = [0,31,((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28,31,30,31,30,31,31,30,31,30,31];
+  var gm;
+  for(gm = 0; gm < 13; gm++){ var v = sal_a[gm]; if(gd <= v) break; gd -= v; }
   return [gy, gm, gd];
 }
 function jalaliMonthLength(jy, jm){
   if(jm <= 6) return 31;
   if(jm <= 11) return 30;
-  const leap = ((jy + 12) % 33) % 4;
+  var leap = ((jy + 12) % 33) % 4;
   return (leap === 1) ? 30 : 29;
 }
 function jalaliMonthName(jm){
   return ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'][jm-1];
 }
-function toFa(n){ const fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, d=>fa[d]); }
+function toFa(n){ var fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, function(d){ return fa[d]; }); }
 function formatPrice(n){ return toFa(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',')); }
 function jalaliToNum(j){ return j.jy * 10000 + j.jm * 100 + j.jd; }
 
-let rangeStart = null, rangeEnd = null, calendarView = null;
-let selectedPay = null, selectedInstallments = null;
+/* ===== STATE ===== */
+var rangeStart = null, rangeEnd = null, calendarView = null;
+var selectedPay = null, selectedInstallments = null;
+var currentUser = null;
 
-window.addEventListener('DOMContentLoaded',()=>{
-  const cur = getCurrentUser();
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded', async function(){
+  var cur = getCurrentUser();
   if(!cur){ window.location.href = 'index.html'; return; }
   if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
+  currentUser = cur;
+  await fetchData();
   renderUser(cur);
   renderStats(cur);
   renderAppointments(cur);
-  const now = new Date();
-  const j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  var now = new Date();
+  var j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
   calendarView = { jy: j[0], jm: j[1] };
 });
 
 function renderUser(user){
-  const firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
+  var firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
   document.getElementById('avatar').textContent = firstName.charAt(0);
   document.getElementById('greetName').textContent = firstName;
   document.getElementById('infoName').textContent = user.name || '—';
   document.getElementById('infoPhone').textContent = user.phone || '—';
-  const emailEl = document.getElementById('infoEmail');
+  var emailEl = document.getElementById('infoEmail');
   if(user.email){ emailEl.textContent = user.email; emailEl.classList.remove('empty-val'); }
   else { emailEl.textContent = 'ثبت نشده — برای افزودن کلیک کنید'; emailEl.classList.add('empty-val'); }
-  const addrEl = document.getElementById('infoAddress');
+  var addrEl = document.getElementById('infoAddress');
   if(user.address){ addrEl.textContent = user.address; addrEl.classList.remove('empty-val'); }
   else { addrEl.textContent = 'ثبت نشده — برای افزودن کلیک کنید'; addrEl.classList.add('empty-val'); }
 }
 
 function renderStats(user){
-  const mine = getAppointments().filter(a => a.user === user.phone);
-  const pending = mine.filter(a => a.status === 'pending');
-  const approved = mine.filter(a => a.status === 'approved');
-  const branches = new Set(mine.map(a=>a.branch));
+  var mine = CACHE.appointments.filter(function(a){ return a.user === user.phone; });
+  var pending = mine.filter(function(a){ return a.status === 'pending'; });
+  var approved = mine.filter(function(a){ return a.status === 'approved'; });
+  var branches = new Set(mine.map(function(a){ return a.branch; }));
   document.getElementById('statTotal').textContent = toFa(mine.length);
   document.getElementById('statPending').textContent = toFa(pending.length);
   document.getElementById('statApproved').textContent = toFa(approved.length);
   document.getElementById('statBranches').textContent = toFa(branches.size);
 }
 
+/* ===== EDIT ===== */
 function editEmail(){
-  const user = getCurrentUser();
-  const item = document.getElementById('emailItem');
+  var user = getCurrentUser();
+  var item = document.getElementById('emailItem');
   item.classList.add('editing');
-  item.innerHTML = `
-    <div class="k">ایمیل</div>
-    <div class="input-wrap">
-      <input type="email" id="emailInput" value="${user.email || ''}" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
-      <button class="save-btn" onclick="saveEmail()">ذخیره</button>
-      <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
-    </div>
-    <div class="edit-err" id="emailErr">ایمیل وارد شده صحیح نیست</div>
-  `;
-  setTimeout(()=>document.getElementById('emailInput').focus(), 100);
+  item.innerHTML = '<div class="k">ایمیل</div><div class="input-wrap"><input type="email" id="emailInput" value="' + (user.email || '') + '" placeholder="example@gmail.com" dir="ltr" style="text-align:left;"><button class="save-btn" onclick="saveEmail()">ذخیره</button><button class="cancel-btn" onclick="cancelEdit()">لغو</button></div><div class="edit-err" id="emailErr">ایمیل وارد شده صحیح نیست</div>';
+  setTimeout(function(){ document.getElementById('emailInput').focus(); }, 100);
 }
-function saveEmail(){
-  const val = document.getElementById('emailInput').value.trim();
-  const err = document.getElementById('emailErr');
-  const input = document.getElementById('emailInput');
+async function saveEmail(){
+  var val = document.getElementById('emailInput').value.trim();
+  var err = document.getElementById('emailErr');
+  var input = document.getElementById('emailInput');
   if(!validEmail(val)){ err.textContent = 'ایمیل وارد شده صحیح نیست'; err.classList.add('show'); input.classList.add('error'); return; }
-  updateUserField('email', val); cancelEdit();
+  await updateUserField('email', val);
+  cancelEdit();
 }
 function editAddress(){
-  const user = getCurrentUser();
-  const item = document.getElementById('addressItem');
+  var user = getCurrentUser();
+  var item = document.getElementById('addressItem');
   item.classList.add('editing');
-  item.innerHTML = `
-    <div class="k">آدرس</div>
-    <div class="input-wrap">
-      <input type="text" id="addressInput" value="${user.address || ''}" placeholder="مثلاً: تهران، خیابان ولیعصر، پلاک ۱۲" maxlength="120">
-      <button class="save-btn" onclick="saveAddress()">ذخیره</button>
-      <button class="cancel-btn" onclick="cancelEdit()">لغو</button>
-    </div>
-    <div class="edit-err" id="addressErr">آدرس باید حداقل ۱۰ کاراکتر باشد</div>
-  `;
-  setTimeout(()=>document.getElementById('addressInput').focus(), 100);
+  item.innerHTML = '<div class="k">آدرس</div><div class="input-wrap"><input type="text" id="addressInput" value="' + (user.address || '') + '" placeholder="مثلاً: تهران، خیابان ولیعصر، پلاک ۱۲" maxlength="120"><button class="save-btn" onclick="saveAddress()">ذخیره</button><button class="cancel-btn" onclick="cancelEdit()">لغو</button></div><div class="edit-err" id="addressErr">آدرس باید حداقل ۱۰ کاراکتر باشد</div>';
+  setTimeout(function(){ document.getElementById('addressInput').focus(); }, 100);
 }
-function saveAddress(){
-  const val = document.getElementById('addressInput').value.trim();
-  const err = document.getElementById('addressErr');
-  const input = document.getElementById('addressInput');
+async function saveAddress(){
+  var val = document.getElementById('addressInput').value.trim();
+  var err = document.getElementById('addressErr');
+  var input = document.getElementById('addressInput');
   if(val.length < 10){ err.classList.add('show'); input.classList.add('error'); return; }
-  updateUserField('address', val); cancelEdit();
+  await updateUserField('address', val);
+  cancelEdit();
 }
 function cancelEdit(){
-  const user = getCurrentUser();
-  const item1 = document.getElementById('emailItem');
-  const item2 = document.getElementById('addressItem');
+  var user = getCurrentUser();
+  var item1 = document.getElementById('emailItem');
+  var item2 = document.getElementById('addressItem');
   item1.classList.remove('editing');
   item2.classList.remove('editing');
-  item1.innerHTML = `<div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div><div class="v" id="infoEmail">—</div>`;
-  item2.innerHTML = `<div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div><div class="v" id="infoAddress">—</div>`;
+  item1.innerHTML = '<div class="k">ایمیل <span class="edit-btn" onclick="editEmail()">ویرایش</span></div><div class="v" id="infoEmail">—</div>';
+  item2.innerHTML = '<div class="k">آدرس <span class="edit-btn" onclick="editAddress()">ویرایش</span></div><div class="v" id="infoAddress">—</div>';
   renderUser(user);
 }
-function updateUserField(field, value){
-  const user = getCurrentUser();
+async function updateUserField(field, value){
+  var user = getCurrentUser();
   user[field] = value;
   setCurrentUser(user);
-  const users = getUsers();
-  const found = users.find(u => u.phone === user.phone && u.role !== 'admin');
-  if(found){ found[field] = value; setUsers(users); }
+  await fetchData();
+  var found = CACHE.users.find(function(u){ return u.phone === user.phone && u.role !== 'admin'; });
+  if(found){ found[field] = value; await saveData(); }
+  currentUser = user;
 }
 function validEmail(e){
   if(!e.trim()) return true;
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 
+/* ===== SERVICE ===== */
 function onServiceChange(){
   if(selectedPay === 'نقدی') updateCashCalc();
   if(selectedPay === 'قسطی' && selectedInstallments) updateInstCalc();
 }
 
+/* ===== PAY ===== */
 function selectPay(payType){
   selectedPay = payType;
-  document.querySelectorAll('.pay-opt').forEach(b=>{
-    b.classList.toggle('selected', b.dataset.pay === payType);
-  });
-  const cashEl = document.getElementById('cashDetail');
-  const instEl = document.getElementById('installmentDetail');
+  document.querySelectorAll('.pay-opt').forEach(function(b){ b.classList.toggle('selected', b.dataset.pay === payType); });
+  var cashEl = document.getElementById('cashDetail');
+  var instEl = document.getElementById('installmentDetail');
   if(payType === 'نقدی'){
     cashEl.classList.add('show');
     instEl.classList.remove('show');
     selectedInstallments = null;
-    document.querySelectorAll('.inst-opt').forEach(b=>b.classList.remove('selected'));
+    document.querySelectorAll('.inst-opt').forEach(function(b){ b.classList.remove('selected'); });
     document.getElementById('instCalcBox').classList.remove('show');
     updateCashCalc();
   } else {
@@ -582,37 +577,35 @@ function selectPay(payType){
   }
 }
 function updateCashCalc(){
-  const service = document.getElementById('newService').value;
+  var service = document.getElementById('newService').value;
   if(!service){
     document.getElementById('cashOriginal').textContent = '—';
     document.getElementById('cashDiscount').textContent = '—';
     document.getElementById('cashFinal').textContent = '—';
     return;
   }
-  const price = SERVICE_PRICES[service];
-  const discount = Math.round(price * CASH_DISCOUNT / 100);
-  const final = price - discount;
+  var price = SERVICE_PRICES[service];
+  var discount = Math.round(price * CASH_DISCOUNT / 100);
+  var final = price - discount;
   document.getElementById('cashOriginal').textContent = formatPrice(price) + ' تومان';
   document.getElementById('cashDiscount').textContent = '−' + formatPrice(discount) + ' تومان';
   document.getElementById('cashFinal').textContent = formatPrice(final) + ' تومان';
 }
 function selectInstallments(n){
   selectedInstallments = n;
-  document.querySelectorAll('.inst-opt').forEach(b=>{
-    b.classList.toggle('selected', parseInt(b.dataset.n) === n);
-  });
+  document.querySelectorAll('.inst-opt').forEach(function(b){ b.classList.toggle('selected', parseInt(b.dataset.n) === n); });
   updateInstCalc();
 }
 function updateInstCalc(){
-  const service = document.getElementById('newService').value;
-  const box = document.getElementById('instCalcBox');
+  var service = document.getElementById('newService').value;
+  var box = document.getElementById('instCalcBox');
   if(!service || !selectedInstallments){ box.classList.remove('show'); return; }
-  const price = SERVICE_PRICES[service];
-  const months = selectedInstallments;
-  const profitPct = (months - 1) * INSTALLMENT_RATE;
-  const profit = Math.round(price * profitPct / 100);
-  const total = price + profit;
-  const perMonth = Math.round(total / months);
+  var price = SERVICE_PRICES[service];
+  var months = selectedInstallments;
+  var profitPct = (months - 1) * INSTALLMENT_RATE;
+  var profit = Math.round(price * profitPct / 100);
+  var total = price + profit;
+  var perMonth = Math.round(total / months);
   document.getElementById('instOriginal').textContent = formatPrice(price) + ' تومان';
   document.getElementById('instPct').textContent = toFa(profitPct);
   document.getElementById('instProfit').textContent = '+' + formatPrice(profit) + ' تومان';
@@ -621,74 +614,79 @@ function updateInstCalc(){
   box.classList.add('show');
 }
 
+/* ===== DATE PICKER ===== */
 function openDatePicker(){
   document.getElementById('dateModal').classList.remove('hide');
   if(!calendarView){
-    const now = new Date();
-    const j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    var now = new Date();
+    var j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
     calendarView = { jy: j[0], jm: j[1] };
   }
   renderCalendar();
 }
 function closeDatePicker(){ document.getElementById('dateModal').classList.add('hide'); }
 function changeMonth(dir){
-  let { jy, jm } = calendarView;
+  var jy = calendarView.jy, jm = calendarView.jm;
   jm += dir;
   if(jm > 12){ jm = 1; jy++; }
   if(jm < 1){ jm = 12; jy--; }
-  calendarView = { jy, jm };
+  calendarView = { jy: jy, jm: jm };
   renderCalendar();
 }
 function renderCalendar(){
-  const { jy, jm } = calendarView;
-  document.getElementById('calMonthTitle').textContent = `${jalaliMonthName(jm)} ${toFa(jy)}`;
-  const grid = document.getElementById('calGrid');
+  var jy = calendarView.jy, jm = calendarView.jm;
+  document.getElementById('calMonthTitle').textContent = jalaliMonthName(jm) + ' ' + toFa(jy);
+  var grid = document.getElementById('calGrid');
   grid.innerHTML = '';
-  const [gy, gm, gd] = toGregorian(jy, jm, 1);
-  const firstDate = new Date(gy, gm - 1, gd);
-  const jsDay = firstDate.getDay();
-  const offset = (jsDay + 1) % 7;
-  for(let i = 0; i < offset; i++){
-    const empty = document.createElement('div');
+  var g = toGregorian(jy, jm, 1);
+  var firstDate = new Date(g[0], g[1] - 1, g[2]);
+  var jsDay = firstDate.getDay();
+  var offset = (jsDay + 1) % 7;
+  for(var i = 0; i < offset; i++){
+    var empty = document.createElement('div');
     empty.className = 'cal-day empty';
     grid.appendChild(empty);
   }
-  const monthLen = jalaliMonthLength(jy, jm);
-  const today = new Date();
-  const [tjy, tjm, tjd] = toJalali(today.getFullYear(), today.getMonth()+1, today.getDate());
-  for(let d = 1; d <= monthLen; d++){
-    const btn = document.createElement('button');
+  var monthLen = jalaliMonthLength(jy, jm);
+  var today = new Date();
+  var t = toJalali(today.getFullYear(), today.getMonth() + 1, today.getDate());
+  for(var d = 1; d <= monthLen; d++){
+    var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'cal-day';
     btn.textContent = toFa(d);
-    let isPast = false;
-    if(jy < tjy) isPast = true;
-    else if(jy === tjy && jm < tjm) isPast = true;
-    else if(jy === tjy && jm === tjm && d < tjd) isPast = true;
+    var isPast = false;
+    if(jy < t[0]) isPast = true;
+    else if(jy === t[0] && jm < t[1]) isPast = true;
+    else if(jy === t[0] && jm === t[1] && d < t[2]) isPast = true;
     if(isPast) btn.classList.add('disabled');
-    if(jy === tjy && jm === tjm && d === tjd) btn.classList.add('today');
-    const cellNum = jy * 10000 + jm * 100 + d;
+    if(jy === t[0] && jm === t[1] && d === t[2]) btn.classList.add('today');
+    var cellNum = jy * 10000 + jm * 100 + d;
     if(rangeStart && rangeEnd){
-      const s = jalaliToNum(rangeStart);
-      const e = jalaliToNum(rangeEnd);
+      var s = jalaliToNum(rangeStart);
+      var e = jalaliToNum(rangeEnd);
       if(cellNum >= s && cellNum <= e) btn.classList.add('in-range');
     }
     if(rangeStart && jalaliToNum(rangeStart) === cellNum) btn.classList.add('selected');
     if(rangeEnd && jalaliToNum(rangeEnd) === cellNum) btn.classList.add('selected');
-    if(!isPast) btn.onclick = ()=>handleDayClick(jy, jm, d);
+    if(!isPast){
+      (function(yy, mm, dd){
+        btn.onclick = function(){ handleDayClick(yy, mm, dd); };
+      })(jy, jm, d);
+    }
     grid.appendChild(btn);
   }
   updateRangeInfo();
   document.getElementById('calOk').disabled = !rangeStart || !rangeEnd;
 }
 function handleDayClick(jy, jm, d){
-  const clicked = { jy, jm, jd: d };
-  const clickedNum = jalaliToNum(clicked);
+  var clicked = { jy: jy, jm: jm, jd: d };
+  var clickedNum = jalaliToNum(clicked);
   if(!rangeStart || (rangeStart && rangeEnd)){
     rangeStart = clicked;
     rangeEnd = null;
   } else {
-    const startNum = jalaliToNum(rangeStart);
+    var startNum = jalaliToNum(rangeStart);
     if(clickedNum < startNum){
       rangeEnd = rangeStart;
       rangeStart = clicked;
@@ -702,52 +700,61 @@ function handleDayClick(jy, jm, d){
   renderCalendar();
 }
 function updateRangeInfo(){
-  const info = document.getElementById('rangeInfo');
+  var info = document.getElementById('rangeInfo');
   if(rangeStart && rangeEnd){
-    info.innerHTML = `از <b>${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} ${toFa(rangeStart.jy)}</b> تا <b>${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}</b>`;
+    info.innerHTML = 'از <b>' + toFa(rangeStart.jd) + ' ' + jalaliMonthName(rangeStart.jm) + ' ' + toFa(rangeStart.jy) + '</b> تا <b>' + toFa(rangeEnd.jd) + ' ' + jalaliMonthName(rangeEnd.jm) + ' ' + toFa(rangeEnd.jy) + '</b>';
   } else if(rangeStart){
-    info.innerHTML = `شروع: <b>${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} ${toFa(rangeStart.jy)}</b> — اکنون روز پایان را انتخاب کنید`;
+    info.innerHTML = 'شروع: <b>' + toFa(rangeStart.jd) + ' ' + jalaliMonthName(rangeStart.jm) + ' ' + toFa(rangeStart.jy) + '</b> — اکنون روز پایان را انتخاب کنید';
   } else {
     info.textContent = 'یک روز را برای شروع و روز دیگر را برای پایان انتخاب کنید';
   }
 }
 function confirmDate(){
   if(!rangeStart || !rangeEnd) return;
-  const txt = `${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} تا ${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}`;
+  var txt = toFa(rangeStart.jd) + ' ' + jalaliMonthName(rangeStart.jm) + ' تا ' + toFa(rangeEnd.jd) + ' ' + jalaliMonthName(rangeEnd.jm) + ' ' + toFa(rangeEnd.jy);
   document.getElementById('dateBtnText').textContent = txt;
   document.getElementById('dateBtnText').classList.remove('ph');
   document.getElementById('dateBtn').classList.add('filled');
   closeDatePicker();
 }
 
-function addAppointment(){
-  const cur = getCurrentUser();
-  const time = document.getElementById('newTime').value;
-  const branch = document.getElementById('newBranch').value;
-  const service = document.getElementById('newService').value;
-  const msg = document.getElementById('formMsg');
+/* ===== ADD APPOINTMENT ===== */
+async function addAppointment(){
+  var cur = getCurrentUser();
+  var time = document.getElementById('newTime').value;
+  var branch = document.getElementById('newBranch').value;
+  var service = document.getElementById('newService').value;
+  var msg = document.getElementById('formMsg');
+  var btn = document.getElementById('submitApptBtn');
+  
   if(!rangeStart || !rangeEnd){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً بازه زمانی را انتخاب کنید'; return; }
   if(!time){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً ساعت را انتخاب کنید'; return; }
   if(!branch){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً شعبه را انتخاب کنید'; return; }
   if(!service){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً خدمت مورد نظر را انتخاب کنید'; return; }
   if(!selectedPay){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً نوع پرداخت را انتخاب کنید'; return; }
   if(selectedPay === 'قسطی' && !selectedInstallments){ msg.className = 'form-msg err'; msg.textContent = 'لطفاً تعداد اقساط را انتخاب کنید'; return; }
-  const price = SERVICE_PRICES[service];
-  let total = price, payInfo = '';
+  
+  var price = SERVICE_PRICES[service];
+  var total = price, payInfo = '';
   if(selectedPay === 'نقدی'){
-    const discount = Math.round(price * CASH_DISCOUNT / 100);
+    var discount = Math.round(price * CASH_DISCOUNT / 100);
     total = price - discount;
-    payInfo = `نقدی — ${formatPrice(total)} تومان (${CASH_DISCOUNT}٪ تخفیف)`;
+    payInfo = 'نقدی — ' + formatPrice(total) + ' تومان (' + CASH_DISCOUNT + '٪ تخفیف)';
   } else {
-    const profitPct = (selectedInstallments - 1) * INSTALLMENT_RATE;
-    const profit = Math.round(price * profitPct / 100);
+    var profitPct = (selectedInstallments - 1) * INSTALLMENT_RATE;
+    var profit = Math.round(price * profitPct / 100);
     total = price + profit;
-    const perMonth = Math.round(total / selectedInstallments);
-    payInfo = `${toFa(selectedInstallments)} قسط — هر قسط ${formatPrice(perMonth)} تومان`;
+    var perMonth = Math.round(total / selectedInstallments);
+    payInfo = toFa(selectedInstallments) + ' قسط — هر قسط ' + formatPrice(perMonth) + ' تومان';
   }
-  const rangeText = `${toFa(rangeStart.jd)} ${jalaliMonthName(rangeStart.jm)} تا ${toFa(rangeEnd.jd)} ${jalaliMonthName(rangeEnd.jm)} ${toFa(rangeEnd.jy)}`;
-  const appts = getAppointments();
-  appts.push({
+  var rangeText = toFa(rangeStart.jd) + ' ' + jalaliMonthName(rangeStart.jm) + ' تا ' + toFa(rangeEnd.jd) + ' ' + jalaliMonthName(rangeEnd.jm) + ' ' + toFa(rangeEnd.jy);
+  
+  btn.disabled = true;
+  btn.textContent = 'در حال ثبت...';
+  
+  await fetchData();
+  
+  CACHE.appointments.push({
     id: Date.now(),
     name: cur.name,
     phone: cur.phone,
@@ -761,11 +768,24 @@ function addAppointment(){
     dateRange: rangeText,
     time: time,
     user: cur.phone,
-    status: 'pending'
+    status: 'pending',
+    createdAt: new Date().toISOString()
   });
-  setAppointments(appts);
+  
+  var saved = await saveData();
+  
+  btn.disabled = false;
+  btn.textContent = 'ثبت درخواست نوبت';
+  
+  if(!saved){
+    msg.className = 'form-msg err';
+    msg.textContent = 'خطا در ذخیره. لطفاً دوباره امتحان کنید.';
+    return;
+  }
+  
   msg.className = 'form-msg ok';
-  msg.textContent = '✅ درخواست نوبت شما ثبت شد. منتظر تایید و تعیین زمان از طرف مجموعه باشید.';
+  msg.textContent = '✅ درخواست نوبت شما ثبت شد. منتظر تایید و تعیین زمان باشید.';
+  
   rangeStart = null; rangeEnd = null; selectedPay = null; selectedInstallments = null;
   document.getElementById('dateBtnText').textContent = 'انتخاب بازه';
   document.getElementById('dateBtnText').classList.add('ph');
@@ -773,70 +793,60 @@ function addAppointment(){
   document.getElementById('newTime').value = '';
   document.getElementById('newBranch').value = '';
   document.getElementById('newService').value = '';
-  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('selected'));
-  document.querySelectorAll('.inst-opt').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.pay-opt').forEach(function(b){ b.classList.remove('selected'); });
+  document.querySelectorAll('.inst-opt').forEach(function(b){ b.classList.remove('selected'); });
   document.getElementById('cashDetail').classList.remove('show');
   document.getElementById('installmentDetail').classList.remove('show');
   document.getElementById('instCalcBox').classList.remove('show');
+  
   renderStats(cur);
   renderAppointments(cur);
-  setTimeout(()=>{ msg.className = 'form-msg'; }, 6000);
+  setTimeout(function(){ msg.className = 'form-msg'; }, 6000);
 }
 
+/* ===== APPOINTMENTS TABLE ===== */
 function renderAppointments(user){
-  const box = document.getElementById('appointmentsBox');
-  const mine = getAppointments().filter(a => a.user === user.phone);
+  var box = document.getElementById('appointmentsBox');
+  var mine = CACHE.appointments.filter(function(a){ return a.user === user.phone; });
   if(!mine.length){
-    box.innerHTML = `<div class="empty"><div class="big">📭</div><p>هنوز نوبتی رزرو نکرده‌اید</p></div>`;
+    box.innerHTML = '<div class="empty"><div class="big">📭</div><p>هنوز نوبتی رزرو نکرده‌اید</p></div>';
     return;
   }
-  const table = document.createElement('table');
-  table.innerHTML = `
-    <thead>
-      <tr><th>بازه درخواستی</th><th>زمان تعیین‌شده</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr>
-    </thead>
-  `;
-  const tbody = document.createElement('tbody');
-  mine.slice().reverse().forEach(a=>{
-    const status = a.status || 'pending';
-    const statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
-    const payLabel = a.pay === 'قسطی' ? `قسطی (${toFa(a.installments || 0)} قسط)` : (a.pay || '—');
-    const rangeText = a.dateRange || a.date || '—';
-    
-    let finalCell;
+  var table = document.createElement('table');
+  table.innerHTML = '<thead><tr><th>بازه درخواستی</th><th>زمان تعیین‌شده</th><th>خدمت</th><th>شعبه</th><th>پرداخت</th><th>وضعیت</th><th>عملیات</th></tr></thead>';
+  var tbody = document.createElement('tbody');
+  mine.slice().reverse().forEach(function(a){
+    var status = a.status || 'pending';
+    var statusLabel = status === 'approved' ? 'تایید شده' : status === 'canceled' ? 'لغو شده' : 'در انتظار تایید';
+    var payLabel = a.pay === 'قسطی' ? 'قسطی (' + toFa(a.installments || 0) + ' قسط)' : (a.pay || '—');
+    var rangeText = a.dateRange || a.date || '—';
+    var finalCell;
     if(status === 'approved' && a.finalDate){
-      finalCell = `<div class="final-time">${a.finalDate} — ساعت ${a.finalTime || a.time}<small>زمان قطعی مجموعه پناه</small></div>`;
+      finalCell = '<div class="final-time">' + a.finalDate + ' — ساعت ' + (a.finalTime || a.time) + '<small>زمان قطعی مجموعه پناه</small></div>';
     } else if(status === 'canceled'){
-      finalCell = `<span style="color:#ff6b5b;">لغو شده</span>`;
+      finalCell = '<span style="color:#ff6b5b;">لغو شده</span>';
     } else {
-      finalCell = `<span class="waiting-badge">⏳ در انتظار تعیین زمان</span>`;
+      finalCell = '<span class="waiting-badge">⏳ در انتظار تعیین زمان</span>';
     }
-    
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${rangeText}<br><small style="color:#7a8899;">ساعت درخواستی: ${a.time}</small></td>
-      <td>${finalCell}</td>
-      <td>${a.service || '—'}</td>
-      <td>${a.branch || '—'}</td>
-      <td>${payLabel}</td>
-      <td><span class="badge ${status}">${statusLabel}</span></td>
-      <td><button class="del" onclick="delAppt(${a.id})">لغو</button></td>
-    `;
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + rangeText + '<br><small style="color:#7a8899;">ساعت درخواستی: ' + a.time + '</small></td><td>' + finalCell + '</td><td>' + (a.service || '—') + '</td><td>' + (a.branch || '—') + '</td><td>' + payLabel + '</td><td><span class="badge ' + status + '">' + statusLabel + '</span></td><td><button class="del" onclick="delAppt(' + a.id + ')">لغو</button></td>';
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
   box.innerHTML = '';
   box.appendChild(table);
 }
-function delAppt(id){
+
+async function delAppt(id){
   if(!confirm('از لغو این نوبت مطمئن هستید؟')) return;
-  let appts = getAppointments();
-  appts = appts.filter(a => a.id !== id);
-  setAppointments(appts);
-  const cur = getCurrentUser();
+  await fetchData();
+  CACHE.appointments = CACHE.appointments.filter(function(a){ return a.id !== id; });
+  await saveData();
+  var cur = getCurrentUser();
   renderAppointments(cur);
   renderStats(cur);
 }
+
 function logout(){
   if(!confirm('از حساب خود خارج می‌شوید؟')) return;
   clearCurrentUser();
