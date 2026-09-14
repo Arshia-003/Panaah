@@ -44,11 +44,11 @@ nav a:hover::after{width:100%;}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
-.modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
+.modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;max-height:95vh;overflow-y:auto;}
 .modal-overlay.hide .modal{transform:scale(.9);}
 .modal::before{content:'';position:absolute;top:-100px;right:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 70%);pointer-events:none;}
 .modal::after{content:'';position:absolute;bottom:-100px;left:-100px;width:250px;height:250px;background:radial-gradient(circle,rgba(10,110,189,.2),transparent 70%);pointer-events:none;}
-.modal-logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;box-shadow:0 15px 40px rgba(0,194,168,.4);position:relative;z-index:1;flex-shrink:0;}
+.modal-logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;box-shadow:0 15px 40px rgba(0,194,168,.4);position:relative;z-index:1;flex-shrink:0;transition:.3s;}
 .modal h2{text-align:center;font-size:23px;font-weight:900;margin-bottom:8px;position:relative;z-index:1;letter-spacing:-.5px;flex-shrink:0;}
 .modal h2 span{background:linear-gradient(135deg,#00c2a8,#0a6ebd);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .modal .sub{text-align:center;color:#7a8899;font-size:12px;margin-bottom:22px;position:relative;z-index:1;font-weight:300;line-height:1.7;flex-shrink:0;}
@@ -59,7 +59,8 @@ nav a:hover::after{width:100%;}
 .modal .form-group input:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .modal .form-group input.error{border-color:#ff6b5b;box-shadow:0 0 0 4px rgba(231,76,60,.15);}
 .modal .form-group input::placeholder{color:#556070;}
-.modal .form-group input.otp-input{text-align:center;letter-spacing:12px;font-size:22px;font-weight:900;padding:16px;font-family:monospace;direction:ltr;}
+.modal .form-group input.otp-input{text-align:center;letter-spacing:14px;font-size:26px;font-weight:900;padding:18px;font-family:monospace;direction:ltr;background:rgba(0,194,168,.05);border:2px dashed rgba(0,194,168,.4);color:#00c2a8;}
+.modal .form-group input.otp-input:focus{border-style:solid;background:rgba(0,194,168,.1);}
 .err-msg{color:#ff6b5b;font-size:11.5px;margin-top:5px;display:none;font-weight:500;}
 .err-msg.show{display:block;}
 .modal .btn-primary{width:100%;padding:14px;font-size:15px;margin-top:8px;position:relative;z-index:1;flex-shrink:0;}
@@ -69,13 +70,30 @@ nav a:hover::after{width:100%;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
-.otp-info{text-align:center;color:#a8b5c8;font-size:13px;line-height:1.9;position:relative;z-index:1;margin-bottom:18px;padding:14px;background:rgba(0,194,168,.08);border:1px solid rgba(0,194,168,.2);border-radius:12px;}
-.otp-info b{color:#00c2a8;}
-.otp-timer{text-align:center;font-size:13px;color:#7a8899;margin-top:12px;position:relative;z-index:1;}
-.otp-timer b{color:#ffc107;font-weight:700;}
-.otp-timer.expired b{color:#ff6b5b;}
-.resend-btn{background:transparent;border:none;color:#00c2a8;font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;text-decoration:underline;padding:0;margin-top:8px;display:inline-block;}
-.resend-btn:disabled{color:#556070;cursor:not-allowed;text-decoration:none;}
+/* ===== OTP BOX (بخش کد تایید) ===== */
+.otp-box{margin-top:16px;padding:20px;background:linear-gradient(145deg,rgba(0,194,168,.08),rgba(10,110,189,.06));border:1px solid rgba(0,194,168,.25);border-radius:16px;position:relative;z-index:1;display:none;animation:otpSlide .4s cubic-bezier(.2,.9,.3,1);}
+.otp-box.show{display:block;}
+@keyframes otpSlide{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+
+.otp-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.otp-header .otp-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.otp-header .otp-title{font-size:14px;font-weight:800;color:#00c2a8;}
+.otp-header .otp-sub{font-size:11.5px;color:#7a8899;font-weight:400;margin-top:2px;line-height:1.5;}
+.otp-header .otp-sub b{color:#e8eef7;font-weight:700;}
+
+.otp-timer-bar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;}
+.otp-timer-bar .timer-label{color:#7a8899;}
+.otp-timer-bar .timer-value{font-weight:800;color:#ffc107;font-family:monospace;letter-spacing:1px;}
+.otp-timer-bar .timer-value.expired{color:#ff6b5b;}
+
+.otp-actions{display:flex;gap:10px;margin-top:14px;}
+.otp-actions button{flex:1;padding:11px;border-radius:11px;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:.3s;border:none;}
+.otp-verify{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;box-shadow:0 6px 18px rgba(10,110,189,.3);}
+.otp-verify:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px rgba(10,110,189,.4);}
+.otp-verify:disabled{opacity:.5;cursor:not-allowed;}
+.otp-resend{background:rgba(255,255,255,.05);color:#a8b5c8;border:1px solid rgba(255,255,255,.15);}
+.otp-resend:hover:not(:disabled){background:rgba(255,255,255,.1);color:#e8eef7;}
+.otp-resend:disabled{opacity:.4;cursor:not-allowed;}
 
 .btn{padding:16px 38px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:.35s;font-family:inherit;position:relative;overflow:hidden;}
 .btn-primary{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;box-shadow:0 10px 30px rgba(10,110,189,.35);}
@@ -164,7 +182,8 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .btn-primary{padding:13px;font-size:14px;margin-top:6px;}
   .switch-auth{margin-top:14px;font-size:12.5px;padding-top:14px;}
   .cta-section{padding:40px 25px;}
-  .modal .form-group input.otp-input{letter-spacing:8px;font-size:20px;}
+  .modal .form-group input.otp-input{letter-spacing:10px;font-size:22px;padding:15px;}
+  .otp-actions{flex-direction:column;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
@@ -188,70 +207,72 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <!-- STEP 1: REGISTER FORM -->
-    <div id="step1">
-      <div id="registerFields">
-        <div class="form-group">
-          <label>نام و نام خانوادگی</label>
-          <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
-          <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
-        </div>
-        <div class="form-group">
-          <label>شماره تلفن همراه</label>
-          <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
-          <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
-        </div>
-        <div class="form-group">
-          <label>ایمیل (برای دریافت کد تایید)</label>
-          <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
-          <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
-        </div>
-        <div class="form-group">
-          <label>رمز عبور</label>
-          <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
-          <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
-        </div>
-      </div>
-      
-      <div id="loginFields" class="hidden">
-        <div class="form-group">
-          <label>نام و نام خانوادگی یا شماره همراه</label>
-          <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
-          <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
-        </div>
-        <div class="form-group">
-          <label>رمز عبور</label>
-          <input type="password" id="loginPass" placeholder="رمز عبور خود را وارد کنید" maxlength="40">
-          <div class="err-msg" id="errLoginPass">رمز عبور اشتباه است</div>
-        </div>
-      </div>
-      
-      <button class="btn btn-primary" id="submitBtn" onclick="submitAuth()">ورود به مجموعه پناه</button>
-      
-      <div class="switch-auth" id="switchAuth">
-        اگر از قبل حساب دارید، <a onclick="switchMode('login')">وارد شوید</a>
-      </div>
-    </div>
-    
-    <!-- STEP 2: OTP -->
-    <div id="step2" class="hidden">
-      <div class="otp-info">
-        کد تایید به ایمیل <b id="otpEmail">—</b> ارسال شد.<br>
-        لطفاً ایمیل خود را بررسی کنید.
+    <!-- REGISTER FIELDS -->
+    <div id="registerFields">
+      <div class="form-group">
+        <label>نام و نام خانوادگی</label>
+        <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
+        <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
       </div>
       <div class="form-group">
-        <label>کد تایید ۶ رقمی</label>
-        <input type="text" id="otpInput" class="otp-input" placeholder="------" maxlength="6" inputmode="numeric">
-        <div class="err-msg" id="errOtp">کد وارد شده اشتباه است</div>
+        <label>شماره تلفن همراه</label>
+        <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
+        <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
       </div>
-      <div class="otp-timer" id="otpTimer">زمان باقی‌مانده: <b id="timerText">۰۵:۰۰</b></div>
-      <button class="resend-btn" id="resendBtn" onclick="resendOtp()">ارسال مجدد کد</button>
-      <button class="btn btn-primary" onclick="verifyOtp()">تایید و تکمیل ثبت‌نام</button>
-      <div class="switch-auth">
-        <a onclick="backToRegister()">← بازگشت و ویرایش اطلاعات</a>
+      <div class="form-group">
+        <label>ایمیل <span class="optional">(برای دریافت کد تایید)</span></label>
+        <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+        <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
+      </div>
+      <div class="form-group">
+        <label>رمز عبور</label>
+        <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
+        <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
+      </div>
+      
+      <!-- OTP BOX — اینجا باز می‌شه -->
+      <div class="otp-box" id="otpBox">
+        <div class="otp-header">
+          <div class="otp-icon">📧</div>
+          <div>
+            <div class="otp-title">کد تایید ایمیل</div>
+            <div class="otp-sub">کد ۶ رقمی به <b id="otpEmailShow">—</b> ارسال شد</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" id="otpInput" class="otp-input" placeholder="------" maxlength="6" inputmode="numeric">
+          <div class="err-msg" id="errOtp">کد وارد شده اشتباه است</div>
+        </div>
+        <div class="otp-timer-bar">
+          <span class="timer-label">زمان باقی‌مانده:</span>
+          <span class="timer-value" id="timerValue">۰۵:۰۰</span>
+        </div>
+        <div class="otp-actions">
+          <button class="otp-resend" id="resendBtn" onclick="resendOtp()">ارسال مجدد</button>
+          <button class="otp-verify" id="verifyBtn" onclick="verifyOtp()">تایید کد</button>
+        </div>
       </div>
     </div>
     
+    <!-- LOGIN FIELDS -->
+    <div id="loginFields" class="hidden">
+      <div class="form-group">
+        <label>نام و نام خانوادگی یا شماره همراه</label>
+        <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
+        <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
+      </div>
+      <div class="form-group">
+        <label>رمز عبور</label>
+        <input type="password" id="loginPass" placeholder="رمز عبور خود را وارد کنید" maxlength="40">
+        <div class="err-msg" id="errLoginPass">رمز عبور اشتباه است</div>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" id="submitBtn" onclick="submitAuth()">ورود به مجموعه پناه</button>
+    
+    <div class="switch-auth" id="switchAuth">
+      اگر از قبل حساب دارید، <a onclick="switchMode('login')">وارد شوید</a>
+    </div>
   </div>
 </div>
 
@@ -324,18 +345,22 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 
 <footer>
   <div class="footer-logo"><div class="logo-mark">🦷</div> مجموعه پناه</div>
-  <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامی حقوق محفوظ است</p>
+  <p>© ۱۴۰۴ مجموعه پناه — کلینیک تخصصی دندانپزشکی<br>تمامى حقوق محفوظ است</p>
 </footer>
 
 <script>
-/* ===== EmailJS Config ===== */
+/* ============================================
+   EmailJS Configuration
+============================================ */
 var EMAILJS_SERVICE = 'service_pl4i9d2';
 var EMAILJS_TEMPLATE = 'template_kpvqcrf';
 var EMAILJS_PUBLIC = 'AZYMC70pzjqQc73Az';
 
 emailjs.init(EMAILJS_PUBLIC);
 
-/* ===== JSONBin ===== */
+/* ============================================
+   JSONBin Configuration
+============================================ */
 var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
 var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
 var API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
@@ -352,7 +377,7 @@ async function fetchData(){
     CACHE.appointments = record.appointments || [];
     return CACHE;
   } catch(e){
-    console.error('خطا در خواندن:', e);
+    console.error('خطا در خواندن JSONBin:', e);
     return CACHE;
   }
 }
@@ -367,7 +392,7 @@ async function saveData(){
     if(!res.ok) throw new Error('HTTP ' + res.status);
     return true;
   } catch(e){
-    console.error('خطا در ذخیره:', e);
+    console.error('خطا در ذخیره JSONBin:', e);
     return false;
   }
 }
@@ -380,7 +405,9 @@ function getCurrentUser(){
 function setCurrentUser(user){ localStorage.setItem('panaah_current', JSON.stringify(user)); }
 function clearCurrentUser(){ localStorage.removeItem('panaah_current'); }
 
-/* ===== OTP STATE ===== */
+/* ============================================
+   OTP State
+============================================ */
 var otpState = {
   code: null,
   email: null,
@@ -388,10 +415,13 @@ var otpState = {
   phone: null,
   password: null,
   expiresAt: null,
-  timerId: null
+  timerId: null,
+  verified: false
 };
 
-/* ===== UI ===== */
+/* ============================================
+   UI
+============================================ */
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
 function unlockBody(){ document.documentElement.classList.remove('locked'); document.body.classList.remove('locked'); }
 
@@ -415,9 +445,15 @@ function switchMode(mode){
   var sub = document.getElementById('modalSub');
   var btn = document.getElementById('submitBtn');
   var sw = document.getElementById('switchAuth');
+  var logo = document.getElementById('modalLogo');
+  var otpBox = document.getElementById('otpBox');
   
   document.querySelectorAll('.err-msg').forEach(function(e){ e.classList.remove('show'); });
   document.querySelectorAll('.modal input').forEach(function(e){ e.classList.remove('error'); });
+  
+  // مخفی کردن OTP box وقتی بین حالت‌ها عوض می‌شیم
+  otpBox.classList.remove('show');
+  stopOtpTimer();
   
   if(mode==='login'){
     regF.classList.add('hidden');
@@ -425,6 +461,7 @@ function switchMode(mode){
     title.innerHTML = 'ورود به <span>مجموعه پناه</span>';
     sub.textContent = 'با نام یا شماره همراه و رمز عبور وارد شوید';
     btn.textContent = 'ورود به حساب';
+    logo.textContent = '🦷';
     sw.innerHTML = 'حساب ندارید؟ <a onclick="switchMode(\'register\')">ثبت‌نام کنید</a>';
   } else {
     regF.classList.remove('hidden');
@@ -432,11 +469,14 @@ function switchMode(mode){
     title.innerHTML = 'خوش آمدید به <span>مجموعه پناه</span>';
     sub.textContent = 'برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید';
     btn.textContent = 'ورود به مجموعه پناه';
+    logo.textContent = '🦷';
     sw.innerHTML = 'اگر از قبل حساب دارید، <a onclick="switchMode(\'login\')">وارد شوید</a>';
   }
 }
 
-/* ===== INIT ===== */
+/* ============================================
+   INIT
+============================================ */
 window.addEventListener('DOMContentLoaded', async function(){
   await fetchData();
   var cur = getCurrentUser();
@@ -467,7 +507,9 @@ window.addEventListener('DOMContentLoaded', async function(){
 function openAuth(){ document.getElementById('registerModal').classList.remove('hide'); lockBody(); }
 function closeAuth(){ document.getElementById('registerModal').classList.add('hide'); unlockBody(); }
 
-/* ===== VALIDATION ===== */
+/* ============================================
+   VALIDATION
+============================================ */
 function toEnglishDigits(str){
   var fa = '۰۱۲۳۴۵۶۷۸۹', ar = '٠١٢٣٤٥٦٧٨٩';
   return str.replace(/[۰-۹]/g,function(d){ return fa.indexOf(d); })
@@ -484,11 +526,18 @@ function validEmail(e){
 function validPass(p){ return p.length >= 6; }
 
 function submitAuth(){
-  if(authMode === 'register') doRegister();
-  else doLogin();
+  if(authMode === 'login'){ doLogin(); return; }
+  // اگه کد قبلاً تایید شده، ثبت‌نام نهایی
+  if(otpState.verified){ finalizeRegister(); return; }
+  // اگه OTP در جریانه
+  if(otpState.code){ verifyOtp(); return; }
+  // در غیر این صورت، اطلاعات رو ثبت کن و کد بفرست
+  doRegister();
 }
 
-/* ===== REGISTER → Send OTP ===== */
+/* ============================================
+   REGISTER → Send OTP
+============================================ */
 async function doRegister(){
   var nameEl = document.getElementById('regName');
   var phoneEl = document.getElementById('regPhone');
@@ -513,9 +562,11 @@ async function doRegister(){
   btn.textContent = 'در حال ارسال کد...';
   btn.disabled = true;
   
-  // چک کن کاربر با این شماره قبلاً ثبت‌نام نکرده باشه
+  // چک شماره تکراری
   await fetchData();
-  var existingPhone = CACHE.users.find(function(u){ return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role !== 'admin'; });
+  var existingPhone = CACHE.users.find(function(u){
+    return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role !== 'admin';
+  });
   if(existingPhone){
     btn.textContent = 'ورود به مجموعه پناه';
     btn.disabled = false;
@@ -525,88 +576,107 @@ async function doRegister(){
     return;
   }
   
-  // تولید کد ۶ رقمی
   var code = String(Math.floor(100000 + Math.random() * 900000));
   var email = emailEl.value.trim();
   var name = nameEl.value.trim();
   
-  // ذخیره در state
   otpState.code = code;
   otpState.email = email;
   otpState.name = name;
   otpState.phone = toEnglishDigits(phoneEl.value.trim());
   otpState.password = passEl.value;
-  otpState.expiresAt = Date.now() + 5 * 60 * 1000; // 5 دقیقه
+  otpState.expiresAt = Date.now() + 5 * 60 * 1000;
+  otpState.verified = false;
   
-  // ارسال ایمیل با EmailJS
+  // ارسال ایمیل
   try {
-    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    var result = await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
       to_email: email,
       to_name: name,
       otp_code: code
     });
+    console.log('✅ ایمیل ارسال شد:', result.status, result.text);
   } catch(err){
-    console.error('EmailJS error:', err);
+    console.error('❌ EmailJS Error:');
+    console.error('Status:', err && err.status);
+    console.error('Text:', err && err.text);
+    console.error('Full:', JSON.stringify(err, null, 2));
+    
     btn.textContent = 'ورود به مجموعه پناه';
     btn.disabled = false;
-    errEmail.textContent = 'خطا در ارسال ایمیل. لطفاً ایمیل رو چک کن یا دوباره امتحان کن.';
+    
+    var errorMsg = 'خطا در ارسال ایمیل.';
+    if(err && err.status === 0){
+      errorMsg = 'خطا در اتصال به EmailJS. اتصال اینترنتت رو چک کن.';
+    } else if(err && err.text){
+      errorMsg = 'خطا: ' + err.text;
+    }
+    errEmail.textContent = errorMsg;
     errEmail.classList.add('show');
     return;
   }
   
-  btn.textContent = 'ورود به مجموعه پناه';
+  btn.textContent = 'تایید کد و تکمیل ثبت‌نام';
   btn.disabled = false;
   
-  // برو به مرحله ۲
-  goToOtpStep(email);
+  // نمایش OTP box
+  showOtpBox(email);
 }
 
-function goToOtpStep(email){
-  document.getElementById('step1').classList.add('hidden');
-  document.getElementById('step2').classList.remove('hidden');
-  document.getElementById('otpEmail').textContent = email;
-  document.getElementById('otpInput').value = '';
+function showOtpBox(email){
+  var box = document.getElementById('otpBox');
+  var emailShow = document.getElementById('otpEmailShow');
+  var otpInput = document.getElementById('otpInput');
+  
+  emailShow.textContent = email;
+  otpInput.value = '';
   document.getElementById('errOtp').classList.remove('show');
-  document.getElementById('otpInput').classList.remove('error');
-  document.getElementById('modalLogo').textContent = '📧';
-  document.getElementById('modalTitle').innerHTML = 'تایید <span>ایمیل</span>';
-  document.getElementById('modalSub').textContent = 'کد ۶ رقمی که به ایمیلت فرستادیم رو وارد کن';
+  otpInput.classList.remove('error');
+  
+  box.classList.add('show');
+  
+  setTimeout(function(){
+    box.scrollIntoView({behavior:'smooth', block:'nearest'});
+    otpInput.focus();
+  }, 200);
+  
   startOtpTimer();
-  setTimeout(function(){ document.getElementById('otpInput').focus(); }, 100);
 }
 
-function backToRegister(){
+function hideOtpBox(){
+  document.getElementById('otpBox').classList.remove('show');
   stopOtpTimer();
-  otpState.code = null;
-  document.getElementById('step2').classList.add('hidden');
-  document.getElementById('step1').classList.remove('hidden');
-  document.getElementById('modalLogo').textContent = '🦷';
-  document.getElementById('modalTitle').innerHTML = 'خوش آمدید به <span>مجموعه پناه</span>';
-  document.getElementById('modalSub').textContent = 'برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید';
-  switchMode('register');
 }
 
-/* ===== OTP TIMER ===== */
+/* ============================================
+   OTP TIMER
+============================================ */
 function startOtpTimer(){
   stopOtpTimer();
-  var timerEl = document.getElementById('otpTimer');
-  var textEl = document.getElementById('timerText');
+  var timerEl = document.getElementById('timerValue');
   timerEl.classList.remove('expired');
   document.getElementById('resendBtn').disabled = false;
   
+  updateTimerDisplay();
+  
   otpState.timerId = setInterval(function(){
-    var remaining = otpState.expiresAt - Date.now();
-    if(remaining <= 0){
-      stopOtpTimer();
-      timerEl.classList.add('expired');
-      textEl.textContent = 'منقضی شد';
-      document.getElementById('resendBtn').disabled = false;
-      return;
-    }
-    var min = Math.floor(remaining / 60000);
-    var sec = Math.floor((remaining % 60000) / 1000);
-    textEl.textContent = toFa2(min) + ':' + toFa2(sec);
+    updateTimerDisplay();
   }, 1000);
+}
+
+function updateTimerDisplay(){
+  var timerEl = document.getElementById('timerValue');
+  var remaining = otpState.expiresAt - Date.now();
+  if(remaining <= 0){
+    stopOtpTimer();
+    timerEl.classList.add('expired');
+    timerEl.textContent = 'منقضی شد';
+    document.getElementById('resendBtn').disabled = false;
+    return;
+  }
+  var min = Math.floor(remaining / 60000);
+  var sec = Math.floor((remaining % 60000) / 1000);
+  timerEl.textContent = toFa2(min) + ':' + toFa2(sec);
 }
 
 function stopOtpTimer(){
@@ -622,6 +692,9 @@ function toFa2(n){
   return s.replace(/\d/g, function(d){ return fa[d]; });
 }
 
+/* ============================================
+   RESEND OTP
+============================================ */
 async function resendOtp(){
   if(!otpState.email){ return; }
   
@@ -639,16 +712,20 @@ async function resendOtp(){
       to_name: otpState.name,
       otp_code: code
     });
-    btn.textContent = 'ارسال مجدد کد';
+    btn.textContent = 'ارسال مجدد';
     startOtpTimer();
+    document.getElementById('errOtp').classList.remove('show');
+    document.getElementById('otpInput').classList.remove('error');
   } catch(err){
     console.error('Resend error:', err);
-    btn.textContent = 'خطا - دوباره امتحان کن';
-    setTimeout(function(){ btn.textContent = 'ارسال مجدد کد'; btn.disabled = false; }, 2000);
+    btn.textContent = 'خطا - دوباره';
+    setTimeout(function(){ btn.textContent = 'ارسال مجدد'; btn.disabled = false; }, 2000);
   }
 }
 
-/* ===== VERIFY OTP ===== */
+/* ============================================
+   VERIFY OTP
+============================================ */
 async function verifyOtp(){
   var input = document.getElementById('otpInput');
   var errOtp = document.getElementById('errOtp');
@@ -669,6 +746,13 @@ async function verifyOtp(){
     return;
   }
   
+  if(code.length !== 6){
+    errOtp.textContent = 'کد باید ۶ رقم باشه';
+    errOtp.classList.add('show');
+    input.classList.add('error');
+    return;
+  }
+  
   if(code !== otpState.code){
     errOtp.textContent = 'کد وارد شده اشتباه است';
     errOtp.classList.add('show');
@@ -676,8 +760,16 @@ async function verifyOtp(){
     return;
   }
   
-  // کد درست — ثبت‌نام کن
+  // کد درست — ثبت‌نام نهایی
+  otpState.verified = true;
   stopOtpTimer();
+  await finalizeRegister();
+}
+
+async function finalizeRegister(){
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = 'در حال ثبت...';
+  btn.disabled = true;
   
   await fetchData();
   
@@ -693,39 +785,51 @@ async function verifyOtp(){
     joinedAt: new Date().toISOString()
   };
   
-  // دوباره چک کن شماره تکراری نباشه
-  var exists = CACHE.users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
+  // چک دوباره تکراری نباشه
+  var exists = CACHE.users.find(function(u){
+    return u.phone === newUser.phone && u.role !== 'admin';
+  });
   if(exists){
-    errOtp.textContent = 'این شماره قبلاً ثبت‌نام کرده';
-    errOtp.classList.add('show');
+    btn.textContent = 'ورود به مجموعه پناه';
+    btn.disabled = false;
+    alert('این شماره قبلاً ثبت‌نام کرده');
     return;
   }
   
   CACHE.users.push(newUser);
   var saved = await saveData();
   
+  btn.disabled = false;
+  btn.textContent = 'ورود به مجموعه پناه';
+  
   if(!saved){
-    errOtp.textContent = 'خطا در ذخیره‌سازی. دوباره امتحان کن.';
-    errOtp.classList.add('show');
+    alert('خطا در ذخیره‌سازی. دوباره امتحان کن.');
     return;
   }
   
   // پاک کردن state
-  otpState = { code: null, email: null, name: null, phone: null, password: null, expiresAt: null, timerId: null };
+  otpState = {
+    code: null, email: null, name: null, phone: null,
+    password: null, expiresAt: null, timerId: null, verified: false
+  };
   
   setCurrentUser(newUser);
   showUser(newUser);
   
-  // ریست مودال
-  document.getElementById('step2').classList.add('hidden');
-  document.getElementById('step1').classList.remove('hidden');
-  document.getElementById('modalLogo').textContent = '🦷';
-  switchMode('register');
+  // ریست فرم
+  document.getElementById('regName').value = '';
+  document.getElementById('regPhone').value = '';
+  document.getElementById('regEmail').value = '';
+  document.getElementById('regPass').value = '';
+  hideOtpBox();
   
   closeAuth();
+  alert('🎉 ثبت‌نام شما با موفقیت انجام شد!');
 }
 
-/* ===== LOGIN ===== */
+/* ============================================
+   LOGIN
+============================================ */
 async function doLogin(){
   var inputEl = document.getElementById('loginInput');
   var passEl = document.getElementById('loginPass');
@@ -755,14 +859,9 @@ async function doLogin(){
     var admin = CACHE.users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
       admin = {
-        id: 1,
-        username: 'sherkat',
-        name: 'شرکت',
-        phone: '',
-        email: '',
-        address: '',
-        password: '09126481838',
-        role: 'admin',
+        id: 1, username: 'sherkat', name: 'شرکت',
+        phone: '', email: '', address: '',
+        password: '09126481838', role: 'admin',
         joinedAt: new Date().toISOString()
       };
       CACHE.users.push(admin);
@@ -805,14 +904,22 @@ async function doLogin(){
   closeAuth();
 }
 
-/* ===== INPUT FORMATTING ===== */
+/* ============================================
+   INPUT FORMATTING
+============================================ */
 document.getElementById('regPhone').addEventListener('input', function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
 });
 document.getElementById('otpInput').addEventListener('input', function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,6);
+  if(this.value.length === 6){
+    // اختیاری: خودکار تایید کن
+  }
 });
 
+/* ============================================
+   USER DISPLAY
+============================================ */
 function showUser(user){
   var btn = document.getElementById('userBtn');
   var avatar = document.getElementById('userAvatar');
