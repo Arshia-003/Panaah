@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مجموعه پناه | کلینیک تخصصی دندانپزشکی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',sans-serif;}
 html,body{overflow-x:hidden;}
@@ -58,13 +59,23 @@ nav a:hover::after{width:100%;}
 .modal .form-group input:focus{border-color:#00c2a8;background:rgba(0,0,0,.5);box-shadow:0 0 0 4px rgba(0,194,168,.15);}
 .modal .form-group input.error{border-color:#ff6b5b;box-shadow:0 0 0 4px rgba(231,76,60,.15);}
 .modal .form-group input::placeholder{color:#556070;}
+.modal .form-group input.otp-input{text-align:center;letter-spacing:12px;font-size:22px;font-weight:900;padding:16px;font-family:monospace;direction:ltr;}
 .err-msg{color:#ff6b5b;font-size:11.5px;margin-top:5px;display:none;font-weight:500;}
 .err-msg.show{display:block;}
 .modal .btn-primary{width:100%;padding:14px;font-size:15px;margin-top:8px;position:relative;z-index:1;flex-shrink:0;}
+.modal .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
 
 .switch-auth{text-align:center;margin-top:18px;font-size:13px;color:#a8b5c8;position:relative;z-index:1;line-height:1.8;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
+
+.otp-info{text-align:center;color:#a8b5c8;font-size:13px;line-height:1.9;position:relative;z-index:1;margin-bottom:18px;padding:14px;background:rgba(0,194,168,.08);border:1px solid rgba(0,194,168,.2);border-radius:12px;}
+.otp-info b{color:#00c2a8;}
+.otp-timer{text-align:center;font-size:13px;color:#7a8899;margin-top:12px;position:relative;z-index:1;}
+.otp-timer b{color:#ffc107;font-weight:700;}
+.otp-timer.expired b{color:#ff6b5b;}
+.resend-btn{background:transparent;border:none;color:#00c2a8;font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;text-decoration:underline;padding:0;margin-top:8px;display:inline-block;}
+.resend-btn:disabled{color:#556070;cursor:not-allowed;text-decoration:none;}
 
 .btn{padding:16px 38px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:.35s;font-family:inherit;position:relative;overflow:hidden;}
 .btn-primary{background:linear-gradient(135deg,#00c2a8,#0a6ebd);color:#fff;box-shadow:0 10px 30px rgba(10,110,189,.35);}
@@ -153,6 +164,7 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .btn-primary{padding:13px;font-size:14px;margin-top:6px;}
   .switch-auth{margin-top:14px;font-size:12.5px;padding-top:14px;}
   .cta-section{padding:40px 25px;}
+  .modal .form-group input.otp-input{letter-spacing:8px;font-size:20px;}
 }
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
@@ -172,51 +184,74 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
-    <div class="modal-logo">🦷</div>
+    <div class="modal-logo" id="modalLogo">🦷</div>
     <h2 id="modalTitle">خوش آمدید به <span>مجموعه پناه</span></h2>
     <p class="sub" id="modalSub">برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید</p>
     
-    <div id="registerFields">
-      <div class="form-group">
-        <label>نام و نام خانوادگی</label>
-        <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
-        <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
+    <!-- STEP 1: REGISTER FORM -->
+    <div id="step1">
+      <div id="registerFields">
+        <div class="form-group">
+          <label>نام و نام خانوادگی</label>
+          <input type="text" id="regName" placeholder="مثلاً عرشیا محمدی" maxlength="40">
+          <div class="err-msg" id="errName">لطفاً نام و نام خانوادگی خود را کامل وارد کنید</div>
+        </div>
+        <div class="form-group">
+          <label>شماره تلفن همراه</label>
+          <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
+          <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+        </div>
+        <div class="form-group">
+          <label>ایمیل (برای دریافت کد تایید)</label>
+          <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
+          <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
+          <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
+        </div>
       </div>
-      <div class="form-group">
-        <label>شماره تلفن همراه</label>
-        <input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11" inputmode="numeric">
-        <div class="err-msg" id="errPhone">شماره باید با ۰۹ شروع شده و ۱۱ رقم باشد</div>
+      
+      <div id="loginFields" class="hidden">
+        <div class="form-group">
+          <label>نام و نام خانوادگی یا شماره همراه</label>
+          <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
+          <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <input type="password" id="loginPass" placeholder="رمز عبور خود را وارد کنید" maxlength="40">
+          <div class="err-msg" id="errLoginPass">رمز عبور اشتباه است</div>
+        </div>
       </div>
-      <div class="form-group">
-        <label>ایمیل <span class="optional">(اختیاری)</span></label>
-        <input type="email" id="regEmail" placeholder="example@gmail.com" dir="ltr" style="text-align:left;">
-        <div class="err-msg" id="errEmail">ایمیل وارد شده صحیح نیست</div>
-      </div>
-      <div class="form-group">
-        <label>رمز عبور</label>
-        <input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر" maxlength="40">
-        <div class="err-msg" id="errRegPass">رمز عبور باید حداقل ۶ کاراکتر باشد</div>
+      
+      <button class="btn btn-primary" id="submitBtn" onclick="submitAuth()">ورود به مجموعه پناه</button>
+      
+      <div class="switch-auth" id="switchAuth">
+        اگر از قبل حساب دارید، <a onclick="switchMode('login')">وارد شوید</a>
       </div>
     </div>
     
-    <div id="loginFields" class="hidden">
-      <div class="form-group">
-        <label>نام و نام خانوادگی یا شماره همراه</label>
-        <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
-        <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
+    <!-- STEP 2: OTP -->
+    <div id="step2" class="hidden">
+      <div class="otp-info">
+        کد تایید به ایمیل <b id="otpEmail">—</b> ارسال شد.<br>
+        لطفاً ایمیل خود را بررسی کنید.
       </div>
       <div class="form-group">
-        <label>رمز عبور</label>
-        <input type="password" id="loginPass" placeholder="رمز عبور خود را وارد کنید" maxlength="40">
-        <div class="err-msg" id="errLoginPass">رمز عبور اشتباه است</div>
+        <label>کد تایید ۶ رقمی</label>
+        <input type="text" id="otpInput" class="otp-input" placeholder="------" maxlength="6" inputmode="numeric">
+        <div class="err-msg" id="errOtp">کد وارد شده اشتباه است</div>
+      </div>
+      <div class="otp-timer" id="otpTimer">زمان باقی‌مانده: <b id="timerText">۰۵:۰۰</b></div>
+      <button class="resend-btn" id="resendBtn" onclick="resendOtp()">ارسال مجدد کد</button>
+      <button class="btn btn-primary" onclick="verifyOtp()">تایید و تکمیل ثبت‌نام</button>
+      <div class="switch-auth">
+        <a onclick="backToRegister()">← بازگشت و ویرایش اطلاعات</a>
       </div>
     </div>
     
-    <button class="btn btn-primary" id="submitBtn" onclick="submitAuth()">ورود به مجموعه پناه</button>
-    
-    <div class="switch-auth" id="switchAuth">
-      اگر از قبل حساب دارید، <a onclick="switchMode('login')">وارد شوید</a>
-    </div>
   </div>
 </div>
 
@@ -293,6 +328,13 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
 </footer>
 
 <script>
+/* ===== EmailJS Config ===== */
+var EMAILJS_SERVICE = 'service_pl4i9d2';
+var EMAILJS_TEMPLATE = 'template_kpvqcrf';
+var EMAILJS_PUBLIC = 'AZYMC70pzjqQc73Az';
+
+emailjs.init(EMAILJS_PUBLIC);
+
 /* ===== JSONBin ===== */
 var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
 var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
@@ -335,12 +377,19 @@ function getCurrentUser(){
   if(!raw) return null;
   try { return JSON.parse(raw); } catch(e){ return null; }
 }
-function setCurrentUser(user){
-  localStorage.setItem('panaah_current', JSON.stringify(user));
-}
-function clearCurrentUser(){
-  localStorage.removeItem('panaah_current');
-}
+function setCurrentUser(user){ localStorage.setItem('panaah_current', JSON.stringify(user)); }
+function clearCurrentUser(){ localStorage.removeItem('panaah_current'); }
+
+/* ===== OTP STATE ===== */
+var otpState = {
+  code: null,
+  email: null,
+  name: null,
+  phone: null,
+  password: null,
+  expiresAt: null,
+  timerId: null
+};
 
 /* ===== UI ===== */
 function lockBody(){ document.documentElement.classList.add('locked'); document.body.classList.add('locked'); }
@@ -392,13 +441,11 @@ window.addEventListener('DOMContentLoaded', async function(){
   await fetchData();
   var cur = getCurrentUser();
   
-  // اگه کاربر عادی لاگین بود، چک کن هنوز توی دیتابیس هست یا نه
   if(cur && cur.role !== 'admin'){
     var stillExists = CACHE.users.some(function(u){
       return u.role !== 'admin' && u.phone === cur.phone;
     });
     if(!stillExists){
-      // کاربر حذف شده
       clearCurrentUser();
       cur = null;
     }
@@ -432,7 +479,6 @@ function validName(n){
 }
 function validPhone(p){ p = toEnglishDigits(p.trim()); return /^09\d{9}$/.test(p); }
 function validEmail(e){
-  if(!e.trim()) return true;
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(e.trim());
 }
 function validPass(p){ return p.length >= 6; }
@@ -442,7 +488,7 @@ function submitAuth(){
   else doLogin();
 }
 
-/* ===== REGISTER ===== */
+/* ===== REGISTER → Send OTP ===== */
 async function doRegister(){
   var nameEl = document.getElementById('regName');
   var phoneEl = document.getElementById('regPhone');
@@ -464,45 +510,218 @@ async function doRegister(){
   if(!validPass(passEl.value)){ errPass.classList.add('show'); passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
-  btn.textContent = 'در حال ذخیره...';
+  btn.textContent = 'در حال ارسال کد...';
   btn.disabled = true;
+  
+  // چک کن کاربر با این شماره قبلاً ثبت‌نام نکرده باشه
+  await fetchData();
+  var existingPhone = CACHE.users.find(function(u){ return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role !== 'admin'; });
+  if(existingPhone){
+    btn.textContent = 'ورود به مجموعه پناه';
+    btn.disabled = false;
+    errPhone.textContent = 'این شماره قبلاً ثبت‌نام کرده. لطفاً وارد شوید.';
+    errPhone.classList.add('show');
+    phoneEl.classList.add('error');
+    return;
+  }
+  
+  // تولید کد ۶ رقمی
+  var code = String(Math.floor(100000 + Math.random() * 900000));
+  var email = emailEl.value.trim();
+  var name = nameEl.value.trim();
+  
+  // ذخیره در state
+  otpState.code = code;
+  otpState.email = email;
+  otpState.name = name;
+  otpState.phone = toEnglishDigits(phoneEl.value.trim());
+  otpState.password = passEl.value;
+  otpState.expiresAt = Date.now() + 5 * 60 * 1000; // 5 دقیقه
+  
+  // ارسال ایمیل با EmailJS
+  try {
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      to_email: email,
+      to_name: name,
+      otp_code: code
+    });
+  } catch(err){
+    console.error('EmailJS error:', err);
+    btn.textContent = 'ورود به مجموعه پناه';
+    btn.disabled = false;
+    errEmail.textContent = 'خطا در ارسال ایمیل. لطفاً ایمیل رو چک کن یا دوباره امتحان کن.';
+    errEmail.classList.add('show');
+    return;
+  }
+  
+  btn.textContent = 'ورود به مجموعه پناه';
+  btn.disabled = false;
+  
+  // برو به مرحله ۲
+  goToOtpStep(email);
+}
+
+function goToOtpStep(email){
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.remove('hidden');
+  document.getElementById('otpEmail').textContent = email;
+  document.getElementById('otpInput').value = '';
+  document.getElementById('errOtp').classList.remove('show');
+  document.getElementById('otpInput').classList.remove('error');
+  document.getElementById('modalLogo').textContent = '📧';
+  document.getElementById('modalTitle').innerHTML = 'تایید <span>ایمیل</span>';
+  document.getElementById('modalSub').textContent = 'کد ۶ رقمی که به ایمیلت فرستادیم رو وارد کن';
+  startOtpTimer();
+  setTimeout(function(){ document.getElementById('otpInput').focus(); }, 100);
+}
+
+function backToRegister(){
+  stopOtpTimer();
+  otpState.code = null;
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step1').classList.remove('hidden');
+  document.getElementById('modalLogo').textContent = '🦷';
+  document.getElementById('modalTitle').innerHTML = 'خوش آمدید به <span>مجموعه پناه</span>';
+  document.getElementById('modalSub').textContent = 'برای رزرو نوبت و استفاده از خدمات، لطفاً اطلاعات خود را وارد کنید';
+  switchMode('register');
+}
+
+/* ===== OTP TIMER ===== */
+function startOtpTimer(){
+  stopOtpTimer();
+  var timerEl = document.getElementById('otpTimer');
+  var textEl = document.getElementById('timerText');
+  timerEl.classList.remove('expired');
+  document.getElementById('resendBtn').disabled = false;
+  
+  otpState.timerId = setInterval(function(){
+    var remaining = otpState.expiresAt - Date.now();
+    if(remaining <= 0){
+      stopOtpTimer();
+      timerEl.classList.add('expired');
+      textEl.textContent = 'منقضی شد';
+      document.getElementById('resendBtn').disabled = false;
+      return;
+    }
+    var min = Math.floor(remaining / 60000);
+    var sec = Math.floor((remaining % 60000) / 1000);
+    textEl.textContent = toFa2(min) + ':' + toFa2(sec);
+  }, 1000);
+}
+
+function stopOtpTimer(){
+  if(otpState.timerId){
+    clearInterval(otpState.timerId);
+    otpState.timerId = null;
+  }
+}
+
+function toFa2(n){
+  var fa = '۰۱۲۳۴۵۶۷۸۹';
+  var s = n < 10 ? '0' + n : '' + n;
+  return s.replace(/\d/g, function(d){ return fa[d]; });
+}
+
+async function resendOtp(){
+  if(!otpState.email){ return; }
+  
+  var btn = document.getElementById('resendBtn');
+  btn.disabled = true;
+  btn.textContent = 'در حال ارسال...';
+  
+  var code = String(Math.floor(100000 + Math.random() * 900000));
+  otpState.code = code;
+  otpState.expiresAt = Date.now() + 5 * 60 * 1000;
+  
+  try {
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      to_email: otpState.email,
+      to_name: otpState.name,
+      otp_code: code
+    });
+    btn.textContent = 'ارسال مجدد کد';
+    startOtpTimer();
+  } catch(err){
+    console.error('Resend error:', err);
+    btn.textContent = 'خطا - دوباره امتحان کن';
+    setTimeout(function(){ btn.textContent = 'ارسال مجدد کد'; btn.disabled = false; }, 2000);
+  }
+}
+
+/* ===== VERIFY OTP ===== */
+async function verifyOtp(){
+  var input = document.getElementById('otpInput');
+  var errOtp = document.getElementById('errOtp');
+  var code = toEnglishDigits(input.value.trim());
+  
+  errOtp.classList.remove('show');
+  input.classList.remove('error');
+  
+  if(!otpState.code){
+    errOtp.textContent = 'کد منقضی شده. لطفاً ارسال مجدد کن.';
+    errOtp.classList.add('show');
+    return;
+  }
+  
+  if(Date.now() > otpState.expiresAt){
+    errOtp.textContent = 'کد منقضی شده. لطفاً ارسال مجدد کن.';
+    errOtp.classList.add('show');
+    return;
+  }
+  
+  if(code !== otpState.code){
+    errOtp.textContent = 'کد وارد شده اشتباه است';
+    errOtp.classList.add('show');
+    input.classList.add('error');
+    return;
+  }
+  
+  // کد درست — ثبت‌نام کن
+  stopOtpTimer();
   
   await fetchData();
   
   var newUser = {
     id: Date.now(),
-    name: nameEl.value.trim(),
-    phone: toEnglishDigits(phoneEl.value.trim()),
-    email: emailEl.value.trim(),
-    password: passEl.value,
+    name: otpState.name,
+    phone: otpState.phone,
+    email: otpState.email,
+    password: otpState.password,
     address: '',
     role: 'user',
+    emailVerified: true,
     joinedAt: new Date().toISOString()
   };
   
-  var existing = CACHE.users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
-  if(existing){
-    existing.name = newUser.name;
-    existing.email = newUser.email;
-    existing.password = newUser.password;
-  } else {
-    CACHE.users.push(newUser);
-  }
-  
-  var saved = await saveData();
-  
-  btn.textContent = 'ورود به مجموعه پناه';
-  btn.disabled = false;
-  
-  if(!saved){
-    errName.textContent = 'خطا در ذخیره‌سازی. لطفاً دوباره امتحان کنید.';
-    errName.classList.add('show');
+  // دوباره چک کن شماره تکراری نباشه
+  var exists = CACHE.users.find(function(u){ return u.phone === newUser.phone && u.role !== 'admin'; });
+  if(exists){
+    errOtp.textContent = 'این شماره قبلاً ثبت‌نام کرده';
+    errOtp.classList.add('show');
     return;
   }
   
-  var curUser = existing || newUser;
-  setCurrentUser(curUser);
-  showUser(curUser);
+  CACHE.users.push(newUser);
+  var saved = await saveData();
+  
+  if(!saved){
+    errOtp.textContent = 'خطا در ذخیره‌سازی. دوباره امتحان کن.';
+    errOtp.classList.add('show');
+    return;
+  }
+  
+  // پاک کردن state
+  otpState = { code: null, email: null, name: null, phone: null, password: null, expiresAt: null, timerId: null };
+  
+  setCurrentUser(newUser);
+  showUser(newUser);
+  
+  // ریست مودال
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step1').classList.remove('hidden');
+  document.getElementById('modalLogo').textContent = '🦷';
+  switchMode('register');
+  
   closeAuth();
 }
 
@@ -532,7 +751,6 @@ async function doLogin(){
   btn.textContent = 'ورود به حساب';
   btn.disabled = false;
   
-  // ادمین
   if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
     var admin = CACHE.users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
@@ -557,7 +775,6 @@ async function doLogin(){
     return;
   }
   
-  // کاربر عادی
   var found = null;
   var digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
@@ -588,8 +805,12 @@ async function doLogin(){
   closeAuth();
 }
 
+/* ===== INPUT FORMATTING ===== */
 document.getElementById('regPhone').addEventListener('input', function(){
   this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,11);
+});
+document.getElementById('otpInput').addEventListener('input', function(){
+  this.value = toEnglishDigits(this.value).replace(/\D/g,'').slice(0,6);
 });
 
 function showUser(user){
