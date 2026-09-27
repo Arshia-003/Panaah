@@ -17,7 +17,9 @@ body{background:#f5f8fc;color:#1a2438;min-height:100vh;}
 .header-btn{padding:10px 18px;background:#f5f8fc;border:1px solid #e4ebf5;border-radius:12px;color:#1a2438;text-decoration:none;font-size:13.5px;font-weight:600;transition:.3s;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;}
 .header-btn:hover{background:#eaf4fc;border-color:#b8d9f0;transform:translateY(-2px);}
 .header-btn.refresh{background:rgba(0,194,168,.1);border-color:rgba(0,194,168,.3);color:#008b7a;}
+.header-btn.refresh:hover{background:rgba(0,194,168,.2);}
 .header-btn.logout{background:rgba(231,76,60,.08);border-color:rgba(231,76,60,.25);color:#e74c3c;}
+.header-btn.logout:hover{background:rgba(231,76,60,.15);}
 
 .wrap{max-width:1300px;margin:0 auto;padding:40px 30px 80px;position:relative;z-index:2;}
 
@@ -49,7 +51,7 @@ body{background:#f5f8fc;color:#1a2438;min-height:100vh;}
 .search-box::placeholder{color:#9aabbf;}
 
 .table-wrap{overflow-x:auto;border-radius:14px;}
-table{width:100%;border-collapse:collapse;min-width:750px;}
+table{width:100%;border-collapse:collapse;min-width:700px;}
 th,td{padding:14px 12px;text-align:right;font-size:13px;border-bottom:1px solid #eef3f9;vertical-align:middle;}
 th{background:#f5f8fc;color:#0a6ebd;font-weight:700;font-size:12px;letter-spacing:.3px;}
 tr:hover{background:#fafcff;}
@@ -57,15 +59,17 @@ tr:hover{background:#fafcff;}
 .badge.pending{background:rgba(255,193,7,.15);color:#d39e00;border:1px solid rgba(255,193,7,.35);}
 .badge.approved{background:rgba(0,194,168,.12);color:#008b7a;border:1px solid rgba(0,194,168,.3);}
 .badge.canceled{background:rgba(231,76,60,.1);color:#e74c3c;border:1px solid rgba(231,76,60,.25);}
-.badge.user{background:#f0f4f9;color:#6a7a90;border:1px solid #e4ebf5;}
+.badge.waiting{background:rgba(255,152,0,.12);color:#e67e22;border:1px solid rgba(255,152,0,.3);}
+.badge.done{background:rgba(0,194,168,.12);color:#008b7a;border:1px solid rgba(0,194,168,.3);}
+.badge.rejected{background:rgba(231,76,60,.1);color:#e74c3c;border:1px solid rgba(231,76,60,.25);}
 
 .btn-sm{padding:7px 14px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;transition:.3s;border:1px solid transparent;margin:2px;}
 .btn-time{background:rgba(10,110,189,.1);color:#0a6ebd;border-color:rgba(10,110,189,.3);}
 .btn-time:hover{background:rgba(10,110,189,.2);}
-.btn-cancel{background:rgba(231,76,60,.08);color:#e74c3c;border-color:rgba(231,76,60,.25);}
-.btn-cancel:hover{background:rgba(231,76,60,.18);}
-.btn-request{background:rgba(255,152,0,.1);color:#e67e22;border-color:rgba(255,152,0,.3);}
-.btn-request:hover{background:rgba(255,152,0,.2);}
+.btn-request{background:rgba(255,152,0,.12);color:#e67e22;border-color:rgba(255,152,0,.3);}
+.btn-request:hover{background:rgba(255,152,0,.22);}
+.btn-cancel-req{background:rgba(231,76,60,.08);color:#e74c3c;border-color:rgba(231,76,60,.25);}
+.btn-cancel-req:hover{background:rgba(231,76,60,.18);}
 
 .empty{text-align:center;color:#9aabbf;padding:50px 20px;font-size:14px;line-height:2;}
 .empty .big{font-size:44px;margin-bottom:12px;opacity:.5;}
@@ -80,6 +84,10 @@ tr:hover{background:#fafcff;}
 .final-time{background:rgba(0,194,168,.08);border:1px solid rgba(0,194,168,.25);border-radius:10px;padding:8px 12px;font-size:12.5px;color:#008b7a;font-weight:700;display:inline-block;line-height:1.6;}
 .final-time small{display:block;font-weight:400;color:#6a7a90;font-size:11px;margin-top:3px;}
 
+.patient-info{font-size:13.5px;line-height:1.8;}
+.patient-info b{color:#1a2438;font-weight:800;font-size:14.5px;}
+.patient-info .phone{color:#6a7a90;font-size:12.5px;font-family:monospace;direction:ltr;display:inline-block;}
+
 .modal-overlay{position:fixed;inset:0;background:rgba(26,36,56,.4);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.35s;touch-action:none;overflow:auto;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:#fff;border:1px solid #e4ebf5;border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:0 40px 100px rgba(10,110,189,.25);position:relative;transform:scale(1);transition:.35s cubic-bezier(.2,.9,.3,1);max-height:90vh;overflow-y:auto;}
@@ -89,8 +97,9 @@ tr:hover{background:#fafcff;}
 .modal .req-box b{color:#0a6ebd;}
 .modal .form-group{margin-bottom:14px;}
 .modal label{display:block;font-size:12.5px;color:#4a5a70;font-weight:600;margin-bottom:6px;}
-.modal input,.modal select{width:100%;padding:12px 15px;background:#f5f8fc;border:1px solid #e4ebf5;border-radius:12px;font-size:14px;color:#1a2438;font-family:inherit;transition:.3s;outline:none;}
-.modal input:focus,.modal select:focus{border-color:#0a6ebd;background:#fff;box-shadow:0 0 0 4px rgba(10,110,189,.1);}
+.modal input,.modal select,.modal textarea{width:100%;padding:12px 15px;background:#f5f8fc;border:1px solid #e4ebf5;border-radius:12px;font-size:14px;color:#1a2438;font-family:inherit;transition:.3s;outline:none;}
+.modal textarea{resize:vertical;min-height:80px;}
+.modal input:focus,.modal select:focus,.modal textarea:focus{border-color:#0a6ebd;background:#fff;box-shadow:0 0 0 4px rgba(10,110,189,.1);}
 .modal select option{background:#fff;color:#1a2438;}
 .modal-btns{display:flex;gap:10px;margin-top:22px;}
 .modal-btns button{flex:1;padding:13px;border-radius:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:.3s;border:none;}
@@ -99,7 +108,7 @@ tr:hover{background:#fafcff;}
 .btn-cancel-modal{background:#f5f8fc;color:#6a7a90;border:1px solid #e4ebf5;}
 .btn-cancel-modal:hover{background:#eaf4fc;}
 
-.info-banner{background:linear-gradient(145deg,rgba(10,110,189,.08),rgba(0,194,168,.06));border:1px solid rgba(10,110,189,.2);border-radius:16px;padding:18px 22px;margin-bottom:25px;display:flex;align-items:center;gap:14px;font-size:13.5px;color:#4a5a70;line-height:1.8;}
+.info-banner{background:linear-gradient(145deg,rgba(10,110,189,.06),rgba(0,194,168,.05));border:1px solid rgba(10,110,189,.15);border-radius:16px;padding:18px 22px;margin-bottom:25px;display:flex;align-items:center;gap:14px;font-size:13.5px;color:#4a5a70;line-height:1.8;}
 .info-banner .ic{font-size:24px;flex-shrink:0;}
 .info-banner b{color:#0a6ebd;}
 
@@ -134,12 +143,12 @@ tr:hover{background:#fafcff;}
 
   <div class="doc-title">
     <h1>خوش آمدی دکتر 🩺</h1>
-    <p>اینجا می‌تونی نوبت‌های خودت رو ببینی، زمان تعیین کنی و درخواست‌های تغییر نوبت رو به شرکت ارسال کنی.</p>
+    <p>اینجا نوبت‌های خودت رو می‌بینی. برای نوبت‌های در انتظار، زمان تعیین می‌کنی. برای نوبت‌های تایید‌شده، درخواست تغییر به شرکت می‌دی.</p>
   </div>
 
   <div class="info-banner">
     <div class="ic">ℹ️</div>
-    <div>پنل شما فقط شامل <b>اطلاعات نوبت‌ها و اسم مریض‌ها</b>ست. برای تغییر اطلاعات کاربران یا حذف کامل، باید از <b>شرکت</b> بخوای.</div>
+    <div>پنل شما فقط شامل <b>نام و شماره مریض</b> و اطلاعات نوبت‌هاست. برای تغییر مستقیم نوبت‌های تایید‌شده، باید <b>درخواست تغییر</b> به شرکت ارسال کنی.</div>
   </div>
 
   <div class="grid-stats">
@@ -152,8 +161,7 @@ tr:hover{background:#fafcff;}
   <div class="tabs">
     <button class="tab active" onclick="switchTab('pending', this)">📥 در انتظار تایید <span class="badge-cnt" id="tabPendingBadge" style="display:none;">۰</span></button>
     <button class="tab" onclick="switchTab('approved', this)">✅ نوبت‌های تایید‌شده</button>
-    <button class="tab" onclick="switchTab('patients', this)">👥 لیست مریض‌ها</button>
-    <button class="tab" onclick="switchTab('changeReq', this)">📩 درخواست‌های تغییر</button>
+    <button class="tab" onclick="switchTab('changeReq', this)">📩 درخواست‌های تغییر من</button>
   </div>
 
   <!-- PENDING TAB -->
@@ -166,7 +174,7 @@ tr:hover{background:#fafcff;}
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>مریض</th><th>بازه درخواستی</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>عملیات</th></tr>
+            <tr><th>نام مریض</th><th>شماره تماس</th><th>بازه درخواستی</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>عملیات</th></tr>
           </thead>
           <tbody id="pendingList"></tbody>
         </table>
@@ -184,27 +192,9 @@ tr:hover{background:#fafcff;}
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>مریض</th><th>تاریخ نهایی</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>وضعیت</th><th>عملیات</th></tr>
+            <tr><th>نام مریض</th><th>شماره تماس</th><th>تاریخ نهایی</th><th>ساعت</th><th>خدمت</th><th>شعبه</th><th>وضعیت</th><th>عملیات</th></tr>
           </thead>
           <tbody id="approvedList"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- PATIENTS TAB -->
-  <div class="tab-content" id="tabPatients">
-    <div class="section">
-      <div class="section-head">
-        <h2>لیست مریض‌ها</h2>
-        <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterPatients(this.value)">
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>نام و نام خانوادگی</th><th>شماره تماس</th><th>ایمیل</th><th>تعداد نوبت</th><th>آخرین نوبت</th></tr>
-          </thead>
-          <tbody id="patientsList"></tbody>
         </table>
       </div>
     </div>
@@ -214,13 +204,13 @@ tr:hover{background:#fafcff;}
   <div class="tab-content" id="tabChangeReq">
     <div class="section">
       <div class="section-head">
-        <h2>درخواست‌های تغییر نوبت (از طرف شرکت)</h2>
+        <h2>درخواست‌های تغییر من</h2>
         <input type="text" class="search-box" placeholder="🔍 جستجو..." oninput="filterChangeReq(this.value)">
       </div>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>مریض</th><th>نوبت فعلی</th><th>درخواست شرکت</th><th>وضعیت</th><th>عملیات</th></tr>
+            <tr><th>نام مریض</th><th>نوبت فعلی</th><th>نوع درخواست</th><th>توضیحات</th><th>وضعیت</th><th>پاسخ شرکت</th><th>عملیات</th></tr>
           </thead>
           <tbody id="changeReqList"></tbody>
         </table>
@@ -268,8 +258,8 @@ tr:hover{background:#fafcff;}
       </select>
     </div>
     <div class="form-group">
-      <label>توضیحات</label>
-      <input type="text" id="changeNote" placeholder="مثلاً: مریض درخواست تعویق به هفته بعد دارد">
+      <label>توضیحات برای شرکت</label>
+      <textarea id="changeNote" placeholder="مثلاً: مریض درخواست تعویق به هفته بعد دارد"></textarea>
     </div>
     <div class="modal-btns">
       <button class="btn-cancel-modal" onclick="closeChangeReq()">لغو</button>
@@ -332,7 +322,7 @@ function clearCurrentUser(){ localStorage.removeItem('panaah_current'); }
 
 function toFa(n){ var fa = '۰۱۲۳۴۵۶۷۸۹'; return String(n).replace(/\d/g, function(d){ return fa[d]; }); }
 
-var pendingFilter = '', approvedFilter = '', patientsFilter = '', changeReqFilter = '';
+var pendingFilter = '', approvedFilter = '', changeReqFilter = '';
 var currentAssignId = null;
 var currentChangeReqId = null;
 
@@ -361,7 +351,6 @@ function renderAll(){
   renderStats();
   renderPending();
   renderApproved();
-  renderPatients();
   renderChangeReq();
 }
 
@@ -369,11 +358,11 @@ function renderStats(){
   var appts = CACHE.appointments;
   var pending = appts.filter(function(a){ return a.status === 'pending'; });
   var approved = appts.filter(function(a){ return a.status === 'approved'; });
-  var changeReqs = CACHE.changeRequests.filter(function(r){ return r.status === 'pending'; });
+  var myReqs = CACHE.changeRequests.filter(function(r){ return r.requestedBy === 'doctor'; });
   document.getElementById('statTotal').textContent = toFa(appts.length);
   document.getElementById('statPending').textContent = toFa(pending.length);
   document.getElementById('statApproved').textContent = toFa(approved.length);
-  document.getElementById('statRequests').textContent = toFa(changeReqs.length);
+  document.getElementById('statRequests').textContent = toFa(myReqs.length);
   var badge = document.getElementById('tabPendingBadge');
   if(pending.length){
     badge.style.display = 'inline-block';
@@ -383,6 +372,9 @@ function renderStats(){
   }
 }
 
+/* ============================================
+   PENDING — دکتر می‌تونه زمان تعیین کنه
+============================================ */
 function renderPending(){
   var list = document.getElementById('pendingList');
   var appts = CACHE.appointments.filter(function(a){ return a.status === 'pending'; });
@@ -396,14 +388,16 @@ function renderPending(){
     });
   }
   if(!appts.length){
-    list.innerHTML = '<tr><td colspan="6" class="empty">هیچ نوبتی در انتظار تایید نیست</td></tr>';
+    list.innerHTML = '<tr><td colspan="7" class="empty">هیچ نوبتی در انتظار تایید نیست</td></tr>';
     return;
   }
   list.innerHTML = '';
   appts.slice().reverse().forEach(function(a){
     var rangeText = a.dateRange || a.date || '—';
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + (a.name || '—') + '<br><small style="color:#6a7a90;">' + (a.phone || '') + '</small></td>' +
+    tr.innerHTML =
+      '<td><div class="patient-info"><b>' + (a.name || '—') + '</b></div></td>' +
+      '<td><span class="phone">' + (a.phone || '—') + '</span></td>' +
       '<td><div class="req-info">بازه درخواستی:<br><b>' + rangeText + '</b></div></td>' +
       '<td>' + (a.time || '—') + '</td>' +
       '<td>' + (a.service || '—') + '</td>' +
@@ -413,6 +407,9 @@ function renderPending(){
   });
 }
 
+/* ============================================
+   APPROVED — دکتر فقط می‌تونه درخواست تغییر بده
+============================================ */
 function renderApproved(){
   var list = document.getElementById('approvedList');
   var appts = CACHE.appointments.filter(function(a){ return a.status === 'approved' || a.status === 'canceled'; });
@@ -426,7 +423,7 @@ function renderApproved(){
     });
   }
   if(!appts.length){
-    list.innerHTML = '<tr><td colspan="7" class="empty">هیچ نوبت تایید‌شده‌ای نیست</td></tr>';
+    list.innerHTML = '<tr><td colspan="8" class="empty">هیچ نوبت تایید‌شده‌ای نیست</td></tr>';
     return;
   }
   list.innerHTML = '';
@@ -436,96 +433,86 @@ function renderApproved(){
     var finalDate = a.finalDate || '—';
     var finalTime = a.finalTime || a.time || '—';
     var requestedRange = a.dateRange || a.date || '—';
+    var approvedBy = a.approvedBy === 'doctor' ? 'توسط شما' : 'توسط شرکت';
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + (a.name || '—') + '<br><small style="color:#6a7a90;">' + (a.phone || '') + '</small></td>' +
-      '<td><div class="final-time">' + finalDate + '<small>درخواست: ' + requestedRange + '</small></div></td>' +
+    tr.innerHTML =
+      '<td><div class="patient-info"><b>' + (a.name || '—') + '</b></div></td>' +
+      '<td><span class="phone">' + (a.phone || '—') + '</span></td>' +
+      '<td><div class="final-time">' + finalDate + '<small>' + approvedBy + ' — درخواست: ' + requestedRange + '</small></div></td>' +
       '<td>' + finalTime + '</td>' +
       '<td>' + (a.service || '—') + '</td>' +
       '<td>' + (a.branch || '—') + '</td>' +
       '<td><span class="badge ' + status + '">' + statusLabel + '</span></td>' +
       '<td>' +
-        (status === 'approved' ? '<button class="btn-sm btn-time" onclick="openAssign(' + a.id + ')">✏️ ویرایش</button>' : '') +
-        '<button class="btn-sm btn-request" onclick="openChangeReq(' + a.id + ')">📩 درخواست تغییر</button>' +
+        (status === 'approved' ? '<button class="btn-sm btn-request" onclick="openChangeReq(' + a.id + ')">📩 درخواست تغییر</button>' : '—') +
       '</td>';
     list.appendChild(tr);
   });
 }
 
-function renderPatients(){
-  var list = document.getElementById('patientsList');
-  var patients = CACHE.users.filter(function(u){ return u.role !== 'admin' && u.role !== 'doctor'; });
-  if(patientsFilter){
-    var f = patientsFilter.toLowerCase();
-    patients = patients.filter(function(u){
-      return (u.name || '').toLowerCase().includes(f) ||
-             (u.phone || '').includes(f) ||
-             (u.email || '').toLowerCase().includes(f);
-    });
-  }
-  if(!patients.length){
-    list.innerHTML = '<tr><td colspan="5" class="empty">هیچ مریضی ثبت‌نام نکرده است</td></tr>';
-    return;
-  }
-  list.innerHTML = '';
-  patients.slice().reverse().forEach(function(u){
-    var myAppts = CACHE.appointments.filter(function(a){ return a.user === u.phone; });
-    var lastAppt = myAppts.length ? (myAppts[myAppts.length - 1].finalDate || myAppts[myAppts.length - 1].dateRange || '—') : '—';
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + (u.name || '—') + '</td>' +
-      '<td>' + (u.phone || '—') + '</td>' +
-      '<td>' + (u.email || '—') + '</td>' +
-      '<td>' + toFa(myAppts.length) + '</td>' +
-      '<td>' + lastAppt + '</td>';
-    list.appendChild(tr);
-  });
-}
-
+/* ============================================
+   CHANGE REQUESTS — درخواست‌های خود دکتر
+============================================ */
 function renderChangeReq(){
   var list = document.getElementById('changeReqList');
-  var reqs = CACHE.changeRequests.slice();
+  var reqs = CACHE.changeRequests.filter(function(r){ return r.requestedBy === 'doctor'; });
   if(changeReqFilter){
     var f = changeReqFilter.toLowerCase();
     reqs = reqs.filter(function(r){
       return (r.patientName || '').toLowerCase().includes(f) ||
-             (r.note || '').toLowerCase().includes(f);
+             (r.note || '').toLowerCase().includes(f) ||
+             (r.type || '').toLowerCase().includes(f);
     });
   }
   if(!reqs.length){
-    list.innerHTML = '<tr><td colspan="5" class="empty">هیچ درخواست تغییری وجود ندارد</td></tr>';
+    list.innerHTML = '<tr><td colspan="7" class="empty">هنوز درخواست تغییری نفرستادی</td></tr>';
     return;
   }
   list.innerHTML = '';
   reqs.slice().reverse().forEach(function(r){
-    var statusLabel = r.status === 'pending' ? 'در انتظار بررسی' : r.status === 'done' ? 'انجام شده' : 'رد شده';
-    var statusClass = r.status === 'pending' ? 'pending' : r.status === 'done' ? 'approved' : 'canceled';
+    var statusLabel = r.status === 'pending' ? 'در انتظار بررسی' : r.status === 'done' ? 'اعمال شده' : 'رد شده';
+    var statusClass = r.status === 'pending' ? 'waiting' : r.status === 'done' ? 'done' : 'rejected';
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + (r.patientName || '—') + '</td>' +
+    tr.innerHTML =
+      '<td><div class="patient-info"><b>' + (r.patientName || '—') + '</b></div></td>' +
       '<td>' + (r.currentDate || '—') + '</td>' +
-      '<td><div class="req-info">' + (r.type || '—') + '<br><b>' + (r.note || '') + '</b></div></td>' +
+      '<td><span class="badge pending">' + (r.type || '—') + '</span></td>' +
+      '<td><div class="req-info">' + (r.note || '—') + '</div></td>' +
       '<td><span class="badge ' + statusClass + '">' + statusLabel + '</span></td>' +
-      '<td>' + (r.status === 'pending' ? '<button class="btn-sm btn-cancel" onclick="deleteChangeReq(' + r.id + ')">حذف</button>' : '') + '</td>';
+      '<td>' + (r.reviewNote ? '<div class="req-info">' + r.reviewNote + '</div>' : '<span style="color:#9aabbf;">—</span>') + '</td>' +
+      '<td>' +
+        (r.status === 'pending' ? '<button class="btn-sm btn-cancel-req" onclick="deleteChangeReq(' + r.id + ')">لغو درخواست</button>' : '—') +
+      '</td>';
     list.appendChild(tr);
   });
 }
 
 function filterPending(v){ pendingFilter = v.trim(); renderPending(); }
 function filterApproved(v){ approvedFilter = v.trim(); renderApproved(); }
-function filterPatients(v){ patientsFilter = v.trim(); renderPatients(); }
 function filterChangeReq(v){ changeReqFilter = v.trim(); renderChangeReq(); }
 
-/* ===== ASSIGN ===== */
+/* ============================================
+   ASSIGN — فقط برای نوبت‌های pending
+============================================ */
 function openAssign(id){
-  currentAssignId = id;
   var a = CACHE.appointments.find(function(x){ return x.id === id; });
   if(!a) return;
+  // فقط اگه pending باشه اجازه بده
+  if(a.status !== 'pending'){
+    alert('این نوبت قبلاً تایید شده. برای تغییر، از دکمه «درخواست تغییر» استفاده کن.');
+    return;
+  }
+  currentAssignId = id;
   var rangeText = a.dateRange || a.date || '—';
-  document.getElementById('assignReqBox').innerHTML = '<b>مریض:</b> ' + a.name + ' (' + a.phone + ')<br>' +
+  document.getElementById('assignReqBox').innerHTML =
+    '<b>مریض:</b> ' + a.name + '<br>' +
+    '<b>شماره:</b> ' + (a.phone || '—') + '<br>' +
     '<b>بازه درخواستی:</b> ' + rangeText + '<br>' +
     '<b>ساعت درخواستی:</b> ' + (a.time || '—') + '<br>' +
     '<b>خدمت:</b> ' + (a.service || '—') + '<br>' +
     '<b>شعبه:</b> ' + (a.branch || '—');
-  document.getElementById('assignDate').value = a.finalDate || '';
-  document.getElementById('assignTime').value = a.finalTime || a.time || '۰۹:۰۰';
+  document.getElementById('assignDate').value = '';
+  document.getElementById('assignTime').value = a.time || '۰۹:۰۰';
   document.getElementById('assignModal').classList.remove('hide');
 }
 
@@ -542,6 +529,11 @@ async function saveAssign(){
   await fetchData();
   var found = CACHE.appointments.find(function(a){ return a.id === currentAssignId; });
   if(!found){ alert('نوبت پیدا نشد'); return; }
+  if(found.status !== 'pending'){
+    alert('این نوبت قبلاً تایید شده. برای تغییر، از «درخواست تغییر» استفاده کن.');
+    closeAssign();
+    return;
+  }
   found.finalDate = date;
   found.finalTime = time;
   found.status = 'approved';
@@ -552,14 +544,22 @@ async function saveAssign(){
   renderAll();
 }
 
-/* ===== CHANGE REQUEST ===== */
+/* ============================================
+   CHANGE REQUEST — فقط برای نوبت‌های approved
+============================================ */
 function openChangeReq(id){
-  currentChangeReqId = id;
   var a = CACHE.appointments.find(function(x){ return x.id === id; });
   if(!a) return;
+  if(a.status !== 'approved'){
+    alert('فقط برای نوبت‌های تایید‌شده می‌تونی درخواست تغییر بفرستی.');
+    return;
+  }
+  currentChangeReqId = id;
   var finalDate = a.finalDate || '—';
   var finalTime = a.finalTime || a.time || '—';
-  document.getElementById('changeReqBox').innerHTML = '<b>مریض:</b> ' + a.name + ' (' + a.phone + ')<br>' +
+  document.getElementById('changeReqBox').innerHTML =
+    '<b>مریض:</b> ' + a.name + '<br>' +
+    '<b>شماره:</b> ' + (a.phone || '—') + '<br>' +
     '<b>نوبت فعلی:</b> ' + finalDate + ' — ساعت ' + finalTime + '<br>' +
     '<b>خدمت:</b> ' + (a.service || '—');
   document.getElementById('changeType').value = 'لغو';
@@ -590,6 +590,7 @@ async function saveChangeReq(){
     note: note,
     requestedBy: 'doctor',
     status: 'pending',
+    reviewNote: '',
     createdAt: new Date().toISOString()
   });
   await saveData();
@@ -599,7 +600,7 @@ async function saveChangeReq(){
 }
 
 async function deleteChangeReq(id){
-  if(!confirm('این درخواست حذف شود؟')) return;
+  if(!confirm('این درخواست لغو شود؟')) return;
   await fetchData();
   CACHE.changeRequests = CACHE.changeRequests.filter(function(r){ return r.id !== id; });
   await saveData();
