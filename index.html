@@ -42,7 +42,6 @@ nav a:hover::after{width:100%;}
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c2a8,#0a6ebd);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
 .user-avatar.admin{background:linear-gradient(135deg,#7c5cff,#0a6ebd);}
 
-/* ===== MODAL ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,10,20,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:.4s;overflow:hidden;touch-action:none;}
 .modal-overlay.hide{opacity:0;pointer-events:none;}
 .modal{background:linear-gradient(145deg,rgba(20,30,50,.96),rgba(11,18,32,.96));border:1px solid rgba(0,194,168,.25);border-radius:28px;padding:40px 45px 35px;max-width:500px;width:100%;box-shadow:0 40px 100px rgba(0,0,0,.7);position:relative;overflow:hidden;transform:scale(1);transition:.4s;display:flex;flex-direction:column;}
@@ -71,7 +70,6 @@ nav a:hover::after{width:100%;}
 .switch-auth a{color:#00c2a8;font-weight:700;cursor:pointer;text-decoration:none;transition:.3s;border-bottom:1px dashed rgba(0,194,168,.5);padding-bottom:2px;}
 .switch-auth a:hover{color:#3ddbc4;border-bottom-color:#3ddbc4;}
 
-/* ===== OTP BOX ===== */
 .otp-box{margin-top:16px;padding:20px;background:linear-gradient(145deg,rgba(0,194,168,.08),rgba(10,110,189,.06));border:1px solid rgba(0,194,168,.25);border-radius:16px;position:relative;z-index:1;display:none;animation:otpSlide .4s cubic-bezier(.2,.9,.3,1);}
 .otp-box.show{display:block;}
 @keyframes otpSlide{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
@@ -186,15 +184,12 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
   .modal .form-group input.otp-input{letter-spacing:10px;font-size:22px;padding:15px;}
   .otp-actions{flex-direction:column;}
 }
-
-/* ===== وقتی صفحه کوتاهه، مودال خودش اسکرول می‌خوره ===== */
 @media(max-height:700px){
   .modal{padding:25px 35px 25px;max-height:95vh;overflow-y:auto;}
 }
 @media(max-height:600px){
   .modal{padding:20px 28px 20px;max-height:95vh;overflow-y:auto;}
 }
-
 @media(max-width:520px){
   nav a:nth-child(2),nav a:nth-child(3){display:none;}
 }
@@ -264,9 +259,9 @@ footer p{color:#556070;font-size:13px;line-height:2;font-weight:300;}
     
     <div id="loginFields" class="hidden">
       <div class="form-group">
-        <label>نام و نام خانوادگی یا شماره همراه</label>
-        <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی یا ۰۹۱۲۳۴۵۶۷۸۹" maxlength="40">
-        <div class="err-msg" id="errLoginInput">نام یا شماره همراه را وارد کنید</div>
+        <label>نام و نام خانوادگی / شماره همراه / نام کاربری</label>
+        <input type="text" id="loginInput" placeholder="مثلاً عرشیا محمدی، ۰۹۱۲۳۴۵۶۷۸۹ یا sherkat" maxlength="40">
+        <div class="err-msg" id="errLoginInput">نام، شماره یا نام کاربری را وارد کنید</div>
       </div>
       <div class="form-group">
         <label>رمز عبور</label>
@@ -372,7 +367,7 @@ var JSONBIN_BIN = '6aa7fc22ac6210605acba97d';
 var JSONBIN_KEY = '$2a$10$Aeo5..C6OPC7HvhrJihfQ.XJWcdz738W7cC3ZoIcPWMyGe9lJoaam';
 var API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
 
-var CACHE = { users: [], appointments: [] };
+var CACHE = { users: [], appointments: [], changeRequests: [] };
 
 async function fetchData(){
   try {
@@ -382,6 +377,7 @@ async function fetchData(){
     var record = json.record || {};
     CACHE.users = record.users || [];
     CACHE.appointments = record.appointments || [];
+    CACHE.changeRequests = record.changeRequests || [];
     return CACHE;
   } catch(e){
     console.error('خطا در خواندن JSONBin:', e);
@@ -394,7 +390,11 @@ async function saveData(){
     var res = await fetch(API_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-      body: JSON.stringify({ users: CACHE.users, appointments: CACHE.appointments })
+      body: JSON.stringify({
+        users: CACHE.users,
+        appointments: CACHE.appointments,
+        changeRequests: CACHE.changeRequests
+      })
     });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     return true;
@@ -465,7 +465,7 @@ function switchMode(mode){
     regF.classList.add('hidden');
     logF.classList.remove('hidden');
     title.innerHTML = 'ورود به <span>مجموعه پناه</span>';
-    sub.textContent = 'با نام یا شماره همراه و رمز عبور وارد شوید';
+    sub.textContent = 'با نام، شماره یا نام کاربری وارد شوید';
     btn.textContent = 'ورود به حساب';
     logo.textContent = '🦷';
     sw.innerHTML = 'حساب ندارید؟ <a onclick="switchMode(\'register\')">ثبت‌نام کنید</a>';
@@ -484,9 +484,9 @@ window.addEventListener('DOMContentLoaded', async function(){
   await fetchData();
   var cur = getCurrentUser();
   
-  if(cur && cur.role !== 'admin'){
+  if(cur && cur.role === 'user'){
     var stillExists = CACHE.users.some(function(u){
-      return u.role !== 'admin' && u.phone === cur.phone;
+      return u.role === 'user' && u.phone === cur.phone;
     });
     if(!stillExists){
       clearCurrentUser();
@@ -565,7 +565,7 @@ async function doRegister(){
   
   await fetchData();
   var existingPhone = CACHE.users.find(function(u){
-    return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role !== 'admin';
+    return u.phone === toEnglishDigits(phoneEl.value.trim()) && u.role === 'user';
   });
   if(existingPhone){
     btn.textContent = 'ورود به مجموعه پناه';
@@ -782,7 +782,7 @@ async function finalizeRegister(){
   };
   
   var exists = CACHE.users.find(function(u){
-    return u.phone === newUser.phone && u.role !== 'admin';
+    return u.phone === newUser.phone && u.role === 'user';
   });
   if(exists){
     btn.textContent = 'ورود به مجموعه پناه';
@@ -836,7 +836,7 @@ async function doLogin(){
   var ok = true;
   var raw = inputEl.value.trim();
   
-  if(!raw){ errInput.classList.add('show'); errInput.textContent = 'نام یا شماره همراه را وارد کنید'; inputEl.classList.add('error'); ok = false; }
+  if(!raw){ errInput.classList.add('show'); errInput.textContent = 'نام، شماره یا نام کاربری را وارد کنید'; inputEl.classList.add('error'); ok = false; }
   if(!passEl.value){ errPass.classList.add('show'); errPass.textContent = 'رمز عبور را وارد کنید'; passEl.classList.add('error'); ok = false; }
   if(!ok) return;
   
@@ -848,16 +848,28 @@ async function doLogin(){
   btn.textContent = 'ورود به حساب';
   btn.disabled = false;
   
-  if(raw.toLowerCase() === 'sherkat' && passEl.value === '09126481838'){
+  var rawLower = raw.toLowerCase();
+  
+  /* ===== ورود ادمین (شرکت) ===== */
+  if(rawLower === 'sherkat' && passEl.value === '09126481838'){
     var admin = CACHE.users.find(function(u){ return u.role === 'admin'; });
     if(!admin){
       admin = {
-        id: 1, username: 'sherkat', name: 'شرکت',
-        phone: '', email: '', address: '',
-        password: '09126481838', role: 'admin',
+        id: 'admin',
+        username: 'sherkat',
+        name: 'شرکت',
+        phone: '',
+        email: '',
+        address: '',
+        password: '09126481838',
+        role: 'admin',
         joinedAt: new Date().toISOString()
       };
       CACHE.users.push(admin);
+      await saveData();
+    } else {
+      admin.password = '09126481838';
+      admin.role = 'admin';
       await saveData();
     }
     setCurrentUser(admin);
@@ -867,14 +879,44 @@ async function doLogin(){
     return;
   }
   
+  /* ===== ورود دکتر ===== */
+  if(rawLower === 'doctor' && passEl.value === '000333'){
+    var doctor = CACHE.users.find(function(u){ return u.role === 'doctor'; });
+    if(!doctor){
+      doctor = {
+        id: 'doctor',
+        username: 'doctor',
+        name: 'دکتر',
+        phone: '',
+        email: '',
+        address: '',
+        password: '000333',
+        role: 'doctor',
+        joinedAt: new Date().toISOString()
+      };
+      CACHE.users.push(doctor);
+      await saveData();
+    } else {
+      doctor.password = '000333';
+      doctor.role = 'doctor';
+      await saveData();
+    }
+    setCurrentUser(doctor);
+    showUser(doctor);
+    closeAuth();
+    setTimeout(function(){ window.location.href = 'doctor.html'; }, 300);
+    return;
+  }
+  
+  /* ===== ورود کاربر عادی ===== */
   var found = null;
   var digits = toEnglishDigits(raw).replace(/\D/g,'');
   if(/^09\d{9}$/.test(digits)){
-    found = CACHE.users.find(function(u){ return u.phone === digits && u.role !== 'admin'; });
+    found = CACHE.users.find(function(u){ return u.phone === digits && u.role === 'user'; });
   } else {
     var nameNorm = raw.replace(/\s+/g,' ').trim().toLowerCase();
     found = CACHE.users.find(function(u){
-      return u.role !== 'admin' && u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm;
+      return u.role === 'user' && u.name && u.name.replace(/\s+/g,' ').trim().toLowerCase() === nameNorm;
     });
   }
   
@@ -921,6 +963,10 @@ function showUser(user){
     avatar.textContent = '⚙';
     avatar.classList.add('admin');
     uname.textContent = 'پنل مدیریت';
+  } else if(user.role === 'doctor'){
+    avatar.textContent = '🩺';
+    avatar.classList.add('admin');
+    uname.textContent = 'دکتر';
   } else {
     var firstName = (user.name || 'کاربر').trim().split(/\s+/)[0];
     avatar.textContent = firstName.charAt(0);
@@ -933,6 +979,7 @@ function goToDashboard(){
   var cur = getCurrentUser();
   if(!cur){ openAuth(); return; }
   if(cur.role === 'admin'){ window.location.href = 'admin.html'; return; }
+  if(cur.role === 'doctor'){ window.location.href = 'doctor.html'; return; }
   window.location.href = 'dashboard.html';
 }
 </script>
